@@ -24,7 +24,7 @@ export default function Sidebar() {
       }}>
 
       <List>{menuItems.map(item =>
-        <ListItemButton selected={isActive(item.href)}
+        <ListItemButton key={item.text} selected={isActive(item.href)}
           LinkComponent={Link}
           href={item.href}
           sx={{
