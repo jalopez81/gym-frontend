@@ -32,10 +32,10 @@ export default function DashboardPage() {
   };
 
   const actions = [
-    { title: 'Ver Productos', icon: <ShoppingBag fontSize="large" />, href: '/productos', color: '#1976d2' },
-    { title: 'Ver Clases', icon: <FitnessCenter fontSize="large" />, href: '/clases', color: '#2e7d32' },
-    { title: 'Mi Carrito', icon: <ShoppingCart fontSize="large" />, href: '/carrito', color: '#9c27b0' },
-    { title: 'Mi Suscripción', icon: <CardMembership fontSize="large" />, href: '/mis-suscripciones', color: '#ed6c02' }
+    { title: 'Productos', icon: <ShoppingBag fontSize="large" />, href: '/productos', color: '#1976d2' },
+    { title: 'Clases', icon: <FitnessCenter fontSize="large" />, href: '/clases', color: '#2e7d32' },
+    { title: 'Carrito', icon: <ShoppingCart fontSize="large" />, href: '/carrito', color: '#9c27b0' },
+    { title: 'Suscripción', icon: <CardMembership fontSize="large" />, href: '/mis-suscripciones', color: '#ed6c02' }
   ];
 
   return (
