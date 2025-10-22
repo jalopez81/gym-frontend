@@ -1,45 +1,61 @@
 'use client';
 
+import { Box, Container, Typography, Button, Stack } from '@mui/material';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import Navbar from '@/components/Navbar';
 
 export default function Home() {
-  const { isAuthenticated } = useAuth();
   const router = useRouter();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/dashboard');
-    }
-  }, [isAuthenticated, router]);
-
-   if (isAuthenticated) return null;
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-900 flex items-center justify-center">
-      <Navbar />
-      <div className="text-center text-white">
-        <h1 className="text-5xl font-bold mb-4">Bienvenido a Gym Manager</h1>
-        <p className="text-xl mb-8">Gestiona tu entrenamiento y suscripción</p>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      }}
+    >
+      <Container maxWidth="sm">
+        <Box sx={{ textAlign: 'center', color: 'white' }}>
+          <Typography variant="h2" component="h1" gutterBottom fontWeight="bold">
+            💪 Gimnasio App
+          </Typography>
+          <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
+            Gestiona tu entrenamiento y suscripción
+          </Typography>
 
-        <div className="space-x-4 flex flex-col">
-          <Link
-            href="/login"
-            className="bg-white text-blue-600 px-6 py-3 rounded-lg font-bold hover:bg-gray-100"
-          >
-            Iniciar Sesión
-          </Link>
-          <Link
-            href="/registro"
-             className="bg-blue-400 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-300"
-          >
-            Registrarse
-          </Link>
-        </div>
-      </div>
-    </div>
+          <Stack direction="row" spacing={2} justifyContent="center">
+            <Button
+              component={Link}
+              href="/login"
+              variant="contained"
+              size="large"
+              sx={{
+                bgcolor: 'white',
+                color: 'primary.main',
+                '&:hover': { bgcolor: 'grey.100' }
+              }}
+            >
+              Iniciar Sesión
+            </Button>
+            <Button
+              component={Link}
+              href="/registro"
+              variant="outlined"
+              size="large"
+              sx={{
+                color: 'white',
+                borderColor: 'white',
+                '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
+              }}
+            >
+              Registrarse
+            </Button>
+          </Stack>
+        </Box>
+      </Container>
+    </Box>
   );
 }

@@ -4,6 +4,16 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  Paper,
+  Stack
+} from '@mui/material';
 
 export default function RegistroPage() {
   const [email, setEmail] = useState('');
@@ -42,87 +52,90 @@ export default function RegistroPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-900 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Registrarse
-        </h1>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        py: 4
+      }}
+    >
+      <Container maxWidth="sm">
+        <Paper elevation={3} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" align="center" gutterBottom fontWeight="bold">
+            Registrarse
+          </Typography>
 
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 font-bold mb-2">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="tu@email.com"
-              required
-            />
-          </div>
+          <Box component="form" onSubmit={handleSubmit}>
+            <Stack spacing={3}>
+              <TextField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                fullWidth
+                required
+                autoComplete="email"
+              />
 
-          <div>
-            <label className="block text-gray-700 font-bold mb-2">Nombre</label>
-            <input
-              type="text"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Tu nombre completo"
-              required
-            />
-          </div>
+              <TextField
+                label="Nombre Completo"
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                fullWidth
+                required
+                autoComplete="name"
+              />
 
-          <div>
-            <label className="block text-gray-700 font-bold mb-2">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
-              required
-            />
-          </div>
+              <TextField
+                label="Contraseña"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+                required
+                autoComplete="new-password"
+              />
 
-          <div>
-            <label className="block text-gray-700 font-bold mb-2">
-              Confirmar Contraseña
-            </label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
-              required
-            />
-          </div>
+              <TextField
+                label="Confirmar Contraseña"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                fullWidth
+                required
+                autoComplete="new-password"
+              />
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-          >
-            {isLoading ? 'Registrando...' : 'Registrarse'}
-          </button>
-        </form>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                fullWidth
+                disabled={isLoading}
+              >
+                {isLoading ? 'Registrando...' : 'Registrarse'}
+              </Button>
+            </Stack>
+          </Box>
 
-        <p className="text-center text-gray-600 mt-6">
-          ¿Ya tienes cuenta?{' '}
-          <Link href="/login" className="text-blue-600 font-bold hover:underline">
-            Iniciar Sesión
-          </Link>
-        </p>
-      </div>
-    </div>
+          <Typography align="center" sx={{ mt: 3 }}>
+            ¿Ya tienes cuenta?{' '}
+            <Link href="/login" style={{ color: '#1976d2', fontWeight: 'bold' }}>
+              Iniciar Sesión
+            </Link>
+          </Typography>
+        </Paper>
+      </Container>
+    </Box>
   );
 }

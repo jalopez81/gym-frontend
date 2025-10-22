@@ -1,56 +1,58 @@
-import { Usuario } from "@/types";
+import apiClient from "@/lib/apiClient";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-interface AuthStore {
-    usuario: Usuario | null;
-    token: string | null;
-    isLoading: boolean;
-    isAuthenticated: boolean;
-    setAuth: (usuario: Usuario, token: string) => void;
-    logout: () => void;
-    loadFromLocalStorage: () => void;
-}
 
-export const useAuthStore = create<AuthStore>((set) => ({
-    usuario: null,
-    token: null,
-    isLoading: false,
-    isAuthenticated: false,
+type Usuario = { id: string; nombre: string; email: string; rol: string; creado: string };
 
-    setAuth: (usuario: Usuario, token: string) => {
-        localStorage.setItem('token', token);
-        localStorage.setItem('usuario', JSON.stringify(usuario));
-        console.log({
-            token, usuario
-        })
+type AuthState = {
+  usuario: Usuario | null;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  loadUsuario: () => Promise<void>;
+  isLoading: boolean;
+};
 
-        set({
-            usuario, 
-            token,
-            isAuthenticated: true
-        })
-    },
-    
-    logout: () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('usuario');
-        set({
-            usuario: null,
-            token: null,
-            isAuthenticated: false
-        })
-    },
-    
-    loadFromLocalStorage: () => {
-        const token = localStorage.getItem('token');
-        const usuarioJson = localStorage.getItem('usuario');
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set, get) => ({
+      usuario: null,
+      token: null,
+      isLoading: false,
 
-        if(token && usuarioJson){
-            set({
-                token,
-                usuario: JSON.parse(usuarioJson),
-                isAuthenticated: true
-            })
+      login: async (email, password) => {
+        const { data } = await apiClient.post("/auth/login", { email, password });
+
+        set({ usuario: data.usuario, token: data.token });
+      },
+
+      logout: () => {
+        set({ usuario: null, token: null });
+      },
+
+
+      loadUsuario: async () => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+
+          return;
         }
-    },
-}))
+
+        try {
+          const { data } = await apiClient.get("/auth/me");
+          set({ usuario: data.usuario, token });
+        } catch {
+          set({ usuario: null, token: null });
+        }
+
+      },
+    }), {
+    name: "auth-storage",
+    onRehydrateStorage: () => (state) => {
+      console.log("Store rehidratado", state);
+    }
+  }),
+
+)
+

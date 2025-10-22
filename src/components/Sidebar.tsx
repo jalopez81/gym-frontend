@@ -1,130 +1,110 @@
 'use client';
 
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Box,
+  Typography
+} from '@mui/material';
+import {
+  Dashboard,
+  ShoppingCart,
+  FitnessCenter,
+  ShoppingBag,
+  LocalShipping,
+  CardMembership,
+  People,
+  Assessment,
+  Backup
+} from '@mui/icons-material';
 import Link from 'next/link';
-import { useAuth } from '@/hooks/useAuth';
 import { usePathname } from 'next/navigation';
+import { useAuthStore } from '@/store/authStore';
+
+const drawerWidth = 240;
 
 export default function Sidebar() {
-  const { usuario } = useAuth();
+  const usuario = useAuthStore(s => s.usuario)
   const pathname = usePathname();
 
   const isActive = (href: string) => pathname === href;
-
   const esAdmin = usuario?.rol === 'admin';
 
+  const menuItems = [
+    { text: 'Dashboard', icon: <Dashboard />, href: '/dashboard' },
+    { text: 'Productos', icon: <ShoppingBag />, href: '/productos' },
+    { text: 'Clases', icon: <FitnessCenter />, href: '/clases' },
+    { text: 'Carrito', icon: <ShoppingCart />, href: '/carrito' },
+    { text: 'Mis Órdenes', icon: <LocalShipping />, href: '/mis-ordenes' },
+    { text: 'Suscripciones', icon: <CardMembership />, href: '/mis-suscripciones' }
+  ];
+
+  const adminMenuItems = [
+    { text: 'Usuarios', icon: <People />, href: '/admin/usuarios' },
+    { text: 'Reportes', icon: <Assessment />, href: '/admin/reportes' },
+    { text: 'Backups', icon: <Backup />, href: '/admin/backups' }
+  ];
+
   return (
-    <aside className="w-64 bg-white shadow-lg h-screen overflow-y-auto">
-      <div className="p-6">
-        <h2 className="text-xl font-bold text-gray-800">Menú</h2>
-      </div>
-
-      <nav className="space-y-2 px-4">
-        <Link
-          href="/dashboard"
-          className={`block px-4 py-2 rounded ${
-            isActive('/dashboard')
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          📊 Dashboard
-        </Link>
-
-        <Link
-          href="/productos"
-          className={`block px-4 py-2 rounded ${
-            isActive('/productos')
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          🛒 Productos
-        </Link>
-
-        <Link
-          href="/clases"
-          className={`block px-4 py-2 rounded ${
-            isActive('/clases')
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          💪 Clases
-        </Link>
-
-        <Link
-          href="/carrito"
-          className={`block px-4 py-2 rounded ${
-            isActive('/carrito')
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          🛍️ Carrito
-        </Link>
-
-        <Link
-          href="/mis-ordenes"
-          className={`block px-4 py-2 rounded ${
-            isActive('/mis-ordenes')
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          📦 Mis Órdenes
-        </Link>
-
-        <Link
-          href="/mis-suscripciones"
-          className={`block px-4 py-2 rounded ${
-            isActive('/mis-suscripciones')
-              ? 'bg-blue-600 text-white'
-              : 'text-gray-700 hover:bg-gray-100'
-          }`}
-        >
-          📋 Suscripciones
-        </Link>
+    <Drawer
+      variant="permanent"
+      sx={{
+        width: drawerWidth,
+        flexShrink: 0,
+        '& .MuiDrawer-paper': {
+          width: drawerWidth,
+          boxSizing: 'border-box',
+          top: '64px',
+          height: 'calc(100% - 64px)'
+        }
+      }}
+    >
+      <Box sx={{ overflow: 'auto' }}>
+        <List>
+          {menuItems.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton
+                component={Link}
+                href={item.href}
+                selected={isActive(item.href)}
+              >
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
 
         {esAdmin && (
           <>
-            <hr className="my-4" />
-            <p className="px-4 text-sm font-bold text-gray-600">ADMIN</p>
-
-            <Link
-              href="/admin/usuarios"
-              className={`block px-4 py-2 rounded ${
-                isActive('/admin/usuarios')
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              👥 Usuarios
-            </Link>
-
-            <Link
-              href="/admin/reportes"
-              className={`block px-4 py-2 rounded ${
-                isActive('/admin/reportes')
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              📊 Reportes
-            </Link>
-
-            <Link
-              href="/admin/backups"
-              className={`block px-4 py-2 rounded ${
-                isActive('/admin/backups')
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              💾 Backups
-            </Link>
+            <Divider />
+            <Box sx={{ p: 2 }}>
+              <Typography variant="overline" color="text.secondary" fontWeight="bold">
+                ADMINISTRACIÓN
+              </Typography>
+            </Box>
+            <List>
+              {adminMenuItems.map((item) => (
+                <ListItem key={item.text} disablePadding>
+                  <ListItemButton
+                    component={Link}
+                    href={item.href}
+                    selected={isActive(item.href)}
+                  >
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
           </>
         )}
-      </nav>
-    </aside>
+      </Box>
+    </Drawer>
   );
 }

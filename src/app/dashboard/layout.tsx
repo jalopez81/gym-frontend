@@ -1,40 +1,46 @@
-'use client';
+"use client";
 
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import Navbar from '@/components/Navbar';
-import Sidebar from '@/components/Sidebar';
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
+import { useAuthStore } from "@/store/authStore";
 
-export default function DashboardLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
-  const { isAuthenticated, loadFromLocalStorage } = useAuth();
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const usuario = useAuthStore((s) => s.usuario);
   const router = useRouter();
+  const [rehidrated, setRehydrated] = useState(false);
+
 
   useEffect(() => {
-    loadFromLocalStorage();
-  }, [loadFromLocalStorage]);
+    setRehydrated(true);
+}, []);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push('/login');
-    }
-  }, [isAuthenticated, router]);
+      if (rehidrated && !usuario) router.push("/login");
+  }, [usuario, rehidrated, router]);
 
-  if (!isAuthenticated) return null;
+  if (!usuario) return null;
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Navbar />
-      <div className="flex">
+      <Box sx={{ display: "flex", flex: 1 }}>
         <Sidebar />
-        <main className="flex-1 p-8">
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            ml: "240px",
+            backgroundColor: "#f5f5f5",
+            minHeight: "calc(100vh - 64px)",
+          }}
+        >
           {children}
-        </main>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 }

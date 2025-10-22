@@ -1,17 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
+// import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Alert,
+  Paper,
+  Stack
+} from '@mui/material';
+import { useAuthStore } from '@/store/authStore';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
-  const [password, setPassword] = useState('123456');
+  const [password, setPassword] = useState('6!80Us0((^eJD^G6E#^bQ&24');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
   const router = useRouter();
+  const login = useAuthStore(s => s.login);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,67 +40,78 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-blue-900 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-          Iniciar Sesión
-        </h1>
+    <Box
+      sx={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        py: 4
+      }}
+    >
+      <Container maxWidth="sm">
+        <Paper elevation={3} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" align="center" gutterBottom fontWeight="bold">
+            Iniciar Sesión
+          </Typography>
 
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-gray-700 font-bold mb-2">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="tu@email.com"
-              required
-            />
-          </div>
+          <Box component="form" onSubmit={handleSubmit}>
+            <Stack spacing={3}>
+              <TextField
+                label="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                fullWidth
+                required
+                autoComplete="email"
+              />
 
-          <div>
-            <label className="block text-gray-700 font-bold mb-2">
-              Contraseña
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="••••••••"
-              required
-            />
-          </div>
+              <TextField
+                label="Contraseña"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                fullWidth
+                required
+                autoComplete="current-password"
+              />
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-blue-600 text-white font-bold py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-          >
-            {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-          </button>
-        </form>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                fullWidth
+                disabled={isLoading}
+              >
+                {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+              </Button>
+            </Stack>
+          </Box>
 
-        <p className="text-center text-gray-600 mt-6">
-          ¿No tienes cuenta?{' '}
-          <Link href="/registro" className="text-blue-600 font-bold hover:underline">
-            Registrarse
-          </Link>
-        </p>
+          <Typography align="center" sx={{ mt: 3 }}>
+            ¿No tienes cuenta?{' '}
+            <Link href="/registro" style={{ color: '#1976d2', fontWeight: 'bold' }}>
+              Registrarse
+            </Link>
+          </Typography>
 
-        <div className="mt-6 p-4 bg-gray-100 rounded text-sm text-gray-600">
-          <p className="font-bold mb-2">Cuentas de prueba:</p>
-          <p>Admin: admin@gym.com / 123456</p>
-          <p>Cliente: juan@gym.com / 123456</p>
-        </div>
-      </div>
-    </div>
+          <Alert severity="info" sx={{ mt: 3 }}>
+            <Typography variant="subtitle2" fontWeight="bold">
+              Cuentas de prueba:
+            </Typography>
+            <Typography variant="body2">Admin: admin@gym.com / admin123</Typography>
+            <Typography variant="body2">Cliente: juan@gym.com / 123456</Typography>
+          </Alert>
+        </Paper>
+      </Container>
+    </Box>
   );
 }
