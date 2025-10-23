@@ -1,3 +1,4 @@
+import { Roboto } from '@next/font/google'; 
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,11 +12,8 @@ export const metadata: Metadata = {
   description: 'Aplicación de gestión de gimnasio'
 };
 
-export default function RootLayout({
-  children
-}: {
-  children: React.ReactNode;
-}) {
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <body>
@@ -25,14 +23,7 @@ export default function RootLayout({
             <Navbar />
             <Box sx={{ display: "flex", flex: 1 }}>
               <Sidebar />
-              <Box
-                component="main"
-                sx={{
-                  flexGrow: 1,
-                  p: 3,
-                  minHeight: "calc(100vh - 64px)",
-                }}
-              >
+              <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: "calc(100vh - 64px)" }}>
                 {children}
               </Box>
             </Box>

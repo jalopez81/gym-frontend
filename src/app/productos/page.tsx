@@ -149,13 +149,20 @@ export default function ProductosPage() {
       <Typography variant="h4" mb={3}>
         Listado de Productos
       </Typography>
-      <Grid container spacing={3} sx={{ background: "#E3E3D8" }}>
+      <Box className="products-container" 
+      sx={{
+        display: 'flex', 
+        flexWrap: "wrap",
+        justifyContent: 'space-evenly',
+        gap: 3
+      }}
+      >
         {productos.map((producto) => (
           <Grid item xs={12} sm={6} md={4} key={producto.id}>
             <ProductCard producto={producto} />
           </Grid>
         ))}
-      </Grid>
+      </Box>
     </Box>
   );
 }
