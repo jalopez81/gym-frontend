@@ -16,14 +16,14 @@ const classes = {
         paddingLeft: "12px",
         transition: "all 300ms ease-in",
         transform: `translateX(${added ? -285 : 0}px)`,
-        background: "yellow",
+        background: "#ffffff",
     }),
     priceInfo: {
         display: "flex",
         flexDirection: "column",
     },
     name: {
-        fontSize: "1.5rem",
+        fontSize: "1.3rem",
         fontWeight: "500",
         marginTop: '8px',
         width: 185,
@@ -34,7 +34,6 @@ const classes = {
     },
     price: {
         bottom: 5,
-        fontWeight: 'bold'
     },
     addButton: {
         right: 0,
@@ -45,6 +44,9 @@ const classes = {
         padding: 3,
         background: "#bbd7df",
         cursor: "pointer",
+        "&:hover": {
+            background: '#8cbcd1ff',
+        }
     },
     removeButton: {
         background: '#A6CDDE',
@@ -53,7 +55,7 @@ const classes = {
         overflow: 'clip'
     },
     removeButtonIcon1: (hovered: boolean) => ({
-        background: '#A6CDDE',
+        background: '#8cbcd1ff',
         padding: 3,
         transition: "all 300ms ease-in",
         transform: `translateY(${hovered ? -50 : 0}px)`
