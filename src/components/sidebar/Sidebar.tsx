@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
-
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useState } from "react";
 import { menuItems } from "./menu-items";
 import Link from "next/link";
@@ -60,17 +60,19 @@ export default function Sidebar() {
           color: 'white',
           cursor: 'pointer',
           fontWeight: 'bold',
-          paddingX: '7px',
           position: 'absolute',
-          right: '-10px',
+          right: '-14px',
           top: '80px',
           transform: `rotate(${open ? 180 : 0}deg)`,
           transition: 'all 300ms ease-in',
           transitionDelay: "300ms",
           userSelect: "none",
+          display: 'flex', 
+          justifyContent: 'center',
+          padding: 0.5, 
         }}
       >
-        {">"}
+        <ArrowBackIosIcon sx={{fontSize: 18, transform: "translateX(4px)"}}/>
       </Box>
     </Box>
   );
