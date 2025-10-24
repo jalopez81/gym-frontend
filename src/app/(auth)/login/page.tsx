@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-// import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -15,6 +14,7 @@ import {
   Stack
 } from '@mui/material';
 import { useAuthStore } from '@/store/authStore';
+import {syncCart} from '@/utils/syncCart'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
@@ -30,7 +30,8 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      await login(email, password);
+      await login(email, password);      
+      await syncCart()
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.mensaje || 'Error al iniciar sesión');

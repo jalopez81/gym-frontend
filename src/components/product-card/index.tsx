@@ -29,6 +29,7 @@ export function ProductCard({ producto }: Props) {
                 gravity="auto"
                 quality="auto"
                 alt="Producto"
+                loading="lazy"
             />
             <CardProductInfo producto={producto}/>
             <CardActions producto={producto} />

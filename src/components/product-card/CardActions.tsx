@@ -1,9 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { useCartStore } from "@/store/cartStore";
+import { CarritoItem, Producto } from "@/types";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from "react";
-import { Producto } from "@/types";
+import { Box, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 
 type Props = {
     producto: Producto;
@@ -77,15 +78,38 @@ const classes = {
         paddingLeft: "1rem",
         paddingRight: "2rem",
     }
+
 };
 
 export const CardActions = ({ producto }: Props) => {
     const [added, setAdded] = useState(false);
     const [hovered, setHovered] = useState(false);
+    const cartStore = useCartStore();
+
+    useEffect(()=>{
+         const stored = localStorage.getItem('cart-storage')
+         const exists = stored && JSON.parse(stored)?.state.items.some((el: any) => el.producto.id === producto.id);
+         setAdded(exists);
+    }, [])
 
     const switchHovered = (value: boolean) => {
         setHovered(value)
     }
+
+    const agregar = async (producto: Producto) => {
+        setAdded(true)
+        const carritoItem: CarritoItem = {
+            producto,
+            cantidad: 1,
+        }
+        cartStore.add(carritoItem)
+    }
+
+    const quitar = async (producto: Producto) => {
+        setAdded(false)
+        cartStore.remove(producto.id)
+    }
+
 
     return (
         <Box sx={classes.root(added)} className="test-root">
@@ -94,7 +118,7 @@ export const CardActions = ({ producto }: Props) => {
                 <Typography sx={classes.price}>${producto.precio}</Typography>
             </Box>
 
-            <Box sx={classes.addButton} onClick={() => setAdded(!added)}>
+            <Box sx={classes.addButton} onClick={() => agregar(producto)}>
                 <AddShoppingCartIcon />
             </Box>
 
@@ -103,7 +127,7 @@ export const CardActions = ({ producto }: Props) => {
                 onMouseEnter={() => switchHovered(true)}
                 onMouseLeave={() => switchHovered(false)}>
                 <Box sx={classes.removeButtonIcon1(hovered)}><CheckIcon sx={classes.icon} /></Box>
-                <Box sx={classes.removeButtonIcon2(hovered)} onClick={() => setAdded(false)}><CloseIcon sx={classes.icon} /></Box>
+                <Box sx={classes.removeButtonIcon2(hovered)} onClick={() => quitar(producto)}><CloseIcon sx={classes.icon} /></Box>
             </Box>
 
             <Box sx={classes.addedToCartInfo}>

@@ -8,8 +8,12 @@ const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (token) config.headers.Authorization = `Bearer ${token}`;
+      const storage = localStorage.getItem("auth-storage");
+      if (storage) {
+        const authStorage = JSON.parse(storage);
+        const token = authStorage.state.token;
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
     return config;
   },

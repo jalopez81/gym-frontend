@@ -1,7 +1,6 @@
-import apiClient from "@/lib/apiClient";
+import apiClient from "@/utils/apiClient";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
 
 type Usuario = { id: string; nombre: string; email: string; rol: string; creado: string };
 
@@ -49,9 +48,6 @@ export const useAuthStore = create<AuthState>()(
       },
     }), {
     name: "auth-storage",
-    onRehydrateStorage: () => (state) => {
-      console.log("Store rehidratado", state);
-    }
   }),
 
 )

@@ -15,8 +15,6 @@ export default function Navbar() {
     router.push('/login');
   };
 
-  if (!usuario) return null;
-
   return (
     <AppBar position="static">
       <Toolbar>
@@ -26,15 +24,18 @@ export default function Navbar() {
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Typography variant="body1">
-            Hola, {usuario?.nombre}
+            {usuario && `Hola, ${usuario.nombre}!`}
           </Typography>
-          <Button
-            color="inherit"
-            onClick={handleLogout}
-            startIcon={<LogoutIcon />}
-          >
-            Salir
-          </Button>
+          {usuario ?
+            <Button
+              color="inherit"
+              onClick={handleLogout}
+              startIcon={<LogoutIcon />}
+            >
+              Salir
+            </Button> :
+            'Acceder'
+          }
         </Box>
       </Toolbar>
     </AppBar>

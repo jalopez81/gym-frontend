@@ -1,7 +1,8 @@
 "use client"; 
 
 import { ProductCard } from "@/components/product-card";
-import apiClient from "@/lib/apiClient";
+import apiClient from "@/utils/apiClient";
+import { listarProductos } from "@/services/productos";
 import { Producto } from "@/types";
 import {
   Box,
@@ -22,8 +23,9 @@ export default function ProductosPage() {
       setLoading(true);
       setError(null);
       try {
-        const { data } = await apiClient.get("/productos?pagina=1&limite=10");
-        setProductos(data.datos.productos);
+        const response = await listarProductos();
+        const data = response.data.productos;
+        setProductos(data)
       } catch (err: any) {
         setError(err.message);
       } finally {

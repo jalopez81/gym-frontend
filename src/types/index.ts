@@ -16,6 +16,8 @@ export interface Producto {
   creado: string;
 }
 
+export type CrearProducto = Omit<Producto, "id" | "creado">
+
 export interface Clase {
   id: string;
   nombre: string;
@@ -80,10 +82,8 @@ export interface OrdenItem {
 }
 
 export interface CarritoItem {
-  id: string;
-  productoId: string;
   cantidad: number;
-  producto?: Producto;
+  producto: Producto;
 }
 
 export interface AuthResponse {
