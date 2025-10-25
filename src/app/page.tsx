@@ -1,5 +1,6 @@
 'use client';
 
+import MyContainer from '@/components/Container';
 import { useAuthStore } from '@/store/authStore';
 import { Box, Container, Typography, Button, Stack } from '@mui/material';
 import Link from 'next/link';
@@ -20,13 +21,12 @@ export default function Home() {
   }, [usuario, router]);
 
   return (
-    <Box
+    <MyContainer
       sx={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
       }}
     >
       <Container maxWidth="sm">
@@ -49,9 +49,6 @@ export default function Home() {
                 variant="contained"
                 size="large"
                 sx={{
-                  bgcolor: 'white',
-                  color: 'primary.main',
-                  '&:hover': { bgcolor: 'grey.100' }
                 }}
               >
                 Iniciar Sesión
@@ -62,9 +59,6 @@ export default function Home() {
                 variant="outlined"
                 size="large"
                 sx={{
-                  color: 'white',
-                  borderColor: 'white',
-                  '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' }
                 }}
               >
                 Registrarse
@@ -72,6 +66,6 @@ export default function Home() {
             </Stack>
         </Box>
       </Container>
-    </Box>
+    </MyContainer>
   );
 }

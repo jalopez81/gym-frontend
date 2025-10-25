@@ -11,6 +11,7 @@ import {
   Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import MyContainer from "@/components/Container";
 
 
 export default function ProductosPage() {
@@ -39,7 +40,7 @@ export default function ProductosPage() {
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <Box>
+    <MyContainer className="page-productos" sx={{ background: "#f5f5f5"}}>
       <Typography variant="h4" mb={3}>
         Listado de Productos
       </Typography>
@@ -57,6 +58,6 @@ export default function ProductosPage() {
           </Grid>
         ))}
       </Box>
-    </Box>
+    </MyContainer>
   );
 }

@@ -1,4 +1,3 @@
-import { Roboto } from '@next/font/google'; 
 import type { Metadata } from 'next';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,11 +18,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-            <Navbar />
-            <Box sx={{ display: "flex", flex: 1 }}>
-              <Sidebar />
-              <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: "calc(100vh - 64px)" }}>
+          <Box sx={{ display: "flex", flex: 1 }}>
+            <Sidebar />
+            <Box display="flex" flexDirection="column" width="100%">
+              <Navbar />              
+              <Box component="main" sx={{ flexGrow: 1,  height: "calc(100vh - 64px)", overflow: 'auto'}}>
                 {children}
               </Box>
             </Box>

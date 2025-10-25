@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { useAuthStore } from '@/store/authStore';
 import {syncCart} from '@/utils/syncCart'
+import MyContainer from '@/components/Container';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
@@ -47,11 +48,10 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
         py: 4
       }}
     >
-      <Container maxWidth="sm">
+      <MyContainer className="page-login" maxWidth="sm" >
         <Paper elevation={3} sx={{ p: 4 }}>
           <Typography variant="h4" component="h1" align="center" gutterBottom fontWeight="bold">
             Iniciar Sesión
@@ -112,7 +112,7 @@ export default function LoginPage() {
             <Typography variant="body2">Cliente: juan@gym.com / 123456</Typography>
           </Alert>
         </Paper>
-      </Container>
+      </MyContainer>
     </Box>
   );
 }
