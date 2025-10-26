@@ -4,7 +4,7 @@ type MyContainerProps = BoxProps & { children: React.ReactNode };
 
 export default function MyContainer({ children, sx, ...rest }: MyContainerProps) {
   return (
-    <Box sx={{ padding: "2rem", ...sx }} {...rest}>
+    <Box sx={{ padding: "2rem", flexGrow: 2, ...sx }} {...rest}>
       {children}
     </Box>
   );

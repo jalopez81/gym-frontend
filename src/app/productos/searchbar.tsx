@@ -78,7 +78,7 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
     };
 
     return (
-        <Box sx={{ flexGrow: 1, margin: "1rem 0", position: 'sticky', top: 0, zIndex: 10 }}>
+        <Box sx={{ flexGrow: 1, margin: "1rem 0", position: 'sticky', top: "56px", zIndex: 10 }}>
             <AppBar position="sticky" sx={{ top: 0, zIndex: 10 }}>
                 <Toolbar>
                     <Search>

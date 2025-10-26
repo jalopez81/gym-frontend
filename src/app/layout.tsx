@@ -5,6 +5,7 @@ import theme from '@/theme/theme';
 import { Box } from '@mui/material';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/sidebar/Sidebar';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'GYMPLUS',
@@ -18,13 +19,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Box sx={{ display: "flex", flex: 1 }}>
+          <Box className="root-layout__container" sx={{ display: "flex", flex: 1, height: "100vh", overflow: "hidden" }}>
             <Sidebar />
-            <Box display="flex" flexDirection="column" width="100%">
-              <Navbar />              
-              <Box component="main" sx={{ flexGrow: 1,  height: "calc(100vh - 64px)", overflow: 'auto'}}>
+            <Box className="root-layout__main-wrapper" sx={{ display: 'flex', flexDirection: 'column', overflow: "auto"}}>
+              <Navbar />
+              <Box
+                component="main"
+                className="root-layout__main"
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  flex: 1                  
+                }}
+              >
                 {children}
               </Box>
+              <Footer />
             </Box>
           </Box>
         </ThemeProvider>
@@ -32,3 +42,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
+

@@ -15,7 +15,7 @@ export default function ButtonAppBar() {
     router.push('/login');
   };
   return (
-    <AppBar position="static" sx={{background: "#a43f4a"}}>
+    <AppBar position="static" sx={{background: "#a43f4a", position: "sticky", top: 0, zIndex: 10}}>
       <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
         <Box></Box>
         <Toolbar sx={{ minHeight: "56px !important"}}>
