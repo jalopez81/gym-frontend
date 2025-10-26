@@ -93,3 +93,11 @@ export interface AuthResponse {
     token: string;
   };
 }
+
+export interface ProductPagination {
+  total: number;
+  pagina: number;
+  busqueda: string;
+  limite: number;
+  totalPaginas: number;
+}

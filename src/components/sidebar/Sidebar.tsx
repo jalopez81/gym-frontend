@@ -63,8 +63,8 @@ export default function Sidebar() {
       </Box>
 
       <List>{menuItems.map(item =>
-        <Tooltip title={open ? "" : item.text} placement="right" arrow>
-        <ListItemButton key={item.text} selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
+        <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
+        <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
           <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
           <ListItemText primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }} />
         </ListItemButton>
@@ -73,8 +73,8 @@ export default function Sidebar() {
 
       <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>ADMINISTRADOR</Typography>
       <List>{adminMenuItems.map(item =>
-        <Tooltip title={open ? "" : item.text} placement="right" arrow>
-          <ListItemButton key={item.text} selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
+        <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
+          <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
             <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
             <ListItemText primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }} />
           </ListItemButton>
