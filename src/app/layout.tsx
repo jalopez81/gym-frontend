@@ -8,7 +8,7 @@ import Sidebar from '@/components/sidebar/Sidebar';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'GYMPLUS',
+  title: 'GYM FiT',
   description: 'Aplicación de gestión de gimnasio'
 };
 
