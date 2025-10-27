@@ -52,11 +52,6 @@ export default function EditProducto({ producto, onClose }: any) {
             </>}
 
           </Paper>
-          <TextField label="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
-          <TextField label="Descripcion" value={descripcion} onChange={e => setDescripcion(e.target.value)} />
-          <TextField label="Precio" type="number" value={precio} onChange={e => setPrecio(Number(e.target.value))} />
-          <TextField label="Stock" type="number" value={stock} onChange={e => setStock(Number(e.target.value))} />
-          <TextField label="Categoria" value={categoria} onChange={e => setCategoria(e.target.value)} />
           <Button variant="outlined" component="label">
             Subir Imagen
             <input
@@ -65,6 +60,11 @@ export default function EditProducto({ producto, onClose }: any) {
               onChange={e => setImagen(e.target.files?.[0] || null)}
             />
           </Button>
+          <TextField label="Nombre" value={nombre} onChange={e => setNombre(e.target.value)} />
+          <TextField label="Descripcion" value={descripcion} onChange={e => setDescripcion(e.target.value)} />
+          <TextField label="Precio" type="number" value={precio} onChange={e => setPrecio(Number(e.target.value))} />
+          <TextField label="Stock" type="number" value={stock} onChange={e => setStock(Number(e.target.value))} />
+          <TextField label="Categoria" value={categoria} onChange={e => setCategoria(e.target.value)} />
 
           <Button variant="contained" onClick={handleSubmit}>Actualizar</Button>
           <Button variant="outlined" onClick={onClose}>Cancelar</Button>

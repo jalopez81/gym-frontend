@@ -13,7 +13,9 @@ type Props = {
 export function ProductoCard({ producto }: Props) {
     
     return (
-        <Box sx={{
+        <Box 
+        className="product-card"
+        sx={{
             width: 280,
             position: 'relative',
             overflow: 'hidden',
@@ -21,16 +23,18 @@ export function ProductoCard({ producto }: Props) {
             flexDirection: 'column',
             boxShadow: '5px 5px 6px #dedede'
         }}>
-            <CldImage
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CldImage
                 src={producto.imagenSecureUrl}
                 width={280}
                 height={380}
-                crop="fill"
+                crop="auto"
                 gravity="auto"
                 quality="auto"
                 alt="Producto"
                 loading="lazy"
             />
+            </Box>
             <CardProductInfo producto={producto}/>
             <CardActions producto={producto} />
         </Box>
