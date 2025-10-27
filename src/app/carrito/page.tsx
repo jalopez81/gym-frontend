@@ -16,6 +16,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCartStore } from '@/store/cartStore';
 import { syncCart } from '@/utils/syncCart';
+import { CldImage } from 'next-cloudinary';
 
 export default function CartPage() {
   const router = useRouter();
@@ -62,13 +63,23 @@ export default function CartPage() {
           <Stack spacing={2}>
             {items.map(item => (
               <Paper key={item.producto.id} sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                  <Typography variant="h6" sx={{flex: 1}}>{item.producto.nombre}</Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Button size="small" onClick={() => subtractQuantity(item.producto.id)}>-</Button>
-                    <Typography>{item.cantidad}</Typography>
-                    <Button size="small" onClick={() => addQuantity(item.producto.id)}>+</Button>
-                  </Box>
-                  <Typography variant="body2" sx={{width: 130, textAlign: 'right'}}>Precio: ${item.producto.precio}</Typography>
+                <CldImage
+                  src={item.producto.imagenSecureUrl}
+                  width={50}
+                  height={50}
+                  crop="fill"
+                  gravity="auto"
+                  quality="auto"
+                  alt="Producto"
+                  loading="lazy"
+                />
+                <Typography variant="h6" sx={{ flex: 1, marginX: 2 }}>{item.producto.nombre}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Button size="small" onClick={() => subtractQuantity(item.producto.id)}>-</Button>
+                  <Typography>{item.cantidad}</Typography>
+                  <Button size="small" onClick={() => addQuantity(item.producto.id)}>+</Button>
+                </Box>
+                <Typography variant="body2" sx={{ width: 130, textAlign: 'right' }}>Precio: ${item.producto.precio}</Typography>
                 <IconButton onClick={() => remove(item.producto.id)}>
                   <DeleteIcon />
                 </IconButton>
