@@ -2,6 +2,7 @@
 
 import MyContainer from '@/components/Container';
 import { useAuthStore } from '@/store/authStore';
+import { syncCart } from '@/utils/syncCart';
 import { Box, Container, Typography, Button, Stack } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

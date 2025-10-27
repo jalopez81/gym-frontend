@@ -36,10 +36,8 @@ export default function CartPage() {
   }, [items]);
 
   const handleCheckout = async () => {
-    try {
-      await syncCart(); // persistir carrito en backend si aplica
-      clear();
-      router.push('/checkout-success'); // página de confirmación
+    try {     
+      router.push('/pago');
     } catch (err) {
       console.error(err);
       alert('Error al procesar el pedido');

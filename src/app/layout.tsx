@@ -1,11 +1,11 @@
-import type { Metadata } from 'next';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from '@/theme/theme';
-import { Box } from '@mui/material';
+import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import Sidebar from '@/components/sidebar/Sidebar';
-import Footer from '@/components/Footer';
+import theme from '@/theme/theme';
+import { Box } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+import { ThemeProvider } from '@mui/material/styles';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'GYM FiT',

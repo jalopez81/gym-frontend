@@ -19,32 +19,39 @@ export const useCartStore = create<CartState>()(
     persist(
       (set, get) => ({
         items: [],
-        add: (item: CarritoItem) =>
+        add: (item: CarritoItem) => {
           set((state) => ({
             items: state.items.some(el => el.producto.id === item.producto.id)
               ? state.items
               : [...state.items, item],
-          })),
+          }))
+        },
 
-        addQuantity: (id: string) =>
+        addQuantity: (id: string) => {
           set(state => ({
             items: state.items.map(el =>
               el.producto.id === id ? { ...el, cantidad: el.cantidad + 1 } : el
             )
-          })),
+          }))
+        },
 
-        subtractQuantity: (id: string) =>
+        subtractQuantity: (id: string) => {
           set(state => ({
             items: state.items.map(el =>
               el.producto.id === id
                 ? { ...el, cantidad: Math.max(1, el.cantidad - 1) }
                 : el
             )
-          })),
+          }))
+        },
 
-        remove: (id: string) => set({ items: get().items.filter(el => el.producto.id !== id) }),
+        remove: (id: string) => {
+          set({ items: get().items.filter(el => el.producto.id !== id) })
+        },
 
-        clear: () => set({ items: [] }),
+        clear: () => {
+          set({ items: [] })
+        },
 
         syncWithBackend: async (token: string) => {
           if (!token) return;

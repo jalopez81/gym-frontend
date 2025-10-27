@@ -2,11 +2,12 @@
 
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { adminMenuItems, menuItems } from "./menu-items";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import theme from "@/theme/theme";
+import { syncCart } from "@/utils/syncCart";
 
 
 export default function Sidebar() {
@@ -15,6 +16,14 @@ export default function Sidebar() {
   const isActive = (href: string) => pathname === href;
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
+
+  useEffect(() => {
+    async function cc() {
+      console.log('synching')
+      await syncCart();
+    }
+    cc()
+  }, [])
 
   const listItemStyle = {
     borderTop: `solid 1px ${primary}`,
