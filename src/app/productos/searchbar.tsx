@@ -101,6 +101,7 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                     >
                         Buscar
                     </Button>
+                    <Typography variant="body2" mr={4}>{pagination.total} resultados encontrados</Typography>
                     <Select
                         value={pagination.limite.toString()}
                         onChange={updateItemsPerPage}

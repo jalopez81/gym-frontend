@@ -10,7 +10,7 @@ type Props = {
     producto: Producto;
 };
 
-export function ProductCard({ producto }: Props) {
+export function ProductoCard({ producto }: Props) {
     
     return (
         <Box sx={{
@@ -22,7 +22,7 @@ export function ProductCard({ producto }: Props) {
             boxShadow: '5px 5px 6px #dedede'
         }}>
             <CldImage
-                src="zapatos_ftdgpj.jpg"
+                src={producto.imagenSecureUrl}
                 width={280}
                 height={380}
                 crop="fill"

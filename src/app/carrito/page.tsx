@@ -80,7 +80,7 @@ export default function CartPage() {
 
           <Typography variant="h6" align="right" gutterBottom>Total: ${total.toFixed(2)}</Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button variant="outlined" color="secondary" onClick={clear}>Vaciar carrito</Button>
+            <Button variant="outlined" color="primary" onClick={clear}>Vaciar carrito</Button>
             <Button variant="contained" color="primary" onClick={handleCheckout}>Proceder al pago</Button>
           </Stack>
         </Paper>

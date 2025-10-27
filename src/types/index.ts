@@ -14,6 +14,9 @@ export interface Producto {
   stock: number;
   categoria: string;
   creado: string;
+  imagenSecureUrl: string;
+  imagenPublicId: string;
+  imagenUrl: string;
 }
 
 export type CrearProducto = Omit<Producto, "id" | "creado">
