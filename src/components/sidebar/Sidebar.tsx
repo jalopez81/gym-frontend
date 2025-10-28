@@ -29,7 +29,7 @@ export default function Sidebar() {
   const listItemStyle = {
     borderTop: `solid 1px ${primary}`,
     borderBottom: `solid 1px ${primary}`,
-    transition: "all 50ms ease-in",
+    transition: "all 200ms ease-in",
     padding: "2px 16px",
     "&.Mui-selected": {
       color: primary,
