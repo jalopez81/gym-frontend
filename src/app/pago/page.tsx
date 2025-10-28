@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
+import {
   Box,
   Button,
   Card,
@@ -74,11 +74,9 @@ export default function PaymentPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate payment processing
     setTimeout(() => {
       setShowSuccess(true);
-      clear(); // Clear the cart after successful payment
-      // Redirect to confirmation page after 2 seconds
+      clear();
       setTimeout(() => {
         router.push('/dashboard');
       }, 2000);
@@ -104,7 +102,7 @@ export default function PaymentPage() {
                   focused={cardData.focus as any}
                 />
               </Box>
-              
+
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
                   <Grid item xs={12}>
@@ -180,7 +178,7 @@ export default function PaymentPage() {
             <Typography variant="h6" gutterBottom>
               Resumen del Pedido
             </Typography>
-            
+
             <Box sx={{ my: 2 }}>
               {items.map(item => (
                 <Box key={item.producto.id} sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -195,7 +193,7 @@ export default function PaymentPage() {
             </Box>
 
             <Divider sx={{ my: 2 }} />
-            
+
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
               <Typography variant="subtitle1" fontWeight="bold">
                 Total a Pagar
