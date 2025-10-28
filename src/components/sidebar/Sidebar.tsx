@@ -5,8 +5,9 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { adminMenuItems, menuItems } from "./menu-items";
+import { useCartStore } from "@/store/cartStore";
 
 
 export default function Sidebar() {
@@ -15,6 +16,15 @@ export default function Sidebar() {
   const isActive = (href: string) => pathname === href;
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
+  const { fetch: fetchCart } = useCartStore();
+
+  useEffect(()=> {
+    const fetchRemoteCart = async () => {
+      await fetchCart();
+    }
+
+    fetchRemoteCart();
+  }, [])
 
   const listItemStyle = {
     borderTop: `solid 1px ${primary}`,

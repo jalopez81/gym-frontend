@@ -1,6 +1,7 @@
 'use client';
 
 import { useCartStore } from '@/store/cartStore';
+import apiClient from '@/utils/apiClient';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
@@ -20,10 +21,8 @@ import { useEffect, useState } from 'react';
 export default function CartPage() {
   const router = useRouter();
   const items = useCartStore(s => s.items);
-  const remove = useCartStore(s => s.remove);
-  const clear = useCartStore(s => s.clear);
-  const subtractQuantity = useCartStore(s => s.subtractQuantity);
-  const addQuantity = useCartStore(s => s.addQuantity);
+  const {remove, clear, subtractQuantity, addQuantity, fetch} = useCartStore();
+
 
 
   const [total, setTotal] = useState(0);
@@ -33,6 +32,15 @@ export default function CartPage() {
     items.forEach(item => t += item.producto.precio * item.cantidad);
     setTotal(t);
   }, [items]);
+
+  useEffect(()=>{
+    const localStorageExists = Boolean(localStorage.getItem('cart-storage'));
+    
+    if(!localStorageExists){
+      fetch();      
+    }
+
+  }, [])
 
   const handleCheckout = async () => {
     try {     

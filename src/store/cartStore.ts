@@ -11,7 +11,7 @@ type CartState = {
   subtractQuantity: (id: string) => void;
   remove: (id: string) => void;
   clear: () => void;
-  syncWithBackend: (token: string) => Promise<void>;
+  fetch: () => Promise<void>;
 }
 
 export const useCartStore = create<CartState>()(
@@ -53,10 +53,12 @@ export const useCartStore = create<CartState>()(
           set({ items: [] })
         },
 
-        syncWithBackend: async (token: string) => {
-          if (!token) return;
-
-          await apiClient.post('/carrito/sync', { items: get().items })
+        fetch: async () => {
+          const response = await apiClient.get('/carrito')
+          const data = response.data.items
+          data.forEach((item:any) => {
+            get().add(item)
+          })
         }
       }), {
       name: "cart-storage",
