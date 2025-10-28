@@ -1,5 +1,6 @@
 import { useCartStore } from "@/store/cartStore";
 import { CarritoItem, Producto } from "@/types";
+import apiClient from "@/utils/apiClient";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
@@ -103,11 +104,13 @@ export const CardActions = ({ producto }: Props) => {
             cantidad: 1,
         }
         cartStore.add(carritoItem)
+        apiClient.post('/carrito', carritoItem)
     }
 
     const quitar = async (producto: Producto) => {
         setAdded(false)
         cartStore.remove(producto.id)
+        apiClient.delete(`/carrito/${producto.id}`)
     }
 
 

@@ -14,12 +14,11 @@ import {
   Stack
 } from '@mui/material';
 import { useAuthStore } from '@/store/authStore';
-import {syncCart} from '@/utils/syncCart'
 import MyContainer from '@/components/Container';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
-  const [password, setPassword] = useState('6!80Us0((^eJD^G6E#^bQ&24');
+  const [password, setPassword] = useState('admin123');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -32,7 +31,6 @@ export default function LoginPage() {
 
     try {
       await login(email, password);      
-      await syncCart()
       router.push('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.mensaje || 'Error al iniciar sesión');

@@ -2,10 +2,6 @@ import { useCartStore } from "@/store/cartStore";
 import apiClient from "./apiClient";
 
 export const syncCart = async () => {
-  console.log('hit synchar####')
-  const { add } = useCartStore.getState();
-
-
   const item = localStorage.getItem('cart-storage') || JSON.stringify({ state: { items: [] } });
   const local = JSON.parse(item).state.items
 
@@ -22,11 +18,6 @@ export const syncCart = async () => {
   }
   );
   const synchedCart = Array.from(map.values());
-  synchedCart.forEach(item => {
-    add(item      
-    )
-  });
-
   await apiClient.post('/carrito/sync', synchedCart)
 }
   ;

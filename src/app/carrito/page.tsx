@@ -1,22 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useCartStore } from '@/store/cartStore';
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
+  Button,
   Container,
-  Typography,
+  Divider,
+  IconButton,
   Paper,
   Stack,
-  Button,
-  IconButton,
-  Divider
+  Typography
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { useCartStore } from '@/store/cartStore';
-import { syncCart } from '@/utils/syncCart';
 import { CldImage } from 'next-cloudinary';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function CartPage() {
   const router = useRouter();
