@@ -18,20 +18,23 @@ import { useRouter } from 'next/navigation';
 import Cards from 'react-credit-cards-2';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { useCartStore } from '@/store/cartStore';
+import { crearOrden } from '@/services/checkout';
 
 export default function PaymentPage() {
   const router = useRouter();
   const [cardData, setCardData] = useState({
-    number: '',
-    name: '',
-    expiry: '',
-    cvc: '',
+    number: '4111111111111111',
+    name: 'JOHN JACKSON',
+    expiry: '22/28',
+    cvc: '123',
     focus: ''
   });
   const [showSuccess, setShowSuccess] = useState(false);
   const items = useCartStore(s => s.items);
-  const clear = useCartStore(s => s.clear);
+  const clearCart = useCartStore(s => s.clearCart);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
     let t = 0;
@@ -72,13 +75,24 @@ export default function PaymentPage() {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setTimeout(() => {
+    setLoading(true);
+
+     try {
+      const orden = await crearOrden(items);
+      console.log('Orden creada:', orden);
       setShowSuccess(true);
-      clear();
+      router.push('/checkout-success');
+      await clearCart();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+
+    setTimeout(() => {
       setTimeout(() => {
-        router.push('/dashboard');
       }, 2000);
     }, 1500);
   };

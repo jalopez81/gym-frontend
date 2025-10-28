@@ -14,11 +14,18 @@ export default function CheckoutSuccessPage() {
           <Typography variant="body1" gutterBottom>
             Gracias por tu compra. Tu pedido se ha procesado correctamente.
           </Typography>
-          <Link href="/productos" passHref>
-            <Button variant="contained" color="primary">
-              Volver a productos
-            </Button>
-          </Link>
+          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center' }}>
+            <Link href="/productos" passHref>
+              <Button variant="contained" color="primary">
+                Volver a productos
+              </Button>
+            </Link>
+            <Link href="/mis-ordenes" passHref>
+              <Button variant="contained" color="primary">
+                Órdenes
+              </Button>
+            </Link>
+          </Box>
         </Paper>
       </Container>
     </Box>

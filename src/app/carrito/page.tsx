@@ -2,6 +2,7 @@
 
 import { useCartStore } from '@/store/cartStore';
 import apiClient from '@/utils/apiClient';
+import { debounce } from '@/utils/debounce';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
@@ -18,9 +19,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+async function update(id: string, cantidad: number) { await apiClient.put(`/carrito`, { id, cantidad }) }
+
+const debouncedUpdate = debounce(update, 1500)
+
 export default function CartPage() {
   const router = useRouter();
-  const {remove, clear, subtractQuantity, addQuantity, fetch, items} = useCartStore();
+  const { remove, clearCart, setQty, fetch, items } = useCartStore();
 
   const [total, setTotal] = useState(0);
 
@@ -30,17 +35,18 @@ export default function CartPage() {
     setTotal(t);
   }, [items]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const localStorageExists = items.length > 0
-    
-    if(!localStorageExists){
-      fetch();      
+
+    if (!localStorageExists) {
+      fetch();
     }
 
   }, [])
 
+
   const handleCheckout = async () => {
-    try {     
+    try {
       router.push('/pago');
     } catch (err) {
       console.error(err);
@@ -49,7 +55,7 @@ export default function CartPage() {
   };
 
   const handleClearCart = async () => {
-    clear();
+    clearCart();
     await apiClient.delete('/carrito')
   }
 
@@ -60,6 +66,21 @@ export default function CartPage() {
         <Link href="/productos" style={{ marginLeft: 10, color: '#1976d2' }}>Ir a productos</Link>
       </Box>
     );
+  }
+
+  const handleSubtractQuantity = async (item: any) => {
+    const cantidad = item.cantidad - 1;
+    setQty(item.producto.id, cantidad)
+    debouncedUpdate(item.producto.id, cantidad)
+  }
+  const handleAddQuantity = async (item: any) => {
+    const cantidad = item.cantidad + 1;
+    setQty(item.producto.id, cantidad)
+    debouncedUpdate(item.producto.id, cantidad)
+  }
+  const handleRemove = async (item: any) => {
+    remove(item.producto.id)
+    await apiClient.delete(`/carrito/${item.producto.id}`)
   }
 
   return (
@@ -82,12 +103,12 @@ export default function CartPage() {
                 />
                 <Typography variant="h6" sx={{ flex: 1, marginX: 2 }}>{item.producto.nombre}</Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Button size="small" onClick={() => subtractQuantity(item.producto.id)}>-</Button>
+                  <Button size="small" onClick={() => handleSubtractQuantity(item)}>-</Button>
                   <Typography>{item.cantidad}</Typography>
-                  <Button size="small" onClick={() => addQuantity(item.producto.id)}>+</Button>
+                  <Button size="small" onClick={() => handleAddQuantity(item)}>+</Button>
                 </Box>
                 <Typography variant="body2" sx={{ width: 130, textAlign: 'right' }}>Precio: ${item.producto.precio}</Typography>
-                <IconButton onClick={() => remove(item.producto.id)}>
+                <IconButton onClick={() => handleRemove(item)}>
                   <DeleteIcon />
                 </IconButton>
               </Paper>

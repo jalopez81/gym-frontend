@@ -7,10 +7,9 @@ import { devtools } from 'zustand/middleware';
 type CartState = {
   items: CarritoItem[];
   add: (item: CarritoItem) => void;
-  addQuantity: (id: string) => void;
-  subtractQuantity: (id: string) => void;
+  setQty: (id: string, qty: number) => void;
   remove: (id: string) => void;
-  clear: () => void;
+  clearCart: () => void;
   fetch: () => Promise<void>;
 }
 
@@ -19,50 +18,54 @@ export const useCartStore = create<CartState>()(
     persist(
       (set, get) => ({
         items: [],
+
         add: (item: CarritoItem) => {
-          set((state) => ({
-            items: state.items.some(el => el.producto.id === item.producto.id)
-              ? state.items
-              : [...state.items, item],
-          }))
+          set(
+            (state) => ({
+              items: state.items.some(el => el.producto.id === item.producto.id)
+                ? state.items
+                : [...state.items, item],
+            }),
+            false,
+            'cart/add'
+          );
         },
 
-        addQuantity: (id: string) => {
-          set(state => ({
-            items: state.items.map(el =>
-              el.producto.id === id ? { ...el, cantidad: el.cantidad + 1 } : el
-            )
-          }))
-        },
-
-        subtractQuantity: (id: string) => {
-          set(state => ({
-            items: state.items.map(el =>
-              el.producto.id === id
-                ? { ...el, cantidad: Math.max(1, el.cantidad - 1) }
-                : el
-            )
-          }))
+        setQty: (id: string, qty: number) => {
+          set(
+            (state) => ({
+              items: state.items.map(el =>
+                el.producto.id === id ? { ...el, cantidad: qty } : el
+              )
+            }),
+            false,
+            'cart/setQty'
+          );
         },
 
         remove: (id: string) => {
-          set({ items: get().items.filter(el => el.producto.id !== id) })
+          set(
+            { items: get().items.filter(el => el.producto.id !== id) },
+            false,
+            'cart/remove'
+          );
         },
 
-        clear: () => {
-          set({ items: [] })
+        clearCart: () => {
+          set({ items: [] }, false, 'cart/clear');
         },
 
         fetch: async () => {
-          const response = await apiClient.get('/carrito')
-          const data = response.data.items
-          data.forEach((item:any) => {
-            get().add(item)
-          })
+          const response = await apiClient.get('/carrito');
+          const data = response.data.items;
+          data.forEach((item: any) => {
+            get().add(item);
+          });
         }
-      }), {
-      name: "cart-storage",
-    })
-  ),
-)
-
+      }),
+      {
+        name: "cart-storage",
+      }
+    )
+  )
+);
