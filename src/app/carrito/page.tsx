@@ -20,10 +20,7 @@ import { useEffect, useState } from 'react';
 
 export default function CartPage() {
   const router = useRouter();
-  const items = useCartStore(s => s.items);
-  const {remove, clear, subtractQuantity, addQuantity, fetch} = useCartStore();
-
-
+  const {remove, clear, subtractQuantity, addQuantity, fetch, items} = useCartStore();
 
   const [total, setTotal] = useState(0);
 
@@ -34,7 +31,7 @@ export default function CartPage() {
   }, [items]);
 
   useEffect(()=>{
-    const localStorageExists = Boolean(localStorage.getItem('cart-storage'));
+    const localStorageExists = items.length > 0
     
     if(!localStorageExists){
       fetch();      
@@ -50,6 +47,11 @@ export default function CartPage() {
       alert('Error al procesar el pedido');
     }
   };
+
+  const handleClearCart = async () => {
+    clear();
+    await apiClient.delete('/carrito')
+  }
 
   if (items.length === 0) {
     return (
@@ -96,7 +98,7 @@ export default function CartPage() {
 
           <Typography variant="h6" align="right" gutterBottom>Total: ${total.toFixed(2)}</Typography>
           <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button variant="outlined" color="primary" onClick={clear}>Vaciar carrito</Button>
+            <Button variant="outlined" color="primary" onClick={handleClearCart}>Vaciar carrito</Button>
             <Button variant="contained" color="primary" onClick={handleCheckout}>Proceder al pago</Button>
           </Stack>
         </Paper>
