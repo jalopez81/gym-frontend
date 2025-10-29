@@ -1,5 +1,6 @@
 'use client';
 
+import MyContainer from '@/components/Container';
 import { useCartStore } from '@/store/cartStore';
 import { Producto } from '@/types';
 import apiClient from '@/utils/apiClient';
@@ -65,7 +66,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Typography variant="h5">Tu carrito está vacío</Typography>
+        <Typography>Tu carrito está vacío</Typography>
         <Link href="/productos" style={{ marginLeft: 10, color: '#1976d2' }}>Ir a productos</Link>
       </Box>
     );
@@ -73,9 +74,9 @@ export default function CartPage() {
 
   const handleSubtractQuantity = async (item: any) => {
     const cantidad = item.cantidad - 1;
-    
-    if(cantidad === 0) return 
-    
+
+    if (cantidad === 0) return
+
     setQty(item.producto.id, cantidad)
     debouncedUpdate(item.producto, cantidad)
 
@@ -96,46 +97,44 @@ export default function CartPage() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', py: 4, background: '#f5f5f5' }}>
-      <Container maxWidth="md">
-        <Paper elevation={3} sx={{ p: 4 }}>
-          <Typography variant="h4" gutterBottom fontWeight="bold">Carrito</Typography>
-          <Stack spacing={2}>
-            {items.map(item => (
-              <Paper key={item.producto.id} sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                <CldImage
-                  src={item.producto.imagenSecureUrl}
-                  width={50}
-                  height={50}
-                  crop="fill"
-                  gravity="auto"
-                  quality="auto"
-                  alt="Producto"
-                  loading="lazy"
-                />
-                <Typography variant="h6" sx={{ flex: 1, marginX: 2 }}>{item.producto.nombre}</Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Button size="small" onClick={() => handleSubtractQuantity(item)}>-</Button>
-                  <Typography>{item.cantidad}</Typography>
-                  <Button size="small" onClick={() => handleAddQuantity(item)}>+</Button>
-                </Box>
-                <Typography variant="body2" sx={{ width: 130, textAlign: 'right' }}>Precio: ${item.producto.precio}</Typography>
-                <IconButton onClick={() => handleRemove(item)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Paper>
-            ))}
-          </Stack>
+    <MyContainer sx={{ minHeight: '100vh', py: 4, background: '#f5f5f5' }}>
+      <Typography variant="h4">Carrito</Typography>
+      <Paper elevation={3} sx={{ p: 4, maxWidth: 770 }}>
+        <Stack spacing={2}>
+          {items.map(item => (
+            <Paper key={item.producto.id} sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+              <CldImage
+                src={item.producto.imagenSecureUrl}
+                width={50}
+                height={50}
+                crop="fill"
+                gravity="auto"
+                quality="auto"
+                alt="Producto"
+                loading="lazy"
+              />
+              <Typography sx={{ flex: 1, marginX: 2 }}>{item.producto.nombre}</Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Button size="small" onClick={() => handleSubtractQuantity(item)}>-</Button>
+                <Typography>{item.cantidad}</Typography>
+                <Button size="small" onClick={() => handleAddQuantity(item)}>+</Button>
+              </Box>
+              <Typography sx={{ width: 130, textAlign: 'right', }}>{item.producto.precio}</Typography>
+              <IconButton onClick={() => handleRemove(item)}>
+                <DeleteIcon />
+              </IconButton>
+            </Paper>
+          ))}
+        </Stack>
 
-          <Divider sx={{ my: 3 }} />
+        <Divider sx={{ my: 3 }} />
 
-          <Typography variant="h6" align="right" gutterBottom>Total: ${total.toFixed(2)}</Typography>
-          <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button variant="outlined" color="primary" onClick={handleClearCart}>Vaciar carrito</Button>
-            <Button variant="contained" color="primary" onClick={handleCheckout}>Proceder al pago</Button>
-          </Stack>
-        </Paper>
-      </Container>
-    </Box>
+        <Typography align="right" gutterBottom mr={7} fontWeight={"bold"}>Total: ${total.toFixed(2)}</Typography>
+        <Stack direction="row" spacing={2} mt={4} justifyContent="flex-end">
+          <Button variant="outlined" color="primary" onClick={handleClearCart}>Vaciar carrito</Button>
+          <Button variant="contained" color="primary" onClick={handleCheckout}>Proceder al pago</Button>
+        </Stack>
+      </Paper>
+    </MyContainer>
   );
 }

@@ -21,6 +21,7 @@ export function ProductoCard({ producto }: Props) {
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
+            background: "#ffffff",
             boxShadow: '5px 5px 6px #dedede'
         }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>

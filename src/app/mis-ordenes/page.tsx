@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Typography, Container, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import apiClient from '@/utils/apiClient';
+import MyContainer from '@/components/Container';
 
 interface OrdenItem {
   producto: {
@@ -54,45 +55,48 @@ export default function OrdenesPage() {
   if (loading) return <Typography>Cargando órdenes...</Typography>;
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
-      <Typography variant="h4" gutterBottom fontWeight="bold">
+    <MyContainer className="mis-ordenes" sx={{ py: 4 }}>
+      <Typography variant="h4">
         Mis Órdenes
       </Typography>
 
       {ordenes.length === 0 && <Typography>No tienes órdenes aún.</Typography>}
 
-      {ordenes.map((orden) => (
-        <Paper key={orden.id} sx={{ mb: 3, p: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
-            <Typography variant="h6">Orden: {orden.id}</Typography>
-            <Typography>Fecha: {new Date(orden.creado).toLocaleString()}</Typography>
-          </Box>
-          <Typography sx={{ color: getStatusColor(orden.estado as Estado) }}>Estado: {orden.estado}</Typography>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+        {ordenes.map((orden) => (
+          <Paper className="orden" key={orden.id} sx={{ mb: 3, p: 2, maxWidth: 650, width: "100%" }}>
+            <Box className="orden-header" sx={{ ml: 2, mr: 2 }}>
+              <Typography sx={{ color: getStatusColor(orden.estado as Estado) }}>Estado: {orden.estado}</Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography>Fecha: {new Date(orden.creado).toLocaleString()}</Typography>
+                <Typography variant="body2">Orden: <i>{orden.id}</i></Typography>
+              </Box>
+            </Box>
 
-
-          <Table size="small" sx={{ mt: 1 }}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Producto</TableCell>
-                <TableCell align="right">Cantidad</TableCell>
-                <TableCell align="right">Precio</TableCell>
-                <TableCell align="right">Subtotal</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {orden.items.map((item, idx) => (
-                <TableRow key={idx}>
-                  <TableCell>{item.producto.nombre}</TableCell>
-                  <TableCell align="right">{item.cantidad}</TableCell>
-                  <TableCell align="right">${item.producto.precio.toFixed(2)}</TableCell>
-                  <TableCell align="right">${item.subtotal.toFixed(2)}</TableCell>
+            <Table size="small" sx={{ mt: 1 }}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Producto</TableCell>
+                  <TableCell align="right">Cantidad</TableCell>
+                  <TableCell align="right">Precio</TableCell>
+                  <TableCell align="right">Subtotal</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <Typography sx={{ textAlign: 'right', fontWeight: 'bold', margin: '1rem 1rem 0 0' }}>Total: ${orden.total.toFixed(2)}</Typography>
-        </Paper>
-      ))}
-    </Container>
+              </TableHead>
+              <TableBody>
+                {orden.items.map((item, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell>{item.producto.nombre}</TableCell>
+                    <TableCell align="right">{item.cantidad}</TableCell>
+                    <TableCell align="right">${item.producto.precio.toFixed(2)}</TableCell>
+                    <TableCell align="right">${item.subtotal.toFixed(2)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <Typography sx={{ textAlign: 'right', fontWeight: 'bold', margin: '1rem 1rem 0 0' }}>Total: ${orden.total.toFixed(2)}</Typography>
+          </Paper>
+        ))}
+      </Box>
+    </MyContainer>
   );
 }

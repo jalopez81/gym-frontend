@@ -24,7 +24,15 @@ const theme = createTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
+    h4:{
+      margin: '0 0 2rem 0'
+    }
   },
 });
+
+
+
+const defaultTheme = createTheme();
+console.log(defaultTheme.typography);
 
 export default theme;
