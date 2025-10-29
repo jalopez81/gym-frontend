@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CssBaseline />
           <Box className="root-layout__container" sx={{ display: "flex", flex: 1, height: "100vh", overflow: "hidden" }}>
             <Sidebar />
-            <Box className="root-layout__main-wrapper" sx={{ display: 'flex', flexDirection: 'column', overflow: "auto", width: "100%"}}>
+            <Box className="root-layout__main-wrapper" sx={{ display: 'flex', flexDirection: 'column', overflow: "auto", width: "100%", background: '#f3f7f7'}}>
               <Navbar />
               <Box
                 component="main"

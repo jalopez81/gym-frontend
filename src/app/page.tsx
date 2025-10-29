@@ -26,7 +26,7 @@ export default function Home() {
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'        
       }}
     >
       <Container maxWidth="sm">

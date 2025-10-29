@@ -63,10 +63,12 @@ export default function OrdenesPage() {
 
       {ordenes.map((orden) => (
         <Paper key={orden.id} sx={{ mb: 3, p: 2 }}>
-          <Typography variant="h6">Orden: {orden.id}</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between'}}>
+            <Typography variant="h6">Orden: {orden.id}</Typography>
+            <Typography>Fecha: {new Date(orden.creado).toLocaleString()}</Typography>
+          </Box>
           <Typography sx={{ color: getStatusColor(orden.estado as Estado) }}>Estado: {orden.estado}</Typography>
-          <Typography>Total: ${orden.total.toFixed(2)}</Typography>
-          <Typography>Fecha: {new Date(orden.creado).toLocaleString()}</Typography>
+
 
           <Table size="small" sx={{ mt: 1 }}>
             <TableHead>
@@ -88,6 +90,7 @@ export default function OrdenesPage() {
               ))}
             </TableBody>
           </Table>
+          <Typography sx={{ textAlign: 'right', fontWeight: 'bold', margin: '1rem 1rem 0 0' }}>Total: ${orden.total.toFixed(2)}</Typography>
         </Paper>
       ))}
     </Container>
