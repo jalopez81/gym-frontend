@@ -1,6 +1,7 @@
 'use client';
 
 import { useCartStore } from '@/store/cartStore';
+import { Producto } from '@/types';
 import apiClient from '@/utils/apiClient';
 import { debounce } from '@/utils/debounce';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -19,7 +20,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-async function update(id: string, cantidad: number) { await apiClient.put(`/carrito`, { id, cantidad }) }
+async function update(producto: Producto, cantidad: number) { await apiClient.post(`/carrito`, { producto, cantidad }) }
 
 const debouncedUpdate = debounce(update, 1500)
 
@@ -71,12 +72,12 @@ export default function CartPage() {
   const handleSubtractQuantity = async (item: any) => {
     const cantidad = item.cantidad - 1;
     setQty(item.producto.id, cantidad)
-    debouncedUpdate(item.producto.id, cantidad)
+    debouncedUpdate(item.producto, cantidad)
   }
   const handleAddQuantity = async (item: any) => {
     const cantidad = item.cantidad + 1;
     setQty(item.producto.id, cantidad)
-    debouncedUpdate(item.producto.id, cantidad)
+    debouncedUpdate(item.producto, cantidad)
   }
   const handleRemove = async (item: any) => {
     remove(item.producto.id)
