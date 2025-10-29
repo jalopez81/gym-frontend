@@ -27,6 +27,8 @@ const debouncedUpdate = debounce(update, 1500)
 export default function CartPage() {
   const router = useRouter();
   const { remove, clearCart, setQty, fetch, items } = useCartStore();
+  const [disableSubs, setDisableSubs] = useState(false);
+  const [disableAdd, setDisableAdd] = useState(false);
 
   const [total, setTotal] = useState(0);
 
@@ -71,13 +73,22 @@ export default function CartPage() {
 
   const handleSubtractQuantity = async (item: any) => {
     const cantidad = item.cantidad - 1;
+    
+    if(cantidad === 0) return 
+    
     setQty(item.producto.id, cantidad)
     debouncedUpdate(item.producto, cantidad)
+
+    // disable button if qty=0
+    setDisableAdd(cantidad === 0);
   }
   const handleAddQuantity = async (item: any) => {
     const cantidad = item.cantidad + 1;
     setQty(item.producto.id, cantidad)
     debouncedUpdate(item.producto, cantidad)
+
+    // disable button if qty=0
+    setDisableAdd(cantidad === 0);
   }
   const handleRemove = async (item: any) => {
     remove(item.producto.id)
