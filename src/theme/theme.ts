@@ -30,9 +30,4 @@ const theme = createTheme({
   },
 });
 
-
-
-const defaultTheme = createTheme();
-console.log(defaultTheme.typography);
-
 export default theme;

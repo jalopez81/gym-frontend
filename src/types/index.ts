@@ -31,11 +31,37 @@ export interface Clase {
   creado: string;
 }
 
+export interface Entrenador {
+  id: string;
+  usuarioId: string;
+  especialidad: string;
+  experiencia: number;
+  certificaciones: string;
+  creado: string;
+
+  usuario: Usuario;
+}
+
 export interface Sesion {
   id: string;
   claseId: string;
   fechaHora: string;
   creado: string;
+
+  reservas: Reserva[];
+  asistencias: Asistencia[];
+}
+
+export interface Asistencia {
+  id: string;
+  sesionId: string;
+  clienteId: string;
+  estado: string;
+  horaEntrada: string;
+  creado: string;
+  
+  sesion: Sesion;
+  cliente: Usuario;
 }
 
 export interface Reserva {

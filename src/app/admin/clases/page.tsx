@@ -1,0 +1,148 @@
+'use client'
+
+import { Clase, Entrenador } from "@/types";
+import apiClient from "@/utils/apiClient";
+import {
+    Button,
+    CircularProgress,
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableRow,
+    Typography
+} from "@mui/material";
+import { useEffect, useState } from "react";
+import ClaseFormDialog from "./ClaseFormDialog";
+import SesionFormDialog from "./SesionFormDialog";
+import MyContainer from "@/components/Container";
+
+export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
+    nombre: string;
+    duracion: number;
+    capacidad: number;
+}
+
+export default function AdminClases() {
+    const [clases, setClases] = useState<Clase[]>([]);
+    const [entrenadores, setEntrenadores] = useState<Entrenador[]>([]);
+    const [entrenadorSeleccionado, setEntrenadorSeleccionado] = useState<string>('');
+    const [open, setOpen] = useState(false);
+    const [openSesion, setOpenSesion] = useState(false);
+    const [claseSeleccionada, setClaseSeleccionada] = useState<string>("");
+
+    const [newClase, setNewClase] = useState<ClaseForm>({
+        nombre: "Aeróbicos",
+        descripcion: "HIIT para principiantes",
+        duracion: 40,
+        capacidad: 15,
+        entrenadorId: "",
+        creado: "",
+    });
+    const [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [resClases, resEntrenadores] = await Promise.all([
+                    apiClient.get('/clases'),
+                    apiClient.get('/entrenadores'),
+                ]);
+                setClases(resClases.data);
+                setEntrenadores(resEntrenadores.data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, []);
+
+
+    const handleAddClase = async () => {
+        try {
+            setLoading(true);
+            const res = await apiClient.post('/clases', {
+                ...newClase,
+                entrenadorId: entrenadorSeleccionado,
+            });
+            setClases(prev => [...prev, res.data]);
+            setOpen(false);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleVerSesiones = (id: string) => {
+        setClaseSeleccionada(id);
+        setOpenSesion(true);
+    };
+
+
+
+    if (loading) return <CircularProgress />;
+
+
+    return (
+        <MyContainer className="classes-container" style={{ padding: 20 }}>
+            <h1>Administrador de Clases</h1>
+            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+                Agregar Clase
+            </Button>
+
+            {!clases.length && (
+                <Typography variant="h6" m={4}>No hay clases registradas</Typography>
+            )}
+
+            <Table sx={{ marginTop: 2 }}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>ID</TableCell>
+                        <TableCell>Nombre</TableCell>
+                        <TableCell>Duración</TableCell>
+                        <TableCell>Capacidad</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {clases.map((clase) => (
+                        <TableRow key={clase.id}>
+                            <TableCell>{clase.id}</TableCell>
+                            <TableCell>{clase.nombre}</TableCell>
+                            <TableCell>{clase.duracion} min</TableCell>
+                            <TableCell>{clase.capacidad} personas</TableCell>
+                            <TableCell>
+                                <Button size="small" onClick={() => handleVerSesiones(clase.id)}>
+                                    Ver sesiones
+                                </Button>
+                            </TableCell>
+
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+
+            {/* Modal para agregar nueva clase */}
+            <ClaseFormDialog
+                open={open}
+                onClose={() => setOpen(false)}
+                newClase={newClase}
+                setNewClase={setNewClase}
+                entrenadorSeleccionado={entrenadorSeleccionado}
+                setEntrenadorSeleccionado={setEntrenadorSeleccionado}
+                entrenadores={entrenadores}
+                onSave={handleAddClase}
+            />
+            <SesionFormDialog
+                open={openSesion}
+                onClose={() => setOpenSesion(false)}
+                claseId={claseSeleccionada}
+            />
+
+
+        </MyContainer>
+    );
+}
