@@ -1,16 +1,14 @@
 import {
-  Dashboard,
-  ShoppingCart,
-  FitnessCenter,
-  ShoppingBag,
-  LocalShipping,
-  CardMembership,
-  People,
-  Assessment,
   Backup,
+  BarChart,
+  CardMembership,
+  Dashboard,
+  FitnessCenter,
+  LocalShipping,
+  People,
   Settings,
-  Store,
-  BarChart
+  ShoppingBag,
+  ShoppingCart
 } from '@mui/icons-material';
 
 export const menuItems = [

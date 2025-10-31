@@ -1,13 +1,14 @@
 'use client'
 
+import { useCartStore } from "@/store/cartStore";
 import theme from "@/theme/theme";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { adminMenuItems, menuItems } from "./menu-items";
-import { useCartStore } from "@/store/cartStore";
+import { useAuthStore } from "@/store/authStore";
 
 
 export default function Sidebar() {
@@ -17,8 +18,9 @@ export default function Sidebar() {
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
   const { fetch: fetchCart } = useCartStore();
+  const { usuario, ROLES } = useAuthStore();
 
-  useEffect(()=> {
+  useEffect(() => {
     const fetchRemoteCart = async () => {
       await fetchCart();
     }
@@ -85,15 +87,17 @@ export default function Sidebar() {
         </Tooltip>)}
       </List>
 
-      <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>ADMINISTRADOR</Typography>
-      <List>{adminMenuItems.map(item =>
-        <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
-          <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
-            <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }} />
-          </ListItemButton>
-        </Tooltip>)}
-      </List>
+      {usuario?.rol === ROLES.ADMIN && <>
+        <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>ADMINISTRADOR</Typography>
+        <List>{adminMenuItems.map(item =>
+          <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
+            <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
+              <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }} />
+            </ListItemButton>
+          </Tooltip>)}
+        </List>
+      </>}
 
 
       <Box

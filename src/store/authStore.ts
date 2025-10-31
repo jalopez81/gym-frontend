@@ -11,6 +11,7 @@ type AuthState = {
   logout: () => void;
   loadUsuario: () => Promise<void>;
   isLoading: boolean;
+  ROLES: Record<string, string>;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -19,6 +20,12 @@ export const useAuthStore = create<AuthState>()(
       usuario: null,
       token: null,
       isLoading: false,
+      ROLES: {
+        ADMIN: 'admin',
+        CLIENTE: 'cliente',
+        ENTRENADOR: 'entrenador',
+        RECEPCIONISTA: 'recepcionista'
+      },
 
       login: async (email, password) => {
         const { data } = await apiClient.post("/auth/login", { email, password });
