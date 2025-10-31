@@ -29,7 +29,12 @@ export interface Clase {
   capacidad: number;
   entrenadorId: string;
   creado: string;
+
+  entrenador: Entrenador;
+  sesiones: Sesion[];
 }
+
+export type ClaseDisplay = Clase & { entrenador: Entrenador };
 
 export interface Entrenador {
   id: string;
