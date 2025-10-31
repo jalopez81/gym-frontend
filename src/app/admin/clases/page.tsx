@@ -5,6 +5,7 @@ import apiClient from "@/utils/apiClient";
 import {
     Button,
     CircularProgress,
+    IconButton,
     Table,
     TableBody,
     TableCell,
@@ -13,9 +14,13 @@ import {
     Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import ClaseFormDialog from "./ClaseFormDialog";
+import ClaseFormDialog from "./CrearClase";
 import SesionFormDialog from "./SesionFormDialog";
 import MyContainer from "@/components/Container";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import EditClase from "./EditClase";
+import LoadingAnimation from "@/components/LoadingAnimatino";
 
 export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
     nombre: string;
@@ -30,6 +35,9 @@ export default function AdminClases() {
     const [open, setOpen] = useState(false);
     const [openSesion, setOpenSesion] = useState(false);
     const [claseSeleccionada, setClaseSeleccionada] = useState<string>("");
+    const [openEdit, setOpenEdit] = useState(false);
+    const [claseEdit, setClaseEdit] = useState<Clase | null>(null);
+
 
     const [newClase, setNewClase] = useState<ClaseForm>({
         nombre: "Aeróbicos",
@@ -42,21 +50,22 @@ export default function AdminClases() {
     const [loading, setLoading] = useState(true);
 
 
+    const fetchData = async () => {
+        try {
+            const [resClases, resEntrenadores] = await Promise.all([
+                apiClient.get('/clases'),
+                apiClient.get('/entrenadores'),
+            ]);
+            setClases(resClases.data);
+            setEntrenadores(resEntrenadores.data);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [resClases, resEntrenadores] = await Promise.all([
-                    apiClient.get('/clases'),
-                    apiClient.get('/entrenadores'),
-                ]);
-                setClases(resClases.data);
-                setEntrenadores(resEntrenadores.data);
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
         fetchData();
     }, []);
 
@@ -82,9 +91,18 @@ export default function AdminClases() {
         setOpenSesion(true);
     };
 
+    const handleDelete = async (claseId: string) => {
+        if (!confirm('¿Seguro que quieres eliminar esta clase?')) return;
 
+        try {
+            await apiClient.delete(`/clases/${claseId}`);
+            fetchData();
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
-    if (loading) return <CircularProgress />;
+    if (loading) return <LoadingAnimation />;
 
 
     return (
@@ -101,23 +119,29 @@ export default function AdminClases() {
             <Table sx={{ marginTop: 2 }}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>ID</TableCell>
                         <TableCell>Nombre</TableCell>
+                        <TableCell>Descripción</TableCell>
                         <TableCell>Duración</TableCell>
                         <TableCell>Capacidad</TableCell>
+                        <TableCell>Sesiones</TableCell>
+                        <TableCell>Acciones</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {clases.map((clase) => (
                         <TableRow key={clase.id}>
-                            <TableCell>{clase.id}</TableCell>
                             <TableCell>{clase.nombre}</TableCell>
+                            <TableCell>{clase.descripcion}</TableCell>
                             <TableCell>{clase.duracion} min</TableCell>
                             <TableCell>{clase.capacidad} personas</TableCell>
                             <TableCell>
                                 <Button size="small" onClick={() => handleVerSesiones(clase.id)}>
                                     Ver sesiones
                                 </Button>
+                            </TableCell>
+                            <TableCell>
+                                <IconButton onClick={() => { setClaseEdit(clase); setOpenEdit(true); }}><EditIcon /></IconButton>
+                                <IconButton onClick={() => handleDelete(clase.id)}><DeleteIcon /></IconButton>
                             </TableCell>
 
                         </TableRow>
@@ -141,8 +165,14 @@ export default function AdminClases() {
                 onClose={() => setOpenSesion(false)}
                 claseId={claseSeleccionada}
             />
-
-
+            {claseEdit && (
+                <EditClase
+                    open={openEdit}
+                    onClose={() => setOpenEdit(false)}
+                    clase={claseEdit}
+                    onUpdated={fetchData}
+                />
+            )}
         </MyContainer>
     );
 }
