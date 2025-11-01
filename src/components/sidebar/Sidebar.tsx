@@ -73,8 +73,8 @@ export default function Sidebar() {
         position: 'relative',
         overflow: 'hidden'
       }}>
-        <img style={{ opacity: `${open ? 1 : 0}`, height: 'auto', width: 150, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="logo-small.png" alt="logo" />
-        <img style={{ opacity: `${open ? 0 : 1}`, height: 'auto', width: 40, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="logo-x-small.png" alt="logo" />
+        <img style={{ opacity: `${open ? 1 : 0}`, height: 'auto', width: 150, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="/logo-small.png" alt="logo" />
+        <img style={{ opacity: `${open ? 0 : 1}`, height: 'auto', width: 40, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="/logo-x-small.png" alt="logo" />
         <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, transition: 'all 300ms' }}>Supera tus límites</Typography>
       </Box>
 
