@@ -7,6 +7,7 @@ import apiClient from "@/utils/apiClient";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import {
+    Box,
     Button,
     IconButton,
     Table,
@@ -20,6 +21,7 @@ import { useEffect, useState } from "react";
 import CreateClase from "./CreateClase";
 import EditClase from "./EditClase";
 import EditSesion from "./EditSesion";
+import SearchClase from "@/app/clases/SearchClase";
 
 export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
     nombre: string;
@@ -36,7 +38,7 @@ export default function AdminClases() {
     const [claseSeleccionada, setClaseSeleccionada] = useState<string>("");
     const [openEdit, setOpenEdit] = useState(false);
     const [claseEdit, setClaseEdit] = useState<Clase | null>(null);
-
+    const [searchTerm, setSearchTerm] = useState('');
 
     const [newClase, setNewClase] = useState<ClaseForm>({
         nombre: "Aeróbicos",
@@ -72,10 +74,10 @@ export default function AdminClases() {
     const handleAddClase = async (sesiones: string[]) => {
         try {
             setLoading(true);
-            const resClases = await apiClient.post('/clases', {...newClase, entrenadorId: entrenadorSeleccionado});
+            const resClases = await apiClient.post('/clases', { ...newClase, entrenadorId: entrenadorSeleccionado });
             const claseId = resClases.data.id;
 
-            const arrNewSesiones = sesiones.map(sesion => ({fechaHora: sesion, claseId}))
+            const arrNewSesiones = sesiones.map(sesion => ({ fechaHora: sesion, claseId }))
             const resSesiones = await apiClient.post('/sesiones/multiple', [...arrNewSesiones])
             console.log(resSesiones)
 
@@ -104,19 +106,27 @@ export default function AdminClases() {
         }
     };
 
+    const filteredClases = clases.filter(c =>
+        c.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     if (loading) return <LoadingAnimation />;
 
 
     return (
         <MyContainer className="classes-container" style={{ padding: 20 }}>
             <h1>Administrador de Clases</h1>
-            <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-                Agregar Clase
-            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'space-between' }}>
+                <SearchClase onSearch={setSearchTerm} />
+                <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
+                    Agregar Clase
+                </Button>
+            </Box>
 
             {!clases.length && (
                 <Typography variant="h6" m={4}>No hay clases registradas</Typography>
             )}
+
 
             <Table sx={{ marginTop: 2 }}>
                 <TableHead>
@@ -130,7 +140,7 @@ export default function AdminClases() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {clases.map((clase) => (
+                    {filteredClases.map((clase) => (
                         <TableRow key={clase.id}>
                             <TableCell>{clase.nombre}</TableCell>
                             <TableCell>{clase.descripcion}</TableCell>

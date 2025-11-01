@@ -6,11 +6,13 @@ import apiClient from '@/utils/apiClient';
 import MyContainer from '@/components/Container';
 import { Clase, Reserva, Sesion } from '@/types';
 import CheckIcon from '@mui/icons-material/Check';
+import SearchClase from './SearchClase';
 
 export default function ClasesPage() {
     const [clases, setClases] = useState<Clase[]>([]);
     const [reservas, setReservas] = useState<Reserva[]>([]);
     const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const alreadyReservado = (reservas: Reserva[], sesion: Sesion) => {
         const reserva = reservas.find(res => res.sesionId === sesion.id)
@@ -58,17 +60,21 @@ export default function ClasesPage() {
         }
     };
 
+    const filteredClases = clases.filter(c =>
+        c.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     if (loading) return <Typography>Cargando clases...</Typography>;
 
     return (
         <MyContainer sx={{ py: 4 }}>
             <Typography variant="h4">Clases</Typography>
+            <SearchClase onSearch={setSearchTerm} />
 
             {clases.length === 0 && <Typography>No hay clases disponibles.</Typography>}
 
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
-                {clases.map((clase: Clase) => (
+                {filteredClases.map((clase) => (
                     <Paper key={clase.id} sx={{ p: 2, width: 300 }}>
                         {/* Detalles de la clase */}
                         <Box className="clases-detalles">
