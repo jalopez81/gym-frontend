@@ -1,10 +1,13 @@
 'use client'
 
-import { Clase, Entrenador } from "@/types";
+import MyContainer from "@/components/Container";
+import LoadingAnimation from "@/components/LoadingAnimatino";
+import { Clase, Entrenador, Sesion } from "@/types";
 import apiClient from "@/utils/apiClient";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import {
     Button,
-    CircularProgress,
     IconButton,
     Table,
     TableBody,
@@ -14,13 +17,9 @@ import {
     Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import ClaseFormDialog from "./CrearClase";
-import SesionFormDialog from "./SesionFormDialog";
-import MyContainer from "@/components/Container";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import CreateClase from "./CreateClase";
 import EditClase from "./EditClase";
-import LoadingAnimation from "@/components/LoadingAnimatino";
+import EditSesion from "./EditSesion";
 
 export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
     nombre: string;
@@ -70,14 +69,17 @@ export default function AdminClases() {
     }, []);
 
 
-    const handleAddClase = async () => {
+    const handleAddClase = async (sesiones: string[]) => {
         try {
             setLoading(true);
-            const res = await apiClient.post('/clases', {
-                ...newClase,
-                entrenadorId: entrenadorSeleccionado,
-            });
-            setClases(prev => [...prev, res.data]);
+            const resClases = await apiClient.post('/clases', {...newClase, entrenadorId: entrenadorSeleccionado});
+            const claseId = resClases.data.id;
+
+            const arrNewSesiones = sesiones.map(sesion => ({fechaHora: sesion, claseId}))
+            const resSesiones = await apiClient.post('/sesiones/multiple', [...arrNewSesiones])
+            console.log(resSesiones)
+
+            setClases(prev => [...prev, resClases.data]);
             setOpen(false);
         } catch (err) {
             console.error(err);
@@ -150,7 +152,7 @@ export default function AdminClases() {
             </Table>
 
             {/* Modal para agregar nueva clase */}
-            <ClaseFormDialog
+            <CreateClase
                 open={open}
                 onClose={() => setOpen(false)}
                 newClase={newClase}
@@ -160,7 +162,7 @@ export default function AdminClases() {
                 entrenadores={entrenadores}
                 onSave={handleAddClase}
             />
-            <SesionFormDialog
+            <EditSesion
                 open={openSesion}
                 onClose={() => setOpenSesion(false)}
                 claseId={claseSeleccionada}

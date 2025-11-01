@@ -53,7 +53,7 @@ export default function ClasesPage() {
             console.log(res)
         } catch (err) {
             console.error(err);
-        }finally{
+        } finally {
             await fetchClases();
         }
     };
@@ -98,7 +98,7 @@ export default function ClasesPage() {
                                     {new Date(sesion.fechaHora).toLocaleString()}
                                     {alreadyReservado(reservas, sesion) && <CheckIcon sx={{ color: 'green' }} />}
                                     <Typography variant="body2" color="text.secondary">
-                                        {sesion.reservas.map(r=> r.estado === 'reservado').length}/{clase.capacidad}
+                                        {sesion.reservas.filter(r => r.estado === 'reservado').length}/{clase.capacidad}
                                     </Typography>
                                 </Button>
                             ))}

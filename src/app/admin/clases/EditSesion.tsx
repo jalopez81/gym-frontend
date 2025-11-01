@@ -32,7 +32,7 @@ interface SesionFormDialogProps {
   claseId: string;
 }
 
-export default function SesionFormDialog({ open, onClose, claseId }: SesionFormDialogProps) {
+export default function EditSesion({ open, onClose, claseId }: SesionFormDialogProps) {
   const [fechaHora, setFechaHora] = useState<string>("");
   const [sesiones, setSesiones] = useState<Sesion[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

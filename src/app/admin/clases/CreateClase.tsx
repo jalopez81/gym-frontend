@@ -32,10 +32,10 @@ interface ClaseFormDialogProps {
   entrenadorSeleccionado: string;
   setEntrenadorSeleccionado: (id: string) => void;
   entrenadores: Entrenador[];
-  onSave: () => void;
+  onSave: (sesiones: string[]) => Promise<void>;
 }
 
-export default function ClaseFormDialog({
+export default function CreateClase({
   open,
   onClose,
   newClase,
@@ -143,7 +143,7 @@ export default function ClaseFormDialog({
       <DialogActions>
         <Button onClick={onClose}>Cancelar</Button>
         <Button
-          onClick={() => { onSave() }}
+          onClick={() => { onSave(sesiones.map(s => new Date(s.fechaHora).toISOString(),)) }}
           variant="contained"
           disabled={!entrenadorSeleccionado}
         >

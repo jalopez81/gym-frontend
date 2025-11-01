@@ -64,7 +64,7 @@ export interface Asistencia {
   estado: string;
   horaEntrada: string;
   creado: string;
-  
+
   sesion: Sesion;
   cliente: Usuario;
 }
