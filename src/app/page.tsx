@@ -30,9 +30,9 @@ export default function Home() {
       }}
     >
       <Container maxWidth="sm">
-        <Box sx={{ textAlign: 'center', color: 'white' }}>
+        <Box sx={{ textAlign: 'center' }}>
           <img src="logo-big-png.png" alt="logo" style={{ width: 'auto', height: '300px'}} />
-          <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
+          <Typography variant="h5" gutterBottom sx={{ mb: 4 }} color="GrayText">
             Gestiona tu entrenamiento y suscripción
           </Typography>
 

@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, Typography, Button, CircularProgress, Stack } from '@mui/material'
 import apiClient from '@/utils/apiClient'
 import SeleccionarPlan from './seleccionar-plan'
+import MyContainer from '@/components/Container'
+import MainTitle from '@/components/MainTitle'
 
 export default function MiSuscripcionPage() {
   const [suscripcion, setSuscripcion] = useState<any | null>(null)
@@ -40,16 +42,13 @@ export default function MiSuscripcionPage() {
   if (loading) return <CircularProgress />
 
   if (!suscripcion) {
-    return (
-      <>
-        <Typography>No tienes una suscripción activa</Typography>
-        <SeleccionarPlan />
-      </>
-    )
+    return <SeleccionarPlan />    
   }
 
   return (
-    <Card>
+    <MyContainer className="suscripciones-container">
+      <MainTitle title='Mis Suscripciones' subtitle=''/>
+      <Card sx={{ width: 350}}>
       <CardContent>
         <Typography variant="h6">{suscripcion.plan.nombre}</Typography>
         <Typography>Precio: ${suscripcion.plan.precio}</Typography>
@@ -58,7 +57,7 @@ export default function MiSuscripcionPage() {
           Vence: {new Date(suscripcion.fechaVencimiento).toLocaleDateString()}
         </Typography>
 
-        <Stack direction="row" spacing={2} mt={2}>
+        <Stack direction="row" spacing={2} mt={2} justifyContent="center">
           <Button variant="outlined" color="error" onClick={cancelar}>
             Cancelar
           </Button>
@@ -68,5 +67,6 @@ export default function MiSuscripcionPage() {
         </Stack>
       </CardContent>
     </Card>
+    </MyContainer>
   )
 }

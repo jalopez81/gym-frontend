@@ -1,6 +1,7 @@
 'use client';
 
 import MyContainer from '@/components/Container';
+import MainTitle from '@/components/MainTitle'
 import { useCartStore } from '@/store/cartStore';
 import { Producto } from '@/types';
 import apiClient from '@/utils/apiClient';
@@ -98,7 +99,7 @@ export default function CartPage() {
 
   return (
     <MyContainer sx={{ minHeight: '100vh', py: 4, background: '#f5f5f5' }}>
-      <Typography variant="h4">Carrito</Typography>
+      <MainTitle title='Carrito' subtitle='Aquí puedes remover artículos o cambiar la cantidad' />
       <Paper elevation={3} sx={{ p: 4, maxWidth: 770 }}>
         <Stack spacing={2}>
           {items.map(item => (

@@ -7,6 +7,7 @@ import MyContainer from '@/components/Container';
 import { Clase, Reserva, Sesion } from '@/types';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchClase from './SearchClase';
+import MainTitle from '@/components/MainTitle';
 
 export default function ClasesPage() {
     const [clases, setClases] = useState<Clase[]>([]);
@@ -68,7 +69,7 @@ export default function ClasesPage() {
 
     return (
         <MyContainer sx={{ py: 4 }}>
-            <Typography variant="h4">Clases</Typography>
+            <MainTitle title="Clases" subtitle="Organización de clases, horarios y cupos"/>
             <SearchClase onSearch={setSearchTerm} />
 
             {clases.length === 0 && <Typography>No hay clases disponibles.</Typography>}

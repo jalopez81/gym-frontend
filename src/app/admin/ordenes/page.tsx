@@ -23,6 +23,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import MainTitle from '@/components/MainTitle';
 
 const ESTADO_ORDEN = {
     PENDIENTE: 'pendiente',
@@ -103,10 +104,8 @@ export default function AdminOrdenesPage() {
 
     return (
         <MyContainer sx={{ py: 4 }}>
-            <Typography variant="h4" gutterBottom>
-                Administración de Órdenes
-            </Typography>
-
+            <MainTitle title="Órdenes" subtitle="Supervisión de todas las órdenes generadas"/>
+            
             {ordenes.length === 0 && <Typography>No hay órdenes registradas.</Typography>}
 
             <Box sx={{ display: 'flex', gap: 1, my: 2 }}>

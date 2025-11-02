@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, Button, Grid, CircularProgress, Box } fr
 import apiClient from '@/utils/apiClient'
 import { useRouter } from 'next/navigation'
 import MyContainer from '@/components/Container'
+import MainTitle from '@/components/MainTitle'
 
 export default function SeleccionarPlan() {
   const [planes, setPlanes] = useState<any[]>([])
@@ -36,6 +37,7 @@ export default function SeleccionarPlan() {
 
   return (
     <MyContainer className="seleccionar-plan-container">
+      <MainTitle title="Seleccionar Plan" subtitle="Elige el plan de suscripción que mejor se adapte a tus objetivos"/>
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         {planes.map((plan) => (
           <Card sx={{

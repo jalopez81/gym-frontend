@@ -1,6 +1,7 @@
 'use client';
 
 import MyContainer from '@/components/Container';
+import MainTitle from '@/components/MainTitle';
 import apiClient from '@/utils/apiClient';
 import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -56,9 +57,7 @@ export default function OrdenesPage() {
 
   return (
     <MyContainer className="mis-ordenes" sx={{ py: 4 }}>
-      <Typography variant="h4">
-        Mis Órdenes
-      </Typography>
+      <MainTitle title="Mis órdenes" subtitle="Historial y estado de tus compras"/>
 
       {ordenes.length === 0 && <Typography>No tienes órdenes aún.</Typography>}
 

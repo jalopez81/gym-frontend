@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { useAuthStore } from '@/store/authStore';
 import MyContainer from '@/components/Container';
+import MainTitle from '@/components/MainTitle';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
@@ -51,9 +52,8 @@ export default function LoginPage() {
     >
       <MyContainer className="page-login" maxWidth="sm" >
         <Paper elevation={3} sx={{ p: 4 }}>
-          <Typography variant="h4" component="h1" align="center" gutterBottom fontWeight="bold">
-            Iniciar Sesión
-          </Typography>
+          <MainTitle title="Iniciar Sesión" subtitle='Usar email y contraseña para iniciar sesión'/>
+          
 
           {error && (
             <Alert severity="error" sx={{ mb: 2 }}>

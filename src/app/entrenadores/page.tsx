@@ -5,6 +5,7 @@ import apiClient from '@/utils/apiClient'
 import { Box, Card, CardContent, Typography, Grid, Avatar, CircularProgress, Divider, Button } from '@mui/material'
 import { CldImage } from 'next-cloudinary';
 import MyContainer from '@/components/Container';
+import MainTitle from '@/components/MainTitle';
 
 export default function EntrenadoresPage() {
   const [entrenadores, setEntrenadores] = useState<any[]>([])
@@ -33,9 +34,7 @@ export default function EntrenadoresPage() {
 
   return (
     <MyContainer sx={{ background: "#eeeeee"}}>
-      <Typography variant="h4" align="center"  fontWeight="bold">
-        Entrenadores
-      </Typography>
+      <MainTitle title="Entrenadores" subtitle="Conoce a nuestros entrenadores y sus especialidades"/>
 
       <Box sx={{ display: 'flex'}}>
         {entrenadores.map(ent => (

@@ -22,6 +22,7 @@ import CreateClase from "./CreateClase";
 import EditClase from "./EditClase";
 import EditSesion from "./EditSesion";
 import SearchClase from "@/app/clases/SearchClase";
+import MainTitle from "@/components/MainTitle";
 
 export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
     nombre: string;
@@ -115,7 +116,7 @@ export default function AdminClases() {
 
     return (
         <MyContainer className="classes-container" style={{ padding: 20 }}>
-            <h1>Administrador de Clases</h1>
+            <MainTitle title="Administrar clases" subtitle="Organización de clases, horarios y cupos"/>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'space-between' }}>
                 <SearchClase onSearch={setSearchTerm} />
                 <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
