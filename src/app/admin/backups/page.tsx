@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Box, Button, Typography } from '@mui/material'
+import { Box, Button, IconButton, Typography } from '@mui/material'
 import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import apiClient from '@/utils/apiClient'
 import { formatDateTime } from '@/utils'
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Backup {
   id: string
@@ -34,6 +35,14 @@ export default function AdminBackups() {
     await apiClient.post(`/backups/${id}/restaurar`)
     alert('Base de datos restaurada exitosamente.')
   }
+  
+  const handleEliminar = async (id: string) => {
+    if (!confirm(`¿Esta seguro de que desea eliminar el backup ${id}?`)) return
+    const res = await apiClient.delete(`/backups/${id}/eliminar`)
+    if(res.status === 200){
+      setBackups(prev => backups.filter(b=> b.id !== id));
+    }    
+  }
 
   useEffect(() => {
     fetchBackups()
@@ -48,13 +57,17 @@ export default function AdminBackups() {
       headerName: 'Acciones',
       flex: 1,
       renderCell: (params) => (
+        <>
         <Button
-          variant="outlined"
+          variant="contained"
           color="primary"
           onClick={() => handleRestaurar(params.row.id)}
+          sx={{ m: 1}}
         >
           Restaurar
         </Button>
+        <IconButton onClick={() => handleEliminar(params.row.id)}><DeleteIcon /></IconButton>
+        </>
       ),
     },
   ]
@@ -83,3 +96,4 @@ export default function AdminBackups() {
     </Box>
   )
 }
+

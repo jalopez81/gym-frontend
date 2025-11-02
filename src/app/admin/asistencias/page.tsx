@@ -107,7 +107,6 @@ const AdminAsistencias = () => {
             <Box sx={{ display: 'flex', gap: 2, mb: 2, p: 1, justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
                 <Box>
                     <FormControl sx={{ minWidth: 180 }}>
-                        <InputLabel>Cliente</InputLabel>
                         <Autocomplete
                             value={clientes.find(c => c.id === filtroCliente) || null}
                             onChange={(_, nuevo) => setFiltroCliente(nuevo ? nuevo.id : '')}
