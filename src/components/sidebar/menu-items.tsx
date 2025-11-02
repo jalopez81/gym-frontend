@@ -25,6 +25,7 @@ export const menuItems = [
 export const adminMenuItems = [
   { text: 'Usuarios', icon: <People />, href: '/admin/usuarios' },
   { text: 'Productos', icon: <ShoppingBag />, href: '/admin/productos' },
+  { text: 'Órdenes', icon: <LocalShipping />, href: '/admin/ordenes' },
   { text: 'Clases', icon: <FitnessCenter />, href: '/admin/clases' },
   { text: 'Asistencias', icon: <Check />, href: '/admin/asistencias' },
   { text: 'Reportes', icon: <BarChart />, href: '/admin/reportes' },

@@ -108,6 +108,8 @@ export interface Orden {
   estado: string;
   items: OrdenItem[];
   creado: string;
+
+  usuario: Usuario;
 }
 
 export interface OrdenItem {
@@ -117,6 +119,8 @@ export interface OrdenItem {
   cantidad: number;
   precioUnitario: number;
   subtotal: number;
+
+  producto: Producto;
 }
 
 export interface CarritoItem {

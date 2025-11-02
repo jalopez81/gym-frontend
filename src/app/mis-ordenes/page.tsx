@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Box, Typography, Container, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
-import apiClient from '@/utils/apiClient';
 import MyContainer from '@/components/Container';
+import apiClient from '@/utils/apiClient';
+import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 interface OrdenItem {
   producto: {

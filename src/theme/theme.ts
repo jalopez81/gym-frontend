@@ -3,6 +3,15 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  components: {
+     MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          backgroundColor: 'white',
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#a43f4a',
