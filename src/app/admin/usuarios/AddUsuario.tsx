@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Dialog,
     DialogTitle,
@@ -15,40 +15,57 @@ import {
 } from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 import apiClient from '@/utils/apiClient';
+import { Usuario } from '@/types';
 
 interface AddUsuarioProps {
     open: boolean;
     onClose: () => void;
-    onGuardado: () => void;
+    onGuardado: () => Promise<void>;
+    usuario?: Usuario | null;
 }
 
-export default function AddUsuario({ open, onClose, onGuardado }: AddUsuarioProps) {
-    const [form, setForm] = useState({
+
+export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardado, usuario }) => {
+    const [form, setForm] = useState<Partial<Usuario>>({
         nombre: '',
         email: '',
-        password: '',
-        rol: 'cliente',
+        rol: '',
         status: 'activo',
     });
 
+    useEffect(() => {
+        if (usuario) {
+            setForm(usuario);
+        } else {
+            setForm({ nombre: '', email: '', rol: '', status: 'activo' });
+        }
+    }, [usuario]);
 
-const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  const { name, value } = e.target;
-  setForm(prev => ({ ...prev, [name]: value }));
-};
 
-const handleSelectChange = (e: SelectChangeEvent<string>) => {
-  const { name, value } = e.target;
-  setForm(prev => ({ ...prev, [name as string]: value }));
-};
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
+    };
 
+    const handleSelectChange = (e: SelectChangeEvent<string>) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name as string]: value }));
+    };
 
     const handleGuardar = async () => {
-        await apiClient.post('/auth/registro', form);
-        onGuardado();
-        onClose();
-        setForm({ nombre: '', email: '', password: '', rol: 'cliente', status: 'activo' });
+        try {
+            if (usuario?.id) {
+                await apiClient.put(`/usuarios/${usuario.id}`, form);
+            } else {
+                await apiClient.post('/usuarios', form);
+            }
+            await onGuardado();
+            onClose();
+        } catch (error) {
+            console.error('Error guardando usuario:', error);
+        }
     };
+
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth>

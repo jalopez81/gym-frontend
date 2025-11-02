@@ -4,6 +4,9 @@ export interface Usuario {
   nombre: string;
   rol: string;
   creado: string;
+  status: string;
+  password?: string; 
+
 }
 
 export interface Producto {
