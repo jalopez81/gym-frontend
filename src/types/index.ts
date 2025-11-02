@@ -55,6 +55,7 @@ export interface Sesion {
 
   reservas: Reserva[];
   asistencias: Asistencia[];
+  clase: Clase;
 }
 
 export interface Asistencia {

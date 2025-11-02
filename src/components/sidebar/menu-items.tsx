@@ -8,6 +8,7 @@ import {
   People,
   Settings,
   ShoppingBag,
+  Check,
   ShoppingCart
 } from '@mui/icons-material';
 
@@ -25,6 +26,7 @@ export const adminMenuItems = [
   { text: 'Usuarios', icon: <People />, href: '/admin/usuarios' },
   { text: 'Productos', icon: <ShoppingBag />, href: '/admin/productos' },
   { text: 'Clases', icon: <FitnessCenter />, href: '/admin/clases' },
+  { text: 'Asistencias', icon: <Check />, href: '/admin/asistencias' },
   { text: 'Reportes', icon: <BarChart />, href: '/admin/reportes' },
   { text: 'Backups', icon: <Backup />, href: '/admin/backups' },
   { text: 'Configuración', icon: <Settings />, href: '/admin/configuracion' },

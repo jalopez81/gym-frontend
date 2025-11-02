@@ -20,7 +20,7 @@ export default function SearchClase({ onSearch }: SearchClaseProps) {
   };
 
   return (
-    <Box sx={{ my: 2 }}>
+    <Box sx={{ p: 2, my: 2, background: "#ffffff" }}>
       <Stack direction="row" spacing={2} alignItems="center">
         <TextField
           label="Buscar clase"
@@ -29,6 +29,7 @@ export default function SearchClase({ onSearch }: SearchClaseProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
+          sx={{background: "#ffffff"}}
         />
         <Button
           variant="contained"
