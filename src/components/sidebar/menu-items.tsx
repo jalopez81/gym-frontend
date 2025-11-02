@@ -19,11 +19,12 @@ export const menuItems = [
   { text: 'Mis Órdenes', icon: <LocalShipping />, href: '/mis-ordenes' },
   { text: 'Clases', icon: <FitnessCenter />, href: '/clases' },
   { text: 'Entrenadores', icon: <People />, href: '/entrenadores' },
-  { text: 'Mis Suscripciones', icon: <CardMembership />, href: '/mis-suscripciones' },
+  { text: 'Mis Suscripciones', icon: <CardMembership />, href: '/suscripciones' },
 ];
 
 export const adminMenuItems = [
   { text: 'Usuarios', icon: <People />, href: '/admin/usuarios' },
+  { text: 'Suscripciones', icon: <CardMembership />, href: '/admin/suscripciones' },
   { text: 'Productos', icon: <ShoppingBag />, href: '/admin/productos' },
   { text: 'Órdenes', icon: <LocalShipping />, href: '/admin/ordenes' },
   { text: 'Clases', icon: <FitnessCenter />, href: '/admin/clases' },
