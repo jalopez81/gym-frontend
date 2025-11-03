@@ -48,6 +48,7 @@ export interface Entrenador {
   creado: string;
 
   usuario: Usuario;
+  clases: Clase[]
 }
 
 export interface Sesion {

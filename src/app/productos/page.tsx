@@ -1,6 +1,6 @@
 "use client";
 
-import MyContainer from "@/components/Container";
+import MyContainer from "@/components/MyContainer";
 import {
   CircularProgress,
   Typography
@@ -15,7 +15,7 @@ export default function ProductosPage() {
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <MyContainer className="page-productos" sx={{ background: "#f5f5f5", height: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+    <MyContainer className="page-productos" sx={{ height: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
       <Searchbar pagination={pagination} setPagination={setPagination} />
 
       {loading && <CircularProgress />}

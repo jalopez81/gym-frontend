@@ -19,6 +19,7 @@ import Cards from 'react-credit-cards-2';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { useCartStore } from '@/store/cartStore';
 import { crearOrden } from '@/services/checkout';
+import MyContainer from '@/components/MyContainer';
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -98,7 +99,7 @@ export default function PaymentPage() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', py: 4, px: 2 }}>
+    <MyContainer className='pago-container' isAuthGuard={true} sx={{ maxWidth: 800, mx: 'auto', py: 4, px: 2 }}>
       <Typography variant="h4" component="h1" gutterBottom>
         Pago con Tarjeta de Crédito
       </Typography>
@@ -229,6 +230,6 @@ export default function PaymentPage() {
           ¡Pago procesado exitosamente!
         </Alert>
       </Snackbar>
-    </Box>
+    </MyContainer>
   );
 }

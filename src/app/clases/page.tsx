@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Typography, Container, Paper, Button } from '@mui/material';
 import apiClient from '@/utils/apiClient';
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 import { Clase, Reserva, Sesion } from '@/types';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchClase from './SearchClase';

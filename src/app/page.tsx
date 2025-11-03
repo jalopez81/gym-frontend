@@ -1,6 +1,6 @@
 'use client';
 
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 import { useAuthStore } from '@/store/authStore';
 import { Box, Container, Typography, Button, Stack } from '@mui/material';
 import Link from 'next/link';

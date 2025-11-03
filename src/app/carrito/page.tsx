@@ -1,7 +1,8 @@
 'use client';
 
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 import MainTitle from '@/components/MainTitle'
+import AuthGuard from '@/components/AuthGuard'
 import { useCartStore } from '@/store/cartStore';
 import { Producto } from '@/types';
 import apiClient from '@/utils/apiClient';
@@ -64,14 +65,6 @@ export default function CartPage() {
     await apiClient.delete('/carrito')
   }
 
-  if (items.length === 0) {
-    return (
-      <Box sx={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <Typography>Tu carrito está vacío</Typography>
-        <Link href="/productos" style={{ marginLeft: 10, color: '#1976d2' }}>Ir a productos</Link>
-      </Box>
-    );
-  }
 
   const handleSubtractQuantity = async (item: any) => {
     const cantidad = item.cantidad - 1;
@@ -84,6 +77,7 @@ export default function CartPage() {
     // disable button if qty=0
     setDisableAdd(cantidad === 0);
   }
+
   const handleAddQuantity = async (item: any) => {
     const cantidad = item.cantidad + 1;
     setQty(item.producto.id, cantidad)
@@ -92,13 +86,23 @@ export default function CartPage() {
     // disable button if qty=0
     setDisableAdd(cantidad === 0);
   }
+
   const handleRemove = async (item: any) => {
     remove(item.producto.id)
     await apiClient.delete(`/carrito/${item.producto.id}`)
   }
 
+  if (items.length === 0) {
+    return (
+      <MyContainer isAuthGuard={true} sx={{ minHeight: '100vh', py: 4 }}>
+        <Typography>Tu carrito está vacío</Typography>
+        <Link href="/productos" style={{ marginLeft: 10, color: '#1976d2' }}>Ir a productos</Link>
+      </MyContainer>
+    );
+  }
+
   return (
-    <MyContainer sx={{ minHeight: '100vh', py: 4, background: '#f5f5f5' }}>
+    <MyContainer isAuthGuard={true} sx={{ minHeight: '100vh', py: 4 }}>
       <MainTitle title='Carrito' subtitle='Aquí puedes remover artículos o cambiar la cantidad' />
       <Paper elevation={3} sx={{ p: 4, maxWidth: 770 }}>
         <Stack spacing={2}>

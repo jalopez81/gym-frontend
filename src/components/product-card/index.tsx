@@ -22,7 +22,8 @@ export function ProductoCard({ producto }: Props) {
             display: 'flex',
             flexDirection: 'column',
             background: "#ffffff",
-            boxShadow: '5px 5px 6px #dedede'
+            boxShadow: '5px 5px 6px #dedede',
+            outline: 'solid 1px #dedede'
         }}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CldImage

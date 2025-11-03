@@ -1,6 +1,6 @@
 'use client'
 
-import MyContainer from "@/components/Container";
+import MyContainer from "@/components/MyContainer";
 import LoadingAnimation from "@/components/LoadingAnimatino";
 import { Clase, Entrenador, Sesion } from "@/types";
 import apiClient from "@/utils/apiClient";

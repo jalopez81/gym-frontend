@@ -14,7 +14,7 @@ import {
   Stack
 } from '@mui/material';
 import { useAuthStore } from '@/store/authStore';
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 import MainTitle from '@/components/MainTitle';
 
 export default function LoginPage() {

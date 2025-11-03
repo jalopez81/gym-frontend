@@ -1,6 +1,6 @@
 'use client';
 
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 import { Orden } from '@/types';
 import { formatDateTime } from '@/utils';
 import apiClient from '@/utils/apiClient';

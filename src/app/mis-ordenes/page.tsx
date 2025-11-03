@@ -1,6 +1,6 @@
 'use client';
 
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 import MainTitle from '@/components/MainTitle';
 import apiClient from '@/utils/apiClient';
 import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
@@ -56,7 +56,7 @@ export default function OrdenesPage() {
   if (loading) return <Typography>Cargando órdenes...</Typography>;
 
   return (
-    <MyContainer className="mis-ordenes" sx={{ py: 4 }}>
+    <MyContainer className="mis-ordenes" isAuthGuard={true} sx={{ py: 4 }}>
       <MainTitle title="Mis órdenes" subtitle="Historial y estado de tus compras"/>
 
       {ordenes.length === 0 && <Typography>No tienes órdenes aún.</Typography>}

@@ -10,10 +10,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [rehidrated, setRehydrated] = useState(false);
 
   useEffect(() => setRehydrated(true), []);
-  useEffect(() => {
-    if (rehidrated && !usuario) router.push("/login");
-  }, [usuario, rehidrated, router]);
+  // useEffect(() => {
+  //   if (rehidrated && !usuario) router.push("/login");
+  // }, [usuario, rehidrated, router]);
 
-  if (!usuario) return null;
+  // if (!usuario) return null;
   return <>{children}</>
 }

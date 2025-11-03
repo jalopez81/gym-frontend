@@ -29,7 +29,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
-                  flex: 1                  
+                  flex: 1,
+                  background: "#ffffff"
                 }}
               >
                 {children}

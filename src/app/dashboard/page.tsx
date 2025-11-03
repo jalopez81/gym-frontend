@@ -17,7 +17,7 @@ import {
 } from '@mui/icons-material';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/authStore';
-import MyContainer from '@/components/Container';
+import MyContainer from '@/components/MyContainer';
 
 export default function DashboardPage() {
   const usuario = useAuthStore( s=> s.usuario);
@@ -40,7 +40,7 @@ export default function DashboardPage() {
   ];
 
   return (
-    <MyContainer className="page-dashboard">
+    <MyContainer className="page-dashboard" isAuthGuard={true}>
       <Typography variant="h4" gutterBottom fontWeight="bold">
         Bienvenido, {usuario?.nombre}!
       </Typography>
