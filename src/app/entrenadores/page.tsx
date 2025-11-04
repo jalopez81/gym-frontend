@@ -26,17 +26,19 @@ export default function EntrenadoresPage() {
   }, [])
 
   const clasesList = (clases: any) => {
+
     return (
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>{clases?.map((clase: any) => (
-        <Box key={clase.nombre} sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          background: '#ffffff',
-          color: '#000000',
-          padding: 1
-        }}>
-          <Typography variant="body1" sx={{fontWeight: 'bold'}}>{clase.nombre}</Typography>
+        <Box key={clase.nombre}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            background: '#ffffff',
+            color: '#000000',
+            padding: 1
+          }}>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{clase.nombre}</Typography>
           <Typography variant="subtitle2">{clase.duracion} minutos</Typography>
           <Typography variant="overline">Capacidad: {clase.capacidad} </Typography>
           <Button size="small">Inscribirse</Button>
@@ -56,7 +58,7 @@ export default function EntrenadoresPage() {
     <MyContainer sx={{ background: "#eeeeee" }}>
       <MainTitle title="Entrenadores" subtitle="Conoce a nuestros entrenadores y sus especialidades" />
 
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
         {entrenadores.map(ent => (
           <Box key={ent.id} sx={{ display: 'flex' }}>
             <Card sx={{
@@ -73,7 +75,7 @@ export default function EntrenadoresPage() {
                 <Typography variant="body2">{ent.experiencia} años de experiencia</Typography>
                 <Typography variant="body2">{ent.certificaciones}</Typography>
 
-                <Tooltip title={clasesList(ent.clases)} sx={{ background: "#ffffff" }}>
+                <Tooltip title={ent.clases.length ? clasesList( ent.classes ) : 'No tiene clases'} sx={{ background: "#ffffff" }}>
                   <Button variant='text' sx={{ m: 1 }}>Ver clases</Button>
                 </Tooltip>
               </Box>
