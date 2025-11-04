@@ -51,7 +51,7 @@ export default function MiSuscripcionPage() {
 
   if (loading) return <CircularProgress />
 
-  if (!suscripcion) return <SeleccionarPlan />
+  // if (!suscripcion) return <SeleccionarPlan />
 
   if (modoCambiarPlan)
     return <SeleccionarPlan onSelectPlan={cambiarPlan} />
@@ -68,7 +68,7 @@ export default function MiSuscripcionPage() {
               Vence: {new Date(suscripcion.fechaVencimiento).toLocaleDateString()}
             </Typography>
 
-            <Stack direction="row" spacing={2} mt={2} justifyContent="center">
+            <Stack direction="row" spacing={2} mt={2} justifyContent="center" alignItems="center">
               <Button variant="outlined" color="error" onClick={cancelar}>
                 Cancelar
               </Button>
@@ -76,7 +76,7 @@ export default function MiSuscripcionPage() {
                 Renovar
               </Button>
               <Button variant="contained" color="secondary" onClick={() => setModoCambiarPlan(true)}>
-                Cambiar plan
+                Cambiar
               </Button>
             </Stack>
           </CardContent>
