@@ -2,16 +2,18 @@
 import { useEffect, useState } from 'react'
 import { Card, CardContent, Typography, Button, CircularProgress, Stack } from '@mui/material'
 import apiClient from '@/utils/apiClient'
-import SeleccionarPlan from './seleccionar-plan'
 import MyContainer from '@/components/MyContainer'
 import MainTitle from '@/components/MainTitle'
-import AuthGuard from '@/components/AuthGuard'
+
+import Planes from '../planes/page'
+import { useRouter } from 'next/navigation'
 
 
 export default function MiSuscripcionPage() {
   const [suscripcion, setSuscripcion] = useState<any | null>(null)
   const [loading, setLoading] = useState(true)
   const [modoCambiarPlan, setModoCambiarPlan] = useState(false)
+  const router = useRouter();
 
   const cargar = async () => {
     try {
@@ -51,10 +53,10 @@ export default function MiSuscripcionPage() {
 
   if (loading) return <CircularProgress />
 
-  // if (!suscripcion) return <SeleccionarPlan />
+  if (!suscripcion) return router.push('/planes')
 
   if (modoCambiarPlan)
-    return <SeleccionarPlan onSelectPlan={cambiarPlan} />
+    return <Planes onSelectPlan={cambiarPlan} />
 
   return (
       <MyContainer className="suscripciones-container" isAuthGuard={true}>

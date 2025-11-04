@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import MyContainer from '@/components/MyContainer'
 import MainTitle from '@/components/MainTitle'
 
-export default function SeleccionarPlan({ onSelectPlan }: { onSelectPlan?: (planId: string) => void }) {
+export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: string) => void }) {
   const [planes, setPlanes] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()

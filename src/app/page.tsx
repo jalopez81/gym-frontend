@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/authStore';
 import { Box, Container, Typography, Button, Stack } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'; 
 
 export default function Home() {
   const router = useRouter();

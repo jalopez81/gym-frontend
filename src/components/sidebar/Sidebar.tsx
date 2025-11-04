@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { adminMenuItems, menuItems } from "./menu-items";
 import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
 
 
 export default function Sidebar() {
@@ -19,6 +20,7 @@ export default function Sidebar() {
   const secondary = theme.palette.secondary.main;
   const { fetch: fetchCart } = useCartStore();
   const { usuario, ROLES } = useAuthStore();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRemoteCart = async () => {
@@ -71,8 +73,11 @@ export default function Sidebar() {
         alignItems: 'center',
         margin: "1rem 0 2rem",
         position: 'relative',
-        overflow: 'hidden'
-      }}>
+        overflow: 'hidden',
+        cursor: 'pointer',
+      }}
+        onClick={() => router.push("/")}
+      >
         <img style={{ opacity: `${open ? 1 : 0}`, height: 'auto', width: 150, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="/logo-small.png" alt="logo" />
         <img style={{ opacity: `${open ? 0 : 1}`, height: 'auto', width: 40, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="/logo-x-small.png" alt="logo" />
         <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, transition: 'all 300ms' }}>Supera tus límites</Typography>

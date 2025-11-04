@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import apiClient from '@/utils/apiClient'
-import { Box, Card, CardContent, Typography, Grid, Avatar, CircularProgress, Divider, Button, Tooltip } from '@mui/material'
-import { CldImage } from 'next-cloudinary';
-import MyContainer from '@/components/MyContainer';
 import MainTitle from '@/components/MainTitle';
-import { Clase } from '@/types';
+import MyContainer from '@/components/MyContainer';
+import apiClient from '@/utils/apiClient';
+import { Box, Button, Card, CircularProgress, Tooltip, Typography } from '@mui/material';
+import { CldImage } from 'next-cloudinary';
+import { useEffect, useState } from 'react';
 
 export default function EntrenadoresPage() {
   const [entrenadores, setEntrenadores] = useState<any[]>([])
@@ -29,7 +28,7 @@ export default function EntrenadoresPage() {
   const clasesList = (clases: any) => {
     return (
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>{clases?.map((clase: any) => (
-        <Box sx={{
+        <Box key={clase.nombre} sx={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',

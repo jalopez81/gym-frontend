@@ -17,6 +17,7 @@ export const menuItems = [
   { text: 'Productos', icon: <ShoppingBag />, href: '/productos' },
   { text: 'Carrito', icon: <ShoppingCart />, href: '/carrito' },
   { text: 'Mis Órdenes', icon: <LocalShipping />, href: '/mis-ordenes' },
+  { text: 'Planes', icon: <CardMembership />, href: '/planes' },
   { text: 'Clases', icon: <FitnessCenter />, href: '/clases' },
   { text: 'Entrenadores', icon: <People />, href: '/entrenadores' },
   { text: 'Mis Suscripciones', icon: <CardMembership />, href: '/suscripciones' },
