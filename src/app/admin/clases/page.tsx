@@ -136,6 +136,7 @@ export default function AdminClases() {
                         <TableCell>Descripción</TableCell>
                         <TableCell>Duración</TableCell>
                         <TableCell>Capacidad</TableCell>
+                        <TableCell>Entrenador</TableCell>
                         <TableCell>Sesiones</TableCell>
                         <TableCell>Acciones</TableCell>
                     </TableRow>
@@ -147,6 +148,7 @@ export default function AdminClases() {
                             <TableCell>{clase.descripcion}</TableCell>
                             <TableCell>{clase.duracion} min</TableCell>
                             <TableCell>{clase.capacidad} personas</TableCell>
+                            <TableCell>{clase.entrenador.usuario.nombre}</TableCell>
                             <TableCell>
                                 <Button size="small" onClick={() => handleVerSesiones(clase.id)}>
                                     Ver sesiones

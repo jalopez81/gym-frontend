@@ -3,15 +3,16 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
 
-
 export default function AuthGuard({ children }: { children: React.ReactNode }) {
-  const { token } = useAuthStore();
+  const { token, hydrated } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) router.replace("/login");
-  }, [token, router]);
+    if (hydrated && !token) router.replace("/login");
+  }, [hydrated, token, router]);
 
+  if (!hydrated) return null;
   if (!token) return null;
+
   return <>{children}</>;
 }

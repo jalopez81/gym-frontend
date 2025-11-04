@@ -7,11 +7,13 @@ type Usuario = { id: string; nombre: string; email: string; rol: string; creado:
 type AuthState = {
   usuario: Usuario | null;
   token: string | null;
+  isLoading: boolean;
+  hydrated: boolean;
+  ROLES: Record<string, string>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   loadUsuario: () => Promise<void>;
-  isLoading: boolean;
-  ROLES: Record<string, string>;
+  setHydrated: (v: boolean) => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -20,6 +22,7 @@ export const useAuthStore = create<AuthState>()(
       usuario: null,
       token: null,
       isLoading: false,
+      hydrated: false,
       ROLES: {
         ADMIN: 'admin',
         CLIENTE: 'cliente',
@@ -27,9 +30,10 @@ export const useAuthStore = create<AuthState>()(
         RECEPCIONISTA: 'recepcionista'
       },
 
+      setHydrated: (v) => set({ hydrated: v }),
+
       login: async (email, password) => {
         const { data } = await apiClient.post("/auth/login", { email, password });
-
         set({ usuario: data.usuario, token: data.token });
       },
 
@@ -37,13 +41,9 @@ export const useAuthStore = create<AuthState>()(
         set({ usuario: null, token: null });
       },
 
-
       loadUsuario: async () => {
         const token = localStorage.getItem("token");
-        if (!token) {
-
-          return;
-        }
+        if (!token) return;
 
         try {
           const { data } = await apiClient.get("/auth/me");
@@ -51,11 +51,13 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           set({ usuario: null, token: null });
         }
-
       },
-    }), {
-    name: "auth-storage",
-  }),
-
-)
-
+    }),
+    {
+      name: "auth-storage",
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
+    }
+  )
+);
