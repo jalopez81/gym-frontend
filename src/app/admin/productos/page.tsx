@@ -19,7 +19,13 @@ export default function AdminProductosPage() {
         <Container sx={{ py: 4 }}>
             <Searchbar pagination={pagination} setPagination={setPagination} />
             <Button variant="contained" color="primary" onClick={() => setOpenCrear(true)}>Crear Producto</Button>
-            <ProductoTable productos={productos} fetchProductos={fetchProductos} />
+            <ProductoTable
+                productos={productos}
+                fetchProductos={fetchProductos}
+                pagination={pagination}
+                setPagination={setPagination}
+                
+                 />
             {openCrear && <CrearProducto onClose={() => { setOpenCrear(false); fetchProductos(); }} />}
         </Container>
     );

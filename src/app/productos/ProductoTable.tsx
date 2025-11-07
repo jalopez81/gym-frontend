@@ -1,15 +1,18 @@
 'use client';
 
-import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Producto, ProductPagination } from '@/types';
+import { Box, Pagination, Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Dispatch, SetStateAction } from "react";
 import ProductoRow from '../admin/productos/ProductoRow';
-import { Producto } from '@/types';
 
 type ProductoTableProps = {
     productos: Producto[];
-    fetchProductos: () => void
+    fetchProductos: () => void;
+    pagination: ProductPagination;
+    setPagination: Dispatch<SetStateAction<ProductPagination>>
 }
 
-export default function ProductoTable({ productos, fetchProductos }: ProductoTableProps) {
+export default function ProductoTable({ productos, fetchProductos, pagination, setPagination }: ProductoTableProps) {
     return (
         <Paper sx={{ mt: 3, p: 2 }}>
             <Table>
@@ -29,5 +32,14 @@ export default function ProductoTable({ productos, fetchProductos }: ProductoTab
                     ))}
                 </TableBody>
             </Table>
+            <Box sx={{ width: "100%", display: 'flex', justifyContent: "center", margin: "1rem 0" }}>
+                <Pagination
+                    count={pagination?.totalPaginas || 1}
+                    page={pagination.pagina}
+                    onChange={(e, value) => setPagination(prev => {
+                        return { ...prev, pagina: value }
+                    })}
+                />
+            </Box>
         </Paper>)
 }
