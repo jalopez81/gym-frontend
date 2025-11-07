@@ -6,6 +6,7 @@ export interface Usuario {
   creado: string;
   status: string;
   password?: string; 
+  imagenSecureUrl?: string;
 
 }
 

@@ -10,11 +10,13 @@ import {
     Box,
     Button,
     IconButton,
+    Popover,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TableRow,
+    Tooltip,
     Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -23,6 +25,7 @@ import EditClase from "./EditClase";
 import EditSesion from "./EditSesion";
 import SearchClase from "@/app/clases/SearchClase";
 import MainTitle from "@/components/MainTitle";
+import EntrenadorCard from "@/app/entrenadores/EntrenadorCard";
 
 export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
     nombre: string;
@@ -40,6 +43,8 @@ export default function AdminClases() {
     const [openEdit, setOpenEdit] = useState(false);
     const [claseEdit, setClaseEdit] = useState<Clase | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
 
     const [newClase, setNewClase] = useState<ClaseForm>({
         nombre: "Aeróbicos",
@@ -107,6 +112,17 @@ export default function AdminClases() {
         }
     };
 
+    const handleClick = (event: any) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const openPopover = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
+
+
     const filteredClases = clases.filter(c =>
         c.nombre.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -116,7 +132,7 @@ export default function AdminClases() {
 
     return (
         <MyContainer className="classes-container" style={{ padding: 20 }}>
-            <MainTitle title="Administrar clases" subtitle="Organización de clases, horarios y cupos"/>
+            <MainTitle title="Administrar clases" subtitle="Organización de clases, horarios y cupos" />
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'space-between' }}>
                 <SearchClase onSearch={setSearchTerm} />
                 <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
@@ -148,15 +164,46 @@ export default function AdminClases() {
                             <TableCell>{clase.descripcion}</TableCell>
                             <TableCell>{clase.duracion} min</TableCell>
                             <TableCell>{clase.capacidad} personas</TableCell>
-                            <TableCell>{clase.entrenador.usuario.nombre}</TableCell>
+
+                            <TableCell sx={{
+                                cursor: "pointer", '&:hover': {
+                                    background: 'lightyellow',
+                                    fontWeight: '400',
+                                    color: 'blue'
+                                }
+                            }}>
+                                <Typography
+                                    onClick={handleClick}>
+                                    {clase.entrenador.usuario.nombre}
+                                </Typography>
+                            </TableCell>
+
+                            <Popover
+                                id={id}
+                                open={openPopover}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'left',
+                                }}
+                            >
+                                <EntrenadorCard ent={clase.entrenador} />
+                            </Popover>
+
+
                             <TableCell>
                                 <Button size="small" onClick={() => handleVerSesiones(clase.id)}>
                                     Ver sesiones
                                 </Button>
                             </TableCell>
                             <TableCell>
-                                <IconButton onClick={() => { setClaseEdit(clase); setOpenEdit(true); }}><EditIcon /></IconButton>
-                                <IconButton onClick={() => handleDelete(clase.id)}><DeleteIcon /></IconButton>
+                                <Tooltip title="Editar clase">
+                                    <IconButton onClick={() => { setClaseEdit(clase); setOpenEdit(true); }}><EditIcon /></IconButton>
+                                </Tooltip>
+                                <Tooltip title="Borrar clase">
+                                    <IconButton onClick={() => handleDelete(clase.id)}><DeleteIcon /></IconButton>
+                                </Tooltip>
                             </TableCell>
 
                         </TableRow>
@@ -179,6 +226,7 @@ export default function AdminClases() {
                 open={openSesion}
                 onClose={() => setOpenSesion(false)}
                 claseId={claseSeleccionada}
+
             />
             {claseEdit && (
                 <EditClase
@@ -186,6 +234,7 @@ export default function AdminClases() {
                     onClose={() => setOpenEdit(false)}
                     clase={claseEdit}
                     onUpdated={fetchData}
+                    entrenadores={entrenadores}
                 />
             )}
         </MyContainer>
