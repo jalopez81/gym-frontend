@@ -100,7 +100,13 @@ export interface Suscripcion {
   fechaInicio: string;
   fechaVencimiento: string;
   estado: string;
-  creado: string;
+  creado: Suscripcion;
+}
+
+export enum EstadoSuscripcion {
+  ACTIVA = 'ACTIVA',
+  CANCELADA = 'CANCELADA',
+  VENCIDA = 'VENCIDA',
 }
 
 export interface Orden {

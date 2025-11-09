@@ -18,11 +18,10 @@ const classes = {
         paddingLeft: "12px",
         transition: "all 300ms ease-in",
         transform: `translateX(${added ? -285 : 0}px)`,
-        background: "#ffffff",
     }),
     priceInfo: {
         display: "flex",
-        flexDirection: "column",
+        flexDirection: "column",        
     },
     name: {
         fontSize: "1.2rem",
@@ -115,7 +114,7 @@ export const CardActions = ({ producto }: Props) => {
 
 
     return (
-        <Box sx={classes.root(added)} className="test-root">
+        <Box sx={classes.root(added)}>
             <Box sx={classes.priceInfo}>
                 <Typography sx={classes.name}>{producto.nombre}</Typography>
                 <Typography sx={classes.price}>${producto.precio}</Typography>

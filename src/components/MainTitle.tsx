@@ -2,7 +2,7 @@
 import { Typography } from '@mui/material'
 
 interface TituloProps {
-  title: string
+  title: string | any
   subtitle?: string
 }
 

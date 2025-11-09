@@ -17,7 +17,7 @@ export const CardProductInfo = ({ producto }: Props) => {
             onMouseEnter={() => setShowInfo(true)}
             onMouseLeave={() => setShowInfo(false)}
             sx={{
-                background: "#92879B",
+                background: "#ffeaea",
                 height: "90%",
                 width: 280,
                 position: "absolute",
@@ -25,7 +25,7 @@ export const CardProductInfo = ({ producto }: Props) => {
                 bottom: showInfo ? "15%" : "85%",
                 borderRadius: showInfo ? 0 : "10px 10px 10px 80px",
                 transition: 'all 300ms ease-in',
-                color: "#ffffff",
+                
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

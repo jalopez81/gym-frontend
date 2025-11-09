@@ -43,7 +43,7 @@ export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: strin
       />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         {planes.map((plan) => (
-          <Card key={plan.id} sx={{ width: 400, m: 2, position: "relative" }}>
+          <Card key={plan.id} sx={{ width: 400, m: 2, position: "relative", background: '#ffeaea' }}>
             <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
               <Box className="plan-details">
                 <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>

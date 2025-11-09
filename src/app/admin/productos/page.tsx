@@ -24,8 +24,7 @@ export default function AdminProductosPage() {
                 fetchProductos={fetchProductos}
                 pagination={pagination}
                 setPagination={setPagination}
-                
-                 />
+            />
             {openCrear && <CrearProducto onClose={() => { setOpenCrear(false); fetchProductos(); }} />}
         </Container>
     );
