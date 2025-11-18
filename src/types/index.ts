@@ -120,6 +120,14 @@ export interface Orden {
   usuario: Usuario;
 }
 
+export enum EstadoOrden {
+  COMPLETADA = 'COMPLETADA',
+  PENDIENTE = 'PENDIENTE',
+  PAGADA = 'PAGADA',
+  ENVIADA = 'ENVIADA',
+  CANCELADA = 'CANCELADA',
+}
+
 export interface OrdenItem {
   id: string;
   ordenId: string;

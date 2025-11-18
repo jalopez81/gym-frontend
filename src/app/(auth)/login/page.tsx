@@ -19,7 +19,7 @@ import MainTitle from '@/components/MainTitle';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
-  const [password, setPassword] = useState('admin123');
+  const [password, setPassword] = useState('123456');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -106,7 +106,7 @@ export default function LoginPage() {
             <Typography variant="subtitle2" fontWeight="bold">
               Cuentas de prueba:
             </Typography>
-            <Typography variant="body2">Admin: admin@gym.com / admin123</Typography>
+            <Typography variant="body2">Admin: admin@gym.com / 123456</Typography>
             <Typography variant="body2">Cliente: juan@gym.com / 123456</Typography>
           </Alert>
         </Paper>

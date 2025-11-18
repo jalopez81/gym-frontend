@@ -8,7 +8,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'GYM FiT',
+  title: 'PRO FiT',
   description: 'Aplicación de gestión de gimnasio'
 };
 
