@@ -15,15 +15,16 @@ export default function Footer() {
       }}
     >
       <Typography variant="body2">
-        © {new Date().getFullYear()} MyCompany. All rights reserved.
+        © {new Date().getFullYear()} PROFIT. 
+        Derechos reservados.
       </Typography>
       <Typography variant="body2" sx={{ mt: 0.5 }}>
         <Link href="/privacy" color="inherit" underline="hover">
-          Privacy Policy
+          Politica de privacidad
         </Link>{' '}
         |{' '}
         <Link href="/terms" color="inherit" underline="hover">
-          Terms of Service
+          Terminos y condiciones
         </Link>
       </Typography>
     </Box>

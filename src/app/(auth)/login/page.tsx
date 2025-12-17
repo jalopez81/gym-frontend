@@ -102,13 +102,13 @@ export default function LoginPage() {
             </Link>
           </Typography>
 
-          <Alert severity="info" sx={{ mt: 3 }}>
+          {/* <Alert severity="info" sx={{ mt: 3 }}>
             <Typography variant="subtitle2" fontWeight="bold">
               Cuentas de prueba:
             </Typography>
             <Typography variant="body2">Admin: admin@gym.com / 123456</Typography>
             <Typography variant="body2">Cliente: juan@gym.com / 123456</Typography>
-          </Alert>
+          </Alert> */}
         </Paper>
       </MyContainer>
     </Box>
