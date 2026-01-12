@@ -87,7 +87,7 @@ export default function Sidebar() {
         <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
           <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
             <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }} />
+            <ListItemText  primary={item.text} sx={{ fontSize: '0.8rem', overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }} />
           </ListItemButton>
         </Tooltip>)}
       </List>

@@ -52,7 +52,7 @@ const AdminUsuarios = () => {
             field: 'creado',
             headerName: 'Fecha registro',
             flex: 1,
-            valueGetter: (value, row) => formatDateTime(row.creado),
+            valueGetter: (row:any) => formatDateTime(row.creado),
         },
         {
             field: 'acciones',

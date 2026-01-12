@@ -2,6 +2,8 @@
 
 import { createTheme } from '@mui/material/styles';
 
+const config = JSON.parse(localStorage.getItem('config') || '{}');
+
 const theme = createTheme({
   components: {
      MuiOutlinedInput: {
@@ -14,10 +16,10 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#a43f4a',
+      main: config?.colorPrincipal || '#a43f4a',
     },
     secondary: {
-      main: '#ffcc29',
+      main: config?.colorSecundario || '#ffcc29',
     },
   },
    typography: {

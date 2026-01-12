@@ -1,5 +1,5 @@
 import { Producto } from '@/types';
-import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
+import InfoOutlineIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Typography } from "@mui/material";
 import { useState } from "react";
 

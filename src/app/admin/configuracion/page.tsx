@@ -54,12 +54,14 @@ export default function AdminConfiguracionPage() {
     const [saving, setSaving] = useState(false);
     const [reseteando, setReseteando] = useState(false);
     const { usuario, ROLES } = useAuthStore();
+    const [localConfig, setLocalConfig] = useState<Configuracion | null>(null);
 
     useEffect(() => {
         const fetchConfig = async () => {
             try {
                 const res = await apiClient.get('/configuracion');
                 setConfig(res.data);
+                localStorage.setItem('config', JSON.stringify(res.data));
             } catch (err: any) {
                 if (err.response?.status === 404) {
                     // Si no hay configuración, inicializamos una vacía para crearla
@@ -83,11 +85,12 @@ export default function AdminConfiguracionPage() {
                         notificarWhatsapp: false,
                         whatsappNumero: '',
                         logoUrl: '',
-                        colorPrincipal: '#1976d2',
-                        colorSecundario: '#9c27b0',
+                        colorPrincipal: '#a43f4a',
+                        colorSecundario: '#ffcc29',
                         creadoEn: '',
                         actualizadoEn: '',
                     });
+                    localStorage.setItem('config', JSON.stringify(config));
                 } else {
                     alert('Error al cargar configuración');
                 }
@@ -98,7 +101,10 @@ export default function AdminConfiguracionPage() {
     ;
 
     const handleChange = (field: keyof Configuracion, value: any) => {
-        if (config) setConfig({ ...config, [field]: value });
+        if (config) {
+            setConfig({ ...config, [field]: value });
+            localStorage.setItem('config', JSON.stringify(config));
+        }
     };
 
     const handleGuardar = async () => {
@@ -225,10 +231,10 @@ export default function AdminConfiguracionPage() {
                         <TextField fullWidth label="URL del logo" value={config.logoUrl} onChange={(e) => handleChange('logoUrl', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth type="color" label="Color principal" value={config.colorPrincipal} onChange={(e) => handleChange('colorPrincipal', e.target.value)} />
+                        <TextField fullWidth type="color" label="Color principal" value={localConfig?.colorPrincipal ||  config.colorPrincipal} onChange={(e) => handleChange('colorPrincipal', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth type="color" label="Color secundario" value={config.colorSecundario} onChange={(e) => handleChange('colorSecundario', e.target.value)} />
+                        <TextField fullWidth type="color" label="Color secundario" value={localConfig?.colorSecundario ||  config.colorSecundario} onChange={(e) => handleChange('colorSecundario', e.target.value)} />
                     </Grid>
                 </Grid>
 
