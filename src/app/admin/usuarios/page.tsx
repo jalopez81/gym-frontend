@@ -52,13 +52,13 @@ const AdminUsuarios = () => {
             field: 'creado',
             headerName: 'Fecha registro',
             flex: 1,
-            valueGetter: (row:any) => formatDateTime(row.creado),
+            valueGetter: (row: any) => formatDateTime(row.value),
         },
         {
             field: 'acciones',
             headerName: 'Acciones',
             renderCell: (params) => (
-                <IconButton onClick={() => handleEditar(params.row)}><EditIcon /></IconButton>                
+                <IconButton onClick={() => handleEditar(params.row)}><EditIcon /></IconButton>
             ),
         },
 
