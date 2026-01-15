@@ -39,7 +39,7 @@ export default function EntrenadoresPage() {
       <MainTitle title="Entrenadores" subtitle="Conoce a nuestros entrenadores y sus especialidades" />
 
       <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
-        {entrenadores.map(ent => <EntrenadorCard ent={ent} />)}
+        {entrenadores.map(ent => <EntrenadorCard key={ent.id} ent={ent} />)}
       </Box>
     </MyContainer>
   )
