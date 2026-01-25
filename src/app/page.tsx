@@ -3,6 +3,7 @@
 import MyContainer from '@/components/MyContainer';
 import { useAuthStore } from '@/store/authStore';
 import { Box, Container, Typography, Button, Stack } from '@mui/material';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'; 
@@ -31,7 +32,7 @@ export default function Home() {
     >
       <Container maxWidth="sm">
         <Box sx={{ textAlign: 'center' }}>
-          <img src="logo-big-png.png" alt="logo" style={{ width: 'auto', height: '300px'}} />
+          <Image src="logo-big-png.png" alt="logo" style={{ width: 'auto', height: '300px'}} />
           <Typography variant="h5" gutterBottom sx={{ mb: 4 }} color="GrayText">
             Gestiona tu entrenamiento y suscripción
           </Typography>

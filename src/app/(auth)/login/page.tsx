@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   Box,
-  Container,
   Typography,
   TextField,
   Button,
@@ -33,7 +32,8 @@ export default function LoginPage() {
     try {
       await login(email, password);      
       router.push('/dashboard');
-    } catch (err: any) {
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (err: any) {
       setError(err.response?.data?.mensaje || 'Error al iniciar sesión');
     } finally {
       setIsLoading(false);

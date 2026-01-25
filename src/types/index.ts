@@ -91,6 +91,7 @@ export interface Plan {
   duracionDias: number;
   beneficios?: string;
   creado: string;
+  nivel: number;
 }
 
 export interface Suscripcion {
@@ -101,6 +102,7 @@ export interface Suscripcion {
   fechaVencimiento: string;
   estado: string;
   creado: Suscripcion;
+  plan: Plan;
 }
 
 export enum EstadoSuscripcion {

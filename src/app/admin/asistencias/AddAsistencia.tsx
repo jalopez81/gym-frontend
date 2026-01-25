@@ -60,7 +60,7 @@ export default function AddAsistencia({
             onChange={(e) => setNueva({ ...nueva, sesionId: e.target.value })}
             label="Sesión"
           >
-            {sesionesCliente.map((s: any) => (
+            {sesionesCliente.map((s: Sesion) => (
               <MenuItem key={s.id} value={s.id}>
                 {s.clase?.nombre
                   ? `${s.clase.nombre} — ${formatDateTime(s.fechaHora)}`

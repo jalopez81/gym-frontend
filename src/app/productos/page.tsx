@@ -10,7 +10,7 @@ import Searchbar from "./searchbar";
 import { useProductos } from "@/hooks/useProductos";
 
 export default function ProductosPage() {
-  const { productos, pagination, setPagination, loading, error, fetchProductos } = useProductos();
+  const { productos, pagination, setPagination, loading, error } = useProductos();
 
   if (error) return <Typography color="error">{error}</Typography>;
 

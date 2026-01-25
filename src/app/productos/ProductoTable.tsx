@@ -27,7 +27,7 @@ export default function ProductoTable({ productos, fetchProductos, pagination, s
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {productos.map((prod: any) => (
+                    {productos.map((prod: Producto) => (
                         <ProductoRow key={prod.id} producto={prod} refresh={fetchProductos} />
                     ))}
                 </TableBody>

@@ -7,11 +7,11 @@ import MainTitle from '@/components/MainTitle'
 
 import Planes from '../planes/page'
 import { useRouter } from 'next/navigation'
-import { EstadoSuscripcion } from '@/types'
+import { EstadoSuscripcion, Suscripcion } from '@/types'
 
 
 export default function MiSuscripcionPage() {
-  const [suscripcion, setSuscripcion] = useState<any | null>(null)
+  const [suscripcion, setSuscripcion] = useState<Suscripcion | null>(null)
   const [loading, setLoading] = useState(true)
   const [modoCambiarPlan, setModoCambiarPlan] = useState(false)
   const router = useRouter();

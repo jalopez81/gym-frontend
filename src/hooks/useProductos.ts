@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { listarProductos } from '@/services/productos';
 import { ProductPagination, Producto } from '@/types';
 
@@ -16,30 +16,33 @@ export function useProductos() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function fetchProductos() {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await listarProductos({
-        pagina: pagination.pagina,
-        limite: pagination.limite,
-        busqueda: pagination.busqueda,
-      });
-      setProductos(response.data.productos);
-      setPagination(prev => ({
-        ...prev,
-        ...response.data.paginacion
-      }));
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
+const fetchProductos = useCallback(async () => {
+  setLoading(true);
+  setError(null);
+  try {
+    const response = await listarProductos({
+      pagina: pagination.pagina,
+      limite: pagination.limite,
+      busqueda: pagination.busqueda,
+    });
+    
+    setProductos(response.data.productos);
+    
+    setPagination(prev => ({
+      ...prev,
+      ...response.data.paginacion
+    }));
+  } catch (err: unknown) {
+    const error = err as { message: string };
+    setError(error.message);
+  } finally {
+    setLoading(false);
   }
+}, [pagination.pagina, pagination.limite, pagination.busqueda]); // Dependencias de la función
 
-  useEffect(() => {
-    fetchProductos();
-  }, [pagination.pagina, pagination.limite, pagination.busqueda]);
+useEffect(() => {
+  fetchProductos();
+}, [fetchProductos]); 
 
   return { productos, pagination, setPagination, loading, error, fetchProductos };
 }

@@ -44,7 +44,8 @@ export default function RegistroPage() {
     try {
       await registro(email, nombre, password);
       router.push('/dashboard');
-    } catch (err: any) {
+    } // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (err: any) {
       setError(err.response?.data?.mensaje || 'Error al registrarse');
     } finally {
       setIsLoading(false);

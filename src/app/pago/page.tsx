@@ -15,7 +15,7 @@ import {
   Divider
 } from '@mui/material';
 import { useRouter } from 'next/navigation';
-import Cards from 'react-credit-cards-2';
+import Cards, { Focused } from 'react-credit-cards-2';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { useCartStore } from '@/store/cartStore';
 import { crearOrden } from '@/services/checkout';
@@ -114,7 +114,7 @@ export default function PaymentPage() {
                   expiry={cardData.expiry}
                   cvc={cardData.cvc}
                   name={cardData.name}
-                  focused={cardData.focus as any}
+                  focused={cardData.focus as Focused}
                 />
               </Box>
 
@@ -179,7 +179,7 @@ export default function PaymentPage() {
                       size="large"
                       sx={{ mt: 2 }}
                     >
-                      Pagar ${total.toFixed(2)}
+                      {loading ? 'Procesando...' : `Pagar $ ${total.toFixed(2)}`}
                     </Button>
                   </Grid>
                 </Grid>

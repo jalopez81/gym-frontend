@@ -5,9 +5,10 @@ import apiClient from '@/utils/apiClient'
 import { useRouter } from 'next/navigation'
 import MyContainer from '@/components/MyContainer'
 import MainTitle from '@/components/MainTitle'
+import { Plan } from '@/types'
 
 export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: string) => void }) {
-  const [planes, setPlanes] = useState<any[]>([])
+  const [planes, setPlanes] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
@@ -42,7 +43,7 @@ export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: strin
         subtitle={onSelectPlan ? 'Elige tu nuevo plan de suscripción' : 'Elige el plan de suscripción que mejor se adapte a tus objetivos'}
       />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-        {planes.map((plan) => (
+        {planes.map((plan: Plan) => (
           <Card key={plan.id} sx={{ width: 400, m: 2, position: "relative", background: '#ffeaea' }}>
             <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
               <Box className="plan-details">

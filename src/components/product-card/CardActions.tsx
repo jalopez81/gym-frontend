@@ -88,9 +88,9 @@ export const CardActions = ({ producto }: Props) => {
 
     useEffect(()=>{
          const stored = localStorage.getItem('cart-storage')
-         const exists = stored && JSON.parse(stored)?.state.items.some((el: any) => el.producto.id === producto.id);
+         const exists = stored && JSON.parse(stored)?.state.items.some((el: CarritoItem) => el.producto.id === producto.id);
          setAdded(exists);
-    }, [])
+    }, [producto.id])
 
     const switchHovered = (value: boolean) => {
         setHovered(value)
