@@ -40,6 +40,12 @@ export interface Clase {
 
 export type ClaseDisplay = Clase & { entrenador: Entrenador };
 
+export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
+    nombre: string;
+    duracion: number;
+    capacidad: number;
+}
+
 export interface Entrenador {
   id: string;
   usuarioId: string;

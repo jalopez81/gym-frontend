@@ -79,8 +79,36 @@ export default function Sidebar() {
       }}
         onClick={() => router.push("/")}
       >
-        <Image style={{ opacity: `${open ? 1 : 0}`, height: 'auto', width: 150, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="/logo-small.png" alt="logo" />
-        <Image style={{ opacity: `${open ? 0 : 1}`, height: 'auto', width: 40, position: 'absolute', top: 0, left: "50%", transform: 'translateX(-50%)', transition: 'all 300ms' }} src="/logo-x-small.png" alt="logo" />
+        <Image
+          src="/logo-small.png"
+          alt="Logo principal"
+          width={150}
+          height={40} 
+          style={{
+            opacity: open ? 1 : 0,
+            position: 'absolute',
+            top: 0,
+            left: "50%",
+            transform: 'translateX(-50%)',
+            transition: 'opacity 300ms' 
+          }}
+          priority
+        />
+
+        <Image
+          src="/logo-x-small.png"
+          alt="Logo icono"
+          width={40}
+          height={40}
+          style={{
+            opacity: open ? 0 : 1,
+            position: 'absolute',
+            top: 0,
+            left: "50%",
+            transform: 'translateX(-50%)',
+            transition: 'opacity 300ms'
+          }}
+        />
         <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, transition: 'all 300ms' }}>Supera tus límites</Typography>
       </Box>
 

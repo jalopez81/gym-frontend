@@ -11,14 +11,16 @@ apiClient.interceptors.request.use(
     if (typeof window !== "undefined") {
       const storage = localStorage.getItem("auth-storage");
       if (storage) {
-        const authStorage = JSON.parse(storage);
+        const authStorage = JSON.parse(storage) as { state: { token?: string } };
         const token = authStorage.state.token;
-        config.headers.Authorization = `Bearer ${token}`;
+        
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
       }
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
-
 export default apiClient;

@@ -58,7 +58,7 @@ export const useCartStore = create<CartState>()(
         fetch: async () => {
           const response = await apiClient.get('/carrito');
           const data = response.data.items;
-          data.forEach((item: any) => {
+          data.forEach((item: CarritoItem) => {
             get().add(item);
           });
         }

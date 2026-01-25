@@ -2,7 +2,7 @@
 
 import MyContainer from "@/components/MyContainer";
 import LoadingAnimation from "@/components/LoadingAnimatino";
-import { Clase, Entrenador, Sesion } from "@/types";
+import { Clase, ClaseForm, Entrenador, Sesion } from "@/types";
 import apiClient from "@/utils/apiClient";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -26,12 +26,6 @@ import EditSesion from "./EditSesion";
 import SearchClase from "@/app/clases/SearchClase";
 import MainTitle from "@/components/MainTitle";
 import EntrenadorCard from "@/app/entrenadores/EntrenadorCard";
-
-export interface ClaseForm extends Partial<Omit<Clase, 'id' | 'entrenador' | 'sesiones'>> {
-    nombre: string;
-    duracion: number;
-    capacidad: number;
-}
 
 export default function AdminClases() {
     const [clases, setClases] = useState<Clase[]>([]);
@@ -112,9 +106,9 @@ export default function AdminClases() {
         }
     };
 
-    const handleClick = (event: any) => {
-        setAnchorEl(event.currentTarget);
-    };
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+};
 
     const handleClose = () => {
         setAnchorEl(null);

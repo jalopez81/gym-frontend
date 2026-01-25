@@ -1,6 +1,6 @@
 'use client'
 
-import { Entrenador } from "@/types";
+import { ClaseForm, Entrenador } from "@/types";
 import {
   Button,
   Dialog,
@@ -18,7 +18,7 @@ import {
   TableRow,
   TextField
 } from "@mui/material";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface SesionTemp {
   fechaHora: string;
@@ -27,8 +27,8 @@ interface SesionTemp {
 interface ClaseFormDialogProps {
   open: boolean;
   onClose: () => void;
-  newClase: any;
-  setNewClase: (data: any) => void;
+  newClase: ClaseForm;  
+  setNewClase: Dispatch<SetStateAction<ClaseForm>>;
   entrenadorSeleccionado: string;
   setEntrenadorSeleccionado: (id: string) => void;
   entrenadores: Entrenador[];

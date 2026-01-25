@@ -40,7 +40,7 @@ export default function AdminBackups() {
     if (!confirm(`¿Esta seguro de que desea eliminar el backup ${id}?`)) return
     const res = await apiClient.delete(`/backups/${id}/eliminar`)
     if(res.status === 200){
-      setBackups(prev => backups.filter(b=> b.id !== id));
+      setBackups(backups.filter(b=> b.id !== id));
     }    
   }
 
@@ -50,7 +50,7 @@ export default function AdminBackups() {
 
   const columnas: GridColDef<Backup>[] = [
     { field: 'nombre', headerName: 'Nombre', flex: 1 },
-    { field: 'fecha', headerName: 'Fecha', flex: 1, valueGetter: (r:any) => formatDateTime(r.fecha) },
+    { field: 'fecha', headerName: 'Fecha', flex: 1, valueGetter: (value) => formatDateTime(value) },
     { field: 'tamaño', headerName: 'Tamaño', flex: 1 },
     {
       field: 'acciones',
