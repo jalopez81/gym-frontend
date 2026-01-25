@@ -7,7 +7,7 @@ import MyContainer from '@/components/MyContainer'
 import MainTitle from '@/components/MainTitle'
 import { Plan } from '@/types'
 
-export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: string) => void }) {
+export default function Planes() {
   const [planes, setPlanes] = useState<Plan[]>([])
   const [loading, setLoading] = useState(true)
   const router = useRouter()
@@ -22,10 +22,6 @@ export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: strin
   }
 
   const suscribirse = async (planId: string) => {
-    if (onSelectPlan) {
-      onSelectPlan(planId)
-      return
-    }
     await apiClient.post('/suscripciones', { planId })
     router.push('/suscripciones')
   }
@@ -39,8 +35,8 @@ export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: strin
   return (
     <MyContainer isAuthGuard={true}>
       <MainTitle
-        title={onSelectPlan ? 'Cambiar Plan' : 'Seleccionar Plan'}
-        subtitle={onSelectPlan ? 'Elige tu nuevo plan de suscripción' : 'Elige el plan de suscripción que mejor se adapte a tus objetivos'}
+        title={"Seleccionar Plan"}
+        subtitle={"Elige el plan de suscripción que mejor se adapte a tus objetivos"}
       />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         {planes.map((plan: Plan) => (
@@ -73,7 +69,7 @@ export default function Planes({ onSelectPlan }: { onSelectPlan?: (planId: strin
                 sx={{ mt: 2 }}
                 onClick={() => suscribirse(plan.id)}
               >
-                {onSelectPlan ? 'Seleccionar' : 'Suscribirme'}
+                Suscribirme
               </Button>
             </CardContent>
           </Card>
