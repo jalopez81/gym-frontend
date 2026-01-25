@@ -3,13 +3,13 @@
 import MainTitle from '@/components/MainTitle';
 import MyContainer from '@/components/MyContainer';
 import apiClient from '@/utils/apiClient';
-import { Box, Button, Card, CircularProgress, Tooltip, Typography } from '@mui/material';
-import { CldImage } from 'next-cloudinary';
+import { Box, CircularProgress } from '@mui/material';
 import { useEffect, useState } from 'react';
 import EntrenadorCard from './EntrenadorCard';
+import { Entrenador } from '@/types';
 
 export default function EntrenadoresPage() {
-  const [entrenadores, setEntrenadores] = useState<any[]>([])
+  const [entrenadores, setEntrenadores] = useState<Entrenador[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

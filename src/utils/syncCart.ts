@@ -1,4 +1,3 @@
-import { useCartStore } from "@/store/cartStore";
 import apiClient from "./apiClient";
 
 export const syncCart = async () => {

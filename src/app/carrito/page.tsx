@@ -2,16 +2,14 @@
 
 import MyContainer from '@/components/MyContainer';
 import MainTitle from '@/components/MainTitle'
-import AuthGuard from '@/components/AuthGuard'
 import { useCartStore } from '@/store/cartStore';
-import { Producto } from '@/types';
+import { Producto, CarritoItem } from '@/types';
 import apiClient from '@/utils/apiClient';
 import { debounce } from '@/utils/debounce';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
   Box,
   Button,
-  Container,
   Divider,
   IconButton,
   Paper,
@@ -23,21 +21,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-async function update(producto: Producto, cantidad: number) { await apiClient.post(`/carrito`, { producto, cantidad }) }
+async function update(_id: string, producto: Producto, cantidad: number) { await apiClient.post(`/carrito`, { producto, cantidad }) }
 
 const debouncedUpdate = debounce(update, 1500)
 
 export default function CartPage() {
   const router = useRouter();
   const { remove, clearCart, setQty, fetch, items } = useCartStore();
-  const [disableSubs, setDisableSubs] = useState(false);
-  const [disableAdd, setDisableAdd] = useState(false);
 
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     let t = 0;
-    items.forEach(item => t += item.producto.precio * item.cantidad);
+    items.forEach((item: CarritoItem) => t += item.producto.precio * item.cantidad);
     setTotal(t);
   }, [items]);
 
@@ -66,28 +62,22 @@ export default function CartPage() {
   }
 
 
-  const handleSubtractQuantity = async (item: any) => {
+  const handleSubtractQuantity = async (item: CarritoItem) => {
     const cantidad = item.cantidad - 1;
 
     if (cantidad === 0) return
 
     setQty(item.producto.id, cantidad)
-    debouncedUpdate(item.producto, cantidad)
-
-    // disable button if qty=0
-    setDisableAdd(cantidad === 0);
+    debouncedUpdate(item.producto.id, item.producto, cantidad)
   }
 
-  const handleAddQuantity = async (item: any) => {
+  const handleAddQuantity = async (item: CarritoItem) => {
     const cantidad = item.cantidad + 1;
     setQty(item.producto.id, cantidad)
-    debouncedUpdate(item.producto, cantidad)
-
-    // disable button if qty=0
-    setDisableAdd(cantidad === 0);
+    debouncedUpdate(item.producto.id, item.producto, cantidad)
   }
 
-  const handleRemove = async (item: any) => {
+  const handleRemove = async (item: CarritoItem) => {
     remove(item.producto.id)
     await apiClient.delete(`/carrito/${item.producto.id}`)
   }
@@ -106,7 +96,7 @@ export default function CartPage() {
       <MainTitle title='Carrito' subtitle='Aquí puedes remover artículos o cambiar la cantidad' />
       <Paper elevation={3} sx={{ p: 4, maxWidth: 770 }}>
         <Stack spacing={2}>
-          {items.map(item => (
+          {items.map((item: CarritoItem) => (
             <Paper key={item.producto.id} sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
               <CldImage
                 src={item.producto.imagenSecureUrl}
