@@ -1,4 +1,4 @@
-import apiClient from "@/lib/axios";
+import axios from "axios";
 import { useAuthStore } from "@/store/authStore"
 import { AuthResponse } from "@/types";
 import { useEffect } from "react"
@@ -13,7 +13,7 @@ export const useAuth = () => {
 
     const login = async (email: string, password: string) => {
         try {
-            const response = await apiClient.post<AuthResponse>('/auth/login', { email, password })
+            const response = await axios.post<AuthResponse>('/auth/login', { email, password })
             const { usuario, token } = response.data.datos;
             setAuth(usuario, token)
             return response;
@@ -25,7 +25,7 @@ export const useAuth = () => {
 
     const registro = async (nombre: string, email: string, password: string) => {
         try {
-            const response = await apiClient.post<AuthResponse>('/auth/registro', { nombre, email, password })
+            const response = await axios.post<AuthResponse>('/auth/registro', { nombre, email, password })
             const { usuario, token } = response.data.datos;
             setAuth(usuario, token)
             return response;

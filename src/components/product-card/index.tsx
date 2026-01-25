@@ -11,6 +11,8 @@ type Props = {
 };
 
 export function ProductoCard({ producto }: Props) {
+
+    if(producto.imagenSecureUrl === "") return null;
     
     return (
         <Box 

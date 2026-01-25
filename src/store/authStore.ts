@@ -14,6 +14,9 @@ type AuthState = {
   logout: () => void;
   loadUsuario: () => Promise<void>;
   setHydrated: (v: boolean) => void;
+  setAuth: (usuario: Usuario, token: string) => void;
+  isAuthenticated: () => boolean;
+  loadFromLocalStorage: () => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -32,24 +35,54 @@ export const useAuthStore = create<AuthState>()(
 
       setHydrated: (v) => set({ hydrated: v }),
 
+      isAuthenticated: () => !!get().token && !!get().usuario,
+
+      setAuth: (usuario, token) => set({ usuario, token }),
+
+      loadFromLocalStorage: () => {
+        try {
+          const storedData = localStorage.getItem("auth-storage");
+          if (!storedData) return;
+
+          const parsed = JSON.parse(storedData);
+          if (parsed?.state) {
+            set({
+              usuario: parsed.state.usuario,
+              token: parsed.state.token,
+            });
+          }
+        } catch (error) {
+          console.error("Error al cargar desde localStorage:", error);
+        }
+      },
+
       login: async (email, password) => {
-        const { data } = await apiClient.post("/auth/login", { email, password });
-        set({ usuario: data.usuario, token: data.token });
+        set({ isLoading: true });
+        try {
+          const { data } = await apiClient.post("/auth/login", { email, password });
+          set({ usuario: data.usuario, token: data.token });
+        } finally {
+          set({ isLoading: false });
+        }
       },
 
       logout: () => {
         set({ usuario: null, token: null });
+        localStorage.removeItem("auth-storage"); // Limpieza manual opcional
       },
 
       loadUsuario: async () => {
-        const token = localStorage.getItem("token");
-        if (!token) return;
+        const currentToken = get().token;
+        if (!currentToken) return;
 
+        set({ isLoading: true });
         try {
           const { data } = await apiClient.get("/auth/me");
-          set({ usuario: data.usuario, token });
-        } catch {
+          set({ usuario: data.usuario });
+        } catch (error) {
           set({ usuario: null, token: null });
+        } finally {
+          set({ isLoading: false });
         }
       },
     }),
