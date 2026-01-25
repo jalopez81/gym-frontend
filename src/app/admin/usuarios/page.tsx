@@ -10,7 +10,6 @@ import {
     Select,
     MenuItem,
     TextField,
-    Autocomplete,
     IconButton,
 } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
@@ -52,7 +51,7 @@ const AdminUsuarios = () => {
             field: 'creado',
             headerName: 'Fecha registro',
             flex: 1,
-            valueGetter: (row: any) => formatDateTime(row.value),
+            valueGetter: (params) => formatDateTime(params.value),
         },
         {
             field: 'acciones',

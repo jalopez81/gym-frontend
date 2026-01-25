@@ -2,7 +2,7 @@
 
 import MyContainer from "@/components/MyContainer";
 import LoadingAnimation from "@/components/LoadingAnimatino";
-import { Clase, ClaseForm, Entrenador, Sesion } from "@/types";
+import { Clase, ClaseForm, Entrenador } from "@/types";
 import apiClient from "@/utils/apiClient";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';

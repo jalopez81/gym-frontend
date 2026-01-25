@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Tabs, Tab, Box, Button } from "@mui/material";
 import MyContainer from "@/components/MyContainer";
 import apiClient from "@/utils/apiClient";
@@ -16,7 +16,7 @@ export default function Reportes() {
   const [tab, setTab] = useState("ordenes");
   const [loading, setLoading] = useState(false);
 
-  const fetchReportes = async () => {
+  const fetchReportes = useCallback(async () => {
     setLoading(true);
     try {
       const res = await apiClient.get(`/reportes/${tab}`);
@@ -26,7 +26,7 @@ export default function Reportes() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [tab]);
 
   const fetchReportesDownload = async () => {
     setLoading(true);
@@ -53,7 +53,7 @@ export default function Reportes() {
 
   useEffect(() => {
     fetchReportes();
-  }, [tab]);
+  }, [fetchReportes]);
 
   return (
     <MyContainer className="reportes-container">

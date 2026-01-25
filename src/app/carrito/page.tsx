@@ -44,7 +44,7 @@ export default function CartPage() {
       fetch();
     }
 
-  }, [])
+  }, [fetch, items.length])
 
 
   const handleCheckout = async () => {

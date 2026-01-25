@@ -13,9 +13,10 @@ import {
     Typography
 } from '@mui/material'
 import apiClient from '@/utils/apiClient'
+import { Suscripcion } from '@/types'
 
 export default function SuscripcionesPage() {
-    const [suscripciones, setSuscripciones] = useState<any[]>([])
+    const [suscripciones, setSuscripciones] = useState<Suscripcion[]>([])
     const [loading, setLoading] = useState(true)
     const [search, setSearch] = useState('')
 
@@ -33,7 +34,7 @@ export default function SuscripcionesPage() {
     if (loading) return <CircularProgress />
 
     const filtradas = suscripciones.filter(
-        (s) =>
+        (s: Suscripcion) =>
             s.usuario.nombre.toLowerCase().includes(search.toLowerCase()) ||
             s.plan.nombre.toLowerCase().includes(search.toLowerCase())
     )

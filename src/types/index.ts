@@ -103,6 +103,7 @@ export interface Plan {
 export interface Suscripcion {
   id: string;
   usuarioId: string;
+  usuario: Usuario;
   planId: string;
   fechaInicio: string;
   fechaVencimiento: string;

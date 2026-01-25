@@ -1,28 +1,36 @@
 import { Box } from "@mui/material";
 import { formatDateTime } from "@/utils";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 
-export const colsDef = {
+type ColsDefType = {
+  ordenes: GridColDef[];
+  productos: GridColDef[];
+  suscripciones: GridColDef[];
+  asistencias: GridColDef[];
+};
+
+export const colsDef: ColsDefType = {
   ordenes: [
     { field: "id", headerName: "ID", width: 100 },
     {
       field: "fecha",
       headerName: "Fecha",
       width: 200,
-      renderCell: (params: any) => formatDateTime(params.value),
+      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string),
     },
     { field: "cliente", headerName: "Cliente", width: 200 },
     {
       field: "total",
       headerName: "Total",
       width: 200,
-      renderCell: (params: any) => `$${params.value}`,
+      renderCell: (params: GridRenderCellParams) => `$${params.value}`,
     },
     {
       field: "estado",
       headerName: "Estado",
       width: 200,
-      renderCell: (params: any) => {
-        const v = params.value?.toUpperCase?.() ?? "";
+      renderCell: (params: GridRenderCellParams) => {
+        const v = (params.value as string)?.toUpperCase?.() ?? "";
         const colorMap: Record<string, string> = {
           PAGADA: "green",
           COMPLETADA: "green",
@@ -42,7 +50,7 @@ export const colsDef = {
       field: "precio",
       headerName: "Precio",
       width: 200,
-      renderCell: (params: any) => `$${params.value}`,
+      renderCell: (params: GridRenderCellParams) => `$${params.value}`,
     },
     { field: "stock", headerName: "Stock", width: 200 },
     { field: "categoria", headerName: "Categoría", width: 200 },
@@ -73,14 +81,14 @@ export const colsDef = {
       field: "inicio",
       headerName: "Inicio",
       width: 150,
-      renderCell: (params: any) => formatDateTime(params.value),
+      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string),
     },
 
     {
       field: "fin",
       headerName: "Fin",
       width: 200,
-      renderCell: (params: any) => formatDateTime(params.value),
+      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string),
     },
   ],
 
@@ -91,7 +99,7 @@ export const colsDef = {
       field: "sesion",
       headerName: "Sesión",
       width: 220,
-      renderCell: (params: any) => formatDateTime(params.value )|| ""
+      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string) || ""
     },
 
     {
@@ -104,7 +112,7 @@ export const colsDef = {
       field: "horaEntrada",
       headerName: "Entrada",
       width: 150,
-      renderCell: (params: any) => formatDateTime(params.value )|| ""
+      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string) || ""
     },
   ],
 };

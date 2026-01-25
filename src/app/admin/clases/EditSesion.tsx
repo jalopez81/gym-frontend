@@ -16,8 +16,9 @@ import {
   CircularProgress,
   IconButton
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import apiClient from "@/utils/apiClient";
+import { isAxiosError } from "axios";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Sesion {
@@ -36,9 +37,9 @@ export default function EditSesion({ open, onClose, claseId }: SesionFormDialogP
   const [fechaHora, setFechaHora] = useState<string>("");
   const [sesiones, setSesiones] = useState<Sesion[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchSesiones = async () => {
+  const fetchSesiones = useCallback(async () => {
     try {
       setLoading(true);
       const res = await apiClient.get(`/sesiones/clase/${claseId}`);
@@ -48,11 +49,11 @@ export default function EditSesion({ open, onClose, claseId }: SesionFormDialogP
     } finally {
       setLoading(false);
     }
-  };
+  }, [claseId]);
   
   useEffect(() => {
     if (open && claseId) fetchSesiones();
-  }, [open, claseId]);
+  }, [open, claseId, fetchSesiones]);
 
   const handleSave = async () => {
     if (!fechaHora) return;
@@ -62,9 +63,13 @@ export default function EditSesion({ open, onClose, claseId }: SesionFormDialogP
       });
       setFechaHora("");
       await fetchSesiones();
-    } catch (err:any) {
-      const message = err.response.data.mensaje;
-      setError(message);      
+    } catch (err) {
+      if (isAxiosError(err)) {
+        const message = err.response?.data?.mensaje || "Error al guardar la sesión";
+        setError(message);
+      } else {
+        setError("Ocurrió un error inesperado");
+      }
     }
   };
 

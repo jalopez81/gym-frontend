@@ -8,7 +8,9 @@ import EditProducto from './EditProducto';
 import apiClient from '@/utils/apiClient';
 import { CldImage } from 'next-cloudinary';
 
-export default function ProductoRow({ producto, refresh }: any) {
+import { Producto } from '@/types';
+
+export default function ProductoRow({ producto, refresh }: { producto: Producto, refresh: () => void }) {
   const [openEdit, setOpenEdit] = useState(false);
 
   const handleDelete = async () => {

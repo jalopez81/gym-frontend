@@ -4,7 +4,9 @@ import apiClient from '@/utils/apiClient';
 import { Box, Button, Modal, Paper, Stack, TextField } from '@mui/material';
 import { useState } from 'react';
 
-export default function CrearProducto({ onClose }: any) {
+import Image from 'next/image';
+
+export default function CrearProducto({ onClose }: { onClose: () => void }) {
   const [nombre, setNombre] = useState('Producto1');
   const [descripcion, setDescripcion] = useState('Este producto es de color');
   const [precio, setPrecio] = useState(600);
@@ -34,7 +36,7 @@ export default function CrearProducto({ onClose }: any) {
       <Box sx={{ width: 400, bgcolor: 'background.paper', p: 4, mx: 'auto', mt: '10%' }}>
         <Stack spacing={2}>
           <Paper sx={{ width: "100%", display: "flex", justifyContent: "space-evenly", alignItems: "center", padding: 1 }}>
-            <img src={imagen ? URL.createObjectURL(imagen) : '/image-placeholder.png'} alt="new image" width={100} height={100} />
+            <Image src={imagen ? URL.createObjectURL(imagen) : '/image-placeholder.png'} alt="new image" width={100} height={100} unoptimized />
           </Paper>
           <Button variant="outlined" component="label">
             Subir Imagen

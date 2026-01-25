@@ -9,11 +9,11 @@ import CrearProducto from './CrearProducto';
 
 export default function AdminProductosPage() {
     const [openCrear, setOpenCrear] = useState(false);
-    const { productos, pagination, setPagination, loading, error, fetchProductos } = useProductos();
+    const { productos, pagination, setPagination, fetchProductos } = useProductos();
 
     useEffect(() => {
         fetchProductos();
-    }, [pagination.pagina, pagination.limite, pagination.busqueda])
+    }, [pagination.pagina, pagination.limite, pagination.busqueda, fetchProductos])
 
     return (
         <Container sx={{ py: 4 }}>

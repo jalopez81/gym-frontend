@@ -54,7 +54,6 @@ export default function AdminConfiguracionPage() {
     const [saving, setSaving] = useState(false);
     const [reseteando, setReseteando] = useState(false);
     const { usuario, ROLES } = useAuthStore();
-    const [localConfig, setLocalConfig] = useState<Configuracion | null>(null);
 
     useEffect(() => {
         const fetchConfig = async () => {
@@ -62,35 +61,41 @@ export default function AdminConfiguracionPage() {
                 const res = await apiClient.get('/configuracion');
                 setConfig(res.data);
                 localStorage.setItem('config', JSON.stringify(res.data));
-            } catch (err: any) {
-                if (err.response?.status === 404) {
-                    // Si no hay configuración, inicializamos una vacía para crearla
-                    setConfig({
-                        id: '',
-                        nombreGimnasio: '',
-                        direccion: '',
-                        telefono: '',
-                        emailContacto: '',
-                        moneda: 'DOP',
-                        impuestos: 0,
-                        horarioApertura: '06:00',
-                        horarioCierre: '22:00',
-                        permitirReservas: false,
-                        duracionSesionMinutos: 60,
-                        maxClasesPorDia: 3,
-                        permitirPagoOnline: false,
-                        metodosPago: [],
-                        notificarEmail: false,
-                        emailNotificaciones: '',
-                        notificarWhatsapp: false,
-                        whatsappNumero: '',
-                        logoUrl: '',
-                        colorPrincipal: '#a43f4a',
-                        colorSecundario: '#ffcc29',
-                        creadoEn: '',
-                        actualizadoEn: '',
-                    });
-                    localStorage.setItem('config', JSON.stringify(config));
+            } catch (err: unknown) {
+                if (err && typeof err === 'object' && 'response' in err) {
+                    const error = err as { response?: { status?: number } };
+                    if (error.response?.status === 404) {
+                        // Si no hay configuración, inicializamos una vacía para crearla
+                        const defaultConfig: Configuracion = {
+                            id: '',
+                            nombreGimnasio: '',
+                            direccion: '',
+                            telefono: '',
+                            emailContacto: '',
+                            moneda: 'DOP',
+                            impuestos: 0,
+                            horarioApertura: '06:00',
+                            horarioCierre: '22:00',
+                            permitirReservas: false,
+                            duracionSesionMinutos: 60,
+                            maxClasesPorDia: 3,
+                            permitirPagoOnline: false,
+                            metodosPago: [],
+                            notificarEmail: false,
+                            emailNotificaciones: '',
+                            notificarWhatsapp: false,
+                            whatsappNumero: '',
+                            logoUrl: '',
+                            colorPrincipal: '#a43f4a',
+                            colorSecundario: '#ffcc29',
+                            creadoEn: '',
+                            actualizadoEn: '',
+                        };
+                        setConfig(defaultConfig);
+                        localStorage.setItem('config', JSON.stringify(defaultConfig));
+                    } else {
+                        alert('Error al cargar configuración');
+                    }
                 } else {
                     alert('Error al cargar configuración');
                 }
@@ -98,12 +103,12 @@ export default function AdminConfiguracionPage() {
         };
         fetchConfig();
     }, []);
-    ;
 
-    const handleChange = (field: keyof Configuracion, value: any) => {
+    const handleChange = (field: keyof Configuracion, value: string | number | boolean | string[]) => {
         if (config) {
-            setConfig({ ...config, [field]: value });
-            localStorage.setItem('config', JSON.stringify(config));
+            const nextConfig = { ...config, [field]: value };
+            setConfig(nextConfig);
+            localStorage.setItem('config', JSON.stringify(nextConfig));
         }
     };
 
@@ -119,9 +124,10 @@ export default function AdminConfiguracionPage() {
                 const res = await apiClient.post('/configuracion', config);
                 setConfig(res.data);
             }
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error(err);
-            alert(err.response?.data?.mensaje || 'Error al guardar configuración.');
+            const error = err as { response?: { data?: { mensaje?: string } } };
+            alert(error.response?.data?.mensaje || 'Error al guardar configuración.');
         } finally {
             setSaving(false);
         }
@@ -130,10 +136,11 @@ export default function AdminConfiguracionPage() {
     const handleResetear = async () => {
         setReseteando(true);
         try {
-            const res = await apiClient.post('/dev/reset-db');
-        } catch (err: any) {
+            await apiClient.post('/dev/reset-db');
+        } catch (err: unknown) {
             console.error(err);
-            alert(err.response?.data?.mensaje || 'Error al resetear.');
+            const error = err as { response?: { data?: { mensaje?: string } } };
+            alert(error.response?.data?.mensaje || 'Error al resetear.');
         } finally {
             setReseteando(false);
         }
@@ -231,10 +238,10 @@ export default function AdminConfiguracionPage() {
                         <TextField fullWidth label="URL del logo" value={config.logoUrl} onChange={(e) => handleChange('logoUrl', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth type="color" label="Color principal" value={localConfig?.colorPrincipal ||  config.colorPrincipal} onChange={(e) => handleChange('colorPrincipal', e.target.value)} />
+                        <TextField fullWidth type="color" label="Color principal" value={config.colorPrincipal} onChange={(e) => handleChange('colorPrincipal', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth type="color" label="Color secundario" value={localConfig?.colorSecundario ||  config.colorSecundario} onChange={(e) => handleChange('colorSecundario', e.target.value)} />
+                        <TextField fullWidth type="color" label="Color secundario" value={config.colorSecundario} onChange={(e) => handleChange('colorSecundario', e.target.value)} />
                     </Grid>
                 </Grid>
 
