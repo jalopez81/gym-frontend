@@ -1,18 +1,22 @@
-export const debounce = (fn: (...args: any[]) => Promise<void>, delay: number) => {
+export const debounce = <T extends unknown[]>(
+  fn: (id: string, ...args: T) => Promise<void>,
+  delay: number
+) => {
   const timers = new Map<string, NodeJS.Timeout>();
-  
-  return (id: string, ...args: any[]) => {
+
+  return (id: string, ...args: T) => {
     // Clear existing timer for this specific ID
-    if (timers.has(id)) {
-      clearTimeout(timers.get(id)!);
+    const existingTimer = timers.get(id);
+    if (existingTimer) {
+      clearTimeout(existingTimer);
     }
-    
+
     // Set new timer for this ID
     const timer = setTimeout(async () => {
       await fn(id, ...args);
       timers.delete(id); // Clean up
     }, delay);
-    
+
     timers.set(id, timer);
   };
 };

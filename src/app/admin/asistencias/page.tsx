@@ -68,26 +68,26 @@ const AdminAsistencias = () => {
             field: 'cliente',
             headerName: 'Cliente',
             flex: 1,
-            valueGetter: (value, row) => row.cliente?.nombre ?? '',
+            valueGetter: (params) => params.row.cliente?.nombre ?? '',
         },
         {
             field: 'clase',
             headerName: 'Clase',
             flex: 1,
-            valueGetter: (value, row) => row.sesion.clase?.nombre ?? '',
+            valueGetter: (params) => params.row.sesion.clase?.nombre ?? '',
         },
         {
             field: 'sesion',
             headerName: 'Sesión',
             flex: 1,
-            valueGetter: (value, row) => formatDateTime(row.sesion?.fechaHora) ?? '',
+            valueGetter: (params) => formatDateTime(params.row.sesion?.fechaHora) ?? '',
         },
         { field: 'estado', headerName: 'Estado', flex: 1 },
         {
             field: 'horaEntrada',
             headerName: 'Hora entrada',
             flex: 1,
-            valueGetter: (value, row) => formatDateTime(row.horaEntrada) ?? '',
+            valueGetter: (params) => formatDateTime(params.row.horaEntrada) ?? '',
         },
     ];
 

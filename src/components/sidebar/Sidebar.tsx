@@ -83,14 +83,14 @@ export default function Sidebar() {
           src="/logo-small.png"
           alt="Logo principal"
           width={150}
-          height={40} 
+          height={40}
           style={{
             opacity: open ? 1 : 0,
             position: 'absolute',
             top: 0,
             left: "50%",
             transform: 'translateX(-50%)',
-            transition: 'opacity 300ms' 
+            transition: 'opacity 300ms'
           }}
           priority
         />
@@ -112,32 +112,34 @@ export default function Sidebar() {
         <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, transition: 'all 300ms' }}>Supera tus límites</Typography>
       </Box>
 
-      <List>{menuItems.map(item =>
-        <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
-          <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
-            <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
-            <ListItemText
-              primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
-              primaryTypographyProps={{ fontSize: '0.7rem' }} />
-          </ListItemButton>
-        </Tooltip>)}
-      </List>
-
-      {usuario?.rol === ROLES.ADMIN && <>
-        <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>ADMINISTRADOR</Typography>
-        <List>{adminMenuItems.map(item =>
+      <Box className="items-container" sx={{ overflowY: 'auto', height: 'calc(100vh - 150px)', scrollbarWidth: 'none' }}>
+        <List>{menuItems.map(item =>
           <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
             <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
               <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
               <ListItemText
                 primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
-                primaryTypographyProps={{ fontSize: '0.7rem' }}
-              />
+                primaryTypographyProps={{ fontSize: '1rem' }} />
             </ListItemButton>
           </Tooltip>)}
         </List>
-      </>}
 
+        {usuario?.rol === ROLES.ADMIN && <>
+          <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>ADMINISTRADOR</Typography>
+          <List>{adminMenuItems.map(item =>
+            <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
+              <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
+                <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
+                <ListItemText
+                  primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                  primaryTypographyProps={{ fontSize: '1rem' }}
+                />
+              </ListItemButton>
+            </Tooltip>)}
+          </List>
+        </>}
+
+      </Box>
 
       <Box
         className="btn-expandir"

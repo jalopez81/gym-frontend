@@ -79,7 +79,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           const { data } = await apiClient.get("/auth/me");
           set({ usuario: data.usuario });
-        } catch (error) {
+        } catch {
           set({ usuario: null, token: null });
         } finally {
           set({ isLoading: false });

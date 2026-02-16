@@ -50,7 +50,7 @@ export default function AdminBackups() {
 
   const columnas: GridColDef<Backup>[] = [
     { field: 'nombre', headerName: 'Nombre', flex: 1 },
-    { field: 'fecha', headerName: 'Fecha', flex: 1, valueGetter: (value) => formatDateTime(value) },
+    { field: 'fecha', headerName: 'Fecha', flex: 1, valueGetter: (params) => formatDateTime(params.value) },
     { field: 'tamaño', headerName: 'Tamaño', flex: 1 },
     {
       field: 'acciones',

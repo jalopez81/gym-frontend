@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Box, Typography, Container, Paper, Button } from '@mui/material';
+import { Box, Typography, Paper, Button } from '@mui/material';
 import apiClient from '@/utils/apiClient';
 import MyContainer from '@/components/MyContainer';
 import { Clase, Reserva, Sesion } from '@/types';

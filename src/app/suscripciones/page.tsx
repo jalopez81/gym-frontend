@@ -41,12 +41,12 @@ export default function MiSuscripcionPage() {
     cargar()
   }
 
-  const cambiarPlan = async (nuevoPlanId: string) => {
-    if (!suscripcion) return
-    await apiClient.patch(`/suscripciones/${suscripcion.id}`, { planId: nuevoPlanId })
-    setModoCambiarPlan(false)
-    cargar()
-  }
+  // const cambiarPlan = async (nuevoPlanId: string) => {
+  //   if (!suscripcion) return
+  //   await apiClient.patch(`/suscripciones/${suscripcion.id}`, { planId: nuevoPlanId })
+  //   setModoCambiarPlan(false)
+  //   cargar()
+  // }
 
   useEffect(() => {
     cargar()
@@ -70,28 +70,7 @@ export default function MiSuscripcionPage() {
   if (!suscripcion) return router.push('/planes')
 
   if (modoCambiarPlan)
-    return <Planes onSelectPlan={cambiarPlan} />
-
-  /*   "id": "a8d343ac-8110-41c8-a1b2-b8ad3656124f",
-    "usuarioId": "0a0d0769-3b8f-4c3e-b599-7d4eef6e7fab",
-    "planId": "e96dfc6b-b579-4f4d-abee-ec3b54e4adde",
-    "estado": "CANCELADA",
-    "fechaInicio": "2025-11-09T14:32:26.364Z",
-    "fechaVencimiento": "2025-12-09T14:32:26.364Z",
-    "creado": "2025-11-09T14:32:26.368Z",
-    "actualizada": "2025-11-09T14:35:55.249Z",
-    "monto": 29.99,
-    "plan": {
-        "id": "e96dfc6b-b579-4f4d-abee-ec3b54e4adde",
-        "nombre": "Plan Básico",
-        "descripcion": "Acceso limitado a las instalaciones y clases grupales.",
-        "precio": 29.99,
-        "duracionDias": 30,
-        "beneficios": "Acceso a gimnasio, 2 clases grupales por semana.",
-        "nivel": 1,
-        "creado": "2025-11-09T04:02:07.760Z",
-        "actualizada": "2025-11-09T04:02:07.760Z"
-    } */
+    return <Planes />
 
   return (
     <MyContainer className="suscripciones-container" isAuthGuard={true}>

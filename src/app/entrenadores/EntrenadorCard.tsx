@@ -3,17 +3,17 @@
 
 import { Box, Button, Card, Tooltip, Typography } from '@mui/material';
 import { CldImage } from 'next-cloudinary';
-import { Entrenador } from '@/types';
+import { Entrenador, Clase } from '@/types';
 
 type EntrenadorCardProps = {
     ent: Entrenador
 }
 
 export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
-    const clasesList = (clases: any) => {
+    const clasesList = (clases: Clase[]) => {
 
         return (
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>{clases?.map((clase: any) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>{clases?.map((clase: Clase) => (
                 <Box key={clase.nombre}
                     sx={{
                         display: 'flex',

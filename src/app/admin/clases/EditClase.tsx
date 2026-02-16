@@ -19,11 +19,11 @@ export default function EditClase({ open, onClose, clase, onUpdated, entrenadore
   const [duracion, setDuracion] = useState(clase.duracion);
   const [entrenadorId, setEntrenadorId] = useState(clase.entrenador?.id || '');
   const [capacidad, setCapacidad] = useState(clase.capacidad);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async () => {
     try {
-      const response = await apiClient.put(`/clases/${clase.id}`, {
+      await apiClient.put(`/clases/${clase.id}`, {
         nombre,
         descripcion,
         duracion,
@@ -32,10 +32,28 @@ export default function EditClase({ open, onClose, clase, onUpdated, entrenadore
       });
       onUpdated();
       onClose();
-    } catch (err: any) {
-      const errorMessages = err.response.data.error.message
-      const errorMsg = JSON.parse(errorMessages)[0].message
-      setError(errorMsg)
+    } catch (err: unknown) {
+      console.error(err);
+      if (err && typeof err === 'object' && 'response' in err) {
+        const errorResponse = err as { response?: { data?: { error?: { message?: string } } } };
+        const errorMessages = errorResponse.response?.data?.error?.message;
+        if (errorMessages) {
+          try {
+            const parsed = JSON.parse(errorMessages);
+            if (Array.isArray(parsed) && parsed[0]?.message) {
+              setError(parsed[0].message);
+            } else {
+              setError(errorMessages);
+            }
+          } catch {
+            setError(errorMessages);
+          }
+        } else {
+          setError("Error al actualizar la clase");
+        }
+      } else {
+        setError("Error al actualizar la clase");
+      }
     }
   };
 
@@ -52,7 +70,7 @@ export default function EditClase({ open, onClose, clase, onUpdated, entrenadore
             <Select
               labelId="select-entrenador-label"
               value={entrenadorId}
-              onChange={(e) => setEntrenadorId(e.target.value)}
+              onChange={(e) => setEntrenadorId(e.target.value as string)}
             >
               {entrenadores?.map((ent) => (
                 <MenuItem key={ent.id} value={ent.id}>

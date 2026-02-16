@@ -18,7 +18,7 @@ import MainTitle from '@/components/MainTitle';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('admin@gym.com');
-  const [password, setPassword] = useState('123456');
+  const [password, setPassword] = useState('@dmIn1299');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();

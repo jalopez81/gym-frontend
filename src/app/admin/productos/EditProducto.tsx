@@ -5,8 +5,10 @@ import { Modal, Box, TextField, Button, Stack, Paper } from '@mui/material';
 import apiClient from '@/utils/apiClient';
 import { CldImage } from 'next-cloudinary';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Producto } from '@/types';
+import Image from 'next/image';
 
-export default function EditProducto({ producto, onClose }: any) {
+export default function EditProducto({ producto, onClose }: { producto: Producto, onClose: () => void }) {
   const [nombre, setNombre] = useState(producto.nombre);
   const [descripcion, setDescripcion] = useState(producto.descripcion || '');
   const [precio, setPrecio] = useState(producto.precio);
@@ -48,7 +50,7 @@ export default function EditProducto({ producto, onClose }: any) {
             />
             {imagen && <>
               <ArrowForwardIcon />
-              <img src={imagen ? URL.createObjectURL(imagen) : undefined} alt="new image" width={100} height={100} />
+              <Image src={URL.createObjectURL(imagen)} alt="new image" width={100} height={100} unoptimized />
             </>}
 
           </Paper>
