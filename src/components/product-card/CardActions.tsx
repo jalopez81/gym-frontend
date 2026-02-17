@@ -5,7 +5,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Props = {
     producto: Producto;
@@ -85,13 +85,7 @@ export const CardActions = ({ producto }: Props) => {
     const [added, setAdded] = useState(false);
     const [hovered, setHovered] = useState(false);
     const cartStore = useCartStore();
-
-    useEffect(()=>{
-         const stored = localStorage.getItem('cart-storage')
-         const exists = stored && JSON.parse(stored)?.state.items.some((el: CarritoItem) => el.producto.id === producto.id);
-         setAdded(exists);
-    }, [producto.id])
-
+    
     const switchHovered = (value: boolean) => {
         setHovered(value)
     }

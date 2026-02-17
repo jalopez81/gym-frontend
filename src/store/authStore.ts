@@ -89,12 +89,11 @@ export const useAuthStore = create<AuthState>()(
         },
       }),
       {
-        name: "auth-storage",
+        name: "auth-store",
         onRehydrateStorage: () => (state) => {
           state?.setHydrated(true);
         },
       }
     ),
-    { name: "AuthStore" } // Esto ayuda a separarlo en el menú de Redux DevTools
   )
 );

@@ -38,13 +38,8 @@ export default function CartPage() {
   }, [items]);
 
   useEffect(() => {
-    const localStorageExists = items.length > 0
-
-    if (!localStorageExists) {
-      fetch();
-    }
-
-  }, [fetch, items.length])
+    fetch();
+  }, [fetch])
 
 
   const handleCheckout = async () => {
