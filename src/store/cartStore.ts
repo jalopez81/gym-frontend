@@ -1,8 +1,7 @@
 import apiClient from "@/utils/apiClient";
 import { CarritoItem } from "@/types";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { devtools } from 'zustand/middleware';
+import { persist, devtools } from "zustand/middleware";
 
 type CartState = {
   items: CarritoItem[];
