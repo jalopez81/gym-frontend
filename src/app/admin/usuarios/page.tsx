@@ -25,6 +25,7 @@ const AdminUsuarios = () => {
     const [busqueda, setBusqueda] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
     const [usuarioEditar, setUsuarioEditar] = useState<Usuario | null>(null);
+    const [editando, setEditando] = useState(false);
 
     const handleEditar = (usuario: Usuario) => {
         setUsuarioEditar(usuario);
@@ -51,7 +52,7 @@ const AdminUsuarios = () => {
             field: 'creado',
             headerName: 'Fecha registro',
             flex: 1,
-            valueGetter: (params) => formatDateTime(params.value),
+            valueGetter: (value) => formatDateTime(value),
         },
         {
             field: 'acciones',
@@ -108,7 +109,11 @@ const AdminUsuarios = () => {
                     </FormControl>
                 </Box>
 
-                <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)}>
+                <Button variant="contained" color="primary" onClick={() => {
+                    setUsuarioEditar(null);
+                    setEditando(false);
+                    setOpenDialog(true);                    
+                }}>
                     Crear usuario
                 </Button>
             </Box>
@@ -131,6 +136,7 @@ const AdminUsuarios = () => {
                 }}
                 onGuardado={fetchUsuarios}
                 usuario={usuarioEditar}
+                editando={editando}
             />
         </Box>
     );

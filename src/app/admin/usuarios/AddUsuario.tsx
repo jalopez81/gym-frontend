@@ -22,10 +22,11 @@ interface AddUsuarioProps {
     onClose: () => void;
     onGuardado: () => Promise<void>;
     usuario?: Usuario | null;
+    editando: boolean;
 }
 
 
-export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardado, usuario }) => {
+export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardado, usuario, editando }) => {
     const [form, setForm] = useState<Partial<Usuario>>({
         nombre: '',
         email: '',
@@ -118,7 +119,7 @@ export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardad
                     variant="contained"
                     color="primary"
                     onClick={handleGuardar}
-                    disabled={!form.nombre || !form.email || !form.password}
+                    disabled={!form.nombre || !form.email || (!form.password && !editando)}
                 >
                     Guardar
                 </Button>
