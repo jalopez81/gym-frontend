@@ -20,6 +20,7 @@ import { CldImage } from 'next-cloudinary';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/store/authStore';
 
 async function update(_id: string, producto: Producto, cantidad: number) { await apiClient.post(`/carrito`, { producto, cantidad }) }
 
@@ -28,7 +29,7 @@ const debouncedUpdate = debounce(update, 1500)
 export default function CartPage() {
   const router = useRouter();
   const { remove, clearCart, setQty, fetch, items } = useCartStore();
-
+  const { isAuthenticated } = useAuthStore()
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -53,9 +54,8 @@ export default function CartPage() {
 
   const handleClearCart = async () => {
     clearCart();
-    await apiClient.delete('/carrito')
+    if (isAuthenticated()) { await apiClient.delete('/carrito') }
   }
-
 
   const handleSubtractQuantity = async (item: CarritoItem) => {
     const cantidad = item.cantidad - 1;
@@ -63,7 +63,7 @@ export default function CartPage() {
     if (cantidad === 0) return
 
     setQty(item.producto.id, cantidad)
-    debouncedUpdate(item.producto.id, item.producto, cantidad)
+    if (isAuthenticated()) { debouncedUpdate(item.producto.id, item.producto, cantidad) }
   }
 
   const handleAddQuantity = async (item: CarritoItem) => {
@@ -74,7 +74,7 @@ export default function CartPage() {
 
   const handleRemove = async (item: CarritoItem) => {
     remove(item.producto.id)
-    await apiClient.delete(`/carrito/${item.producto.id}`)
+    if (isAuthenticated()) { await apiClient.delete(`/carrito/${item.producto.id}`) }
   }
 
   if (items.length === 0) {
