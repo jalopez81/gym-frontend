@@ -6,16 +6,21 @@ import { useRouter } from 'next/navigation'
 import MyContainer from '@/components/MyContainer'
 import MainTitle from '@/components/MainTitle'
 import { Plan } from '@/types'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 export default function Planes() {
   const [planes, setPlanes] = useState<Plan[]>([])
+  const [suscripcionId, setSuscripcionId] = useState('')
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   const cargarPlanes = async () => {
     try {
-      const res = await apiClient.get('/planes')
-      setPlanes(res.data)
+      const resPlanes = await apiClient.get('/planes')
+      const resSuscripciones = await apiClient.get('/suscripciones')
+      setPlanes(resPlanes.data)
+      setSuscripcionId( resSuscripciones.data[0].planId)
+      console.log(':::::', resSuscripciones.data[0].planId )
     } finally {
       setLoading(false)
     }
@@ -63,6 +68,7 @@ export default function Planes() {
                 {plan.nivel}
               </Typography>
 
+              {suscripcionId !== plan.id && (
               <Button
                 variant="contained"
                 color="primary"
@@ -71,6 +77,12 @@ export default function Planes() {
               >
                 Suscribirme
               </Button>
+              )}
+              {suscripcionId === plan.id && (
+                <Typography variant="h5" color="primary" sx={{ mt: 1 }}>
+                  Inscrito <CheckCircleOutlineIcon sx={{ color: 'green', transform: 'translateY(5px)'}}/>
+                </Typography>
+              )}
             </CardContent>
           </Card>
         ))}
