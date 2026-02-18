@@ -26,16 +26,16 @@ import SearchIcon from '@mui/icons-material/Search';
 import MainTitle from '@/components/MainTitle';
 
 const ESTADO_ORDEN = {
-    PENDIENTE: 'pendiente',
-    COMPLETADA: 'completada',
-    CANCELADA: 'cancelada',
+    PENDIENTE: 'PENDIENTE',
+    COMPLETADA: 'COMPLETADA',
+    CANCELADA: 'CANCELADA',
 }
 
 const getStatusColor = (estado: string) => {
     const COLORS: Record<string, string> = {
-        pendiente: 'gray',
-        completada: 'green',
-        cancelada: 'red',
+        'PENDIENTE': 'orange',
+        'COMPLETADA': 'green',
+        'CANCELADA': 'red',
     };
     return COLORS[estado] || 'gray';
 };
