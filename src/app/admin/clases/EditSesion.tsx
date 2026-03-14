@@ -89,7 +89,7 @@ export default function EditSesion({ open, onClose, claseId }: SesionFormDialogP
       <DialogTitle>Sesiones</DialogTitle>
       <DialogContent>
         {loading ? (
-          <CircularProgress />
+          <CircularProgress sx={{ margin: '0 auto'}} />
         ) : (
           <>
             {sesiones.length === 0 ? (

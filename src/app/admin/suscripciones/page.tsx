@@ -31,7 +31,7 @@ export default function SuscripcionesPage() {
 
     useEffect(() => { cargar() }, [])
 
-    if (loading) return <CircularProgress />
+    if (loading) return <CircularProgress sx={{ margin: '0 auto'}} />
 
     const filtradas = suscripciones.filter(
         (s: Suscripcion) =>

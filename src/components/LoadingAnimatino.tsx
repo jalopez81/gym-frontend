@@ -8,7 +8,7 @@ export default function LoadingAnimation(){
             justifyContent: 'center',
             width: '100%'
         }}>
-            <CircularProgress />
+            <CircularProgress sx={{ margin: '0 auto'}} />
         </Box>
     )
 

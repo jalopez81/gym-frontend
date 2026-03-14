@@ -30,7 +30,7 @@ export default function EntrenadoresPage() {
   if (loading)
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 10 }}>
-        <CircularProgress />
+        <CircularProgress sx={{ margin: '0 auto'}} />
       </Box>
     )
 

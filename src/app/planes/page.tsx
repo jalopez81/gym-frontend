@@ -35,7 +35,7 @@ export default function Planes() {
     cargarPlanes()
   }, [])
 
-  if (loading) return <CircularProgress />
+  if (loading) return <CircularProgress sx={{ margin: '0 auto'}} />
 
   return (
     <MyContainer isAuthGuard={true}>

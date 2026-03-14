@@ -20,16 +20,18 @@ export default function Sidebar() {
   const primary = theme.palette.primary.main;
   const secondary = theme.palette.secondary.main;
   const { fetch: fetchCart } = useCartStore();
-  const { usuario, ROLES } = useAuthStore();
+  const { usuario, ROLES, isAuthenticated } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
     const fetchRemoteCart = async () => {
-      await fetchCart();
+      if (isAuthenticated()) {
+        await fetchCart();
+      }
     }
 
     fetchRemoteCart();
-  }, [fetchCart])
+  }, [fetchCart, isAuthenticated])
 
   const listItemStyle = {
     borderTop: `solid 1px ${primary}`,

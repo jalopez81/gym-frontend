@@ -8,8 +8,13 @@ const nextConfig: NextConfig = {
       'lucide-react', 
       '@headlessui/react', 
       '@heroicons/react',
-      'lodash'
+      '@mui/material',
+      '@mui/icons-material',
+      'lodash',
+      '@mui/x-data-grid', 
+      'recharts',
     ],
+    serverComponentsHmrCache: true,
   },
 };
 

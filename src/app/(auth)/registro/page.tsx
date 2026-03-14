@@ -42,7 +42,7 @@ export default function RegistroPage() {
     setIsLoading(true);
 
     try {
-      await registro(email, nombre, password);
+      await registro(nombre, email, password);
       router.push('/dashboard');
     } // eslint-disable-next-line @typescript-eslint/no-explicit-any
     catch (err: any) {

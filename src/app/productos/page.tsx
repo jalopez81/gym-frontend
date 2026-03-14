@@ -15,10 +15,10 @@ export default function ProductosPage() {
   if (error) return <Typography color="error">{error}</Typography>;
 
   return (
-    <MyContainer className="page-productos" sx={{ height: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+    <MyContainer className="page-productos" sx={{ height: "100%", display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
       <Searchbar pagination={pagination} setPagination={setPagination} />
 
-      {loading && <CircularProgress />}
+      {loading && <CircularProgress sx={{ margin: '0 auto'}} />}
 
       {!loading && (
         <ProductoGrid productos={productos} pagination={pagination} setPagination={setPagination}/>

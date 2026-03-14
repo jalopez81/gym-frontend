@@ -53,7 +53,7 @@ const EstadisticasUsuario = () => {
       </FormControl>
 
       {cargando ? (
-        <CircularProgress />
+        <CircularProgress sx={{ margin: '0 auto'}} />
       ) : datos.length > 0 ? (
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={datos}>
