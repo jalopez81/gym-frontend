@@ -81,7 +81,7 @@ export default function PaymentPage() {
     setLoading(true);
 
      try {
-      const orden = await crearOrden(items);
+      await crearOrden(items);
       setShowSuccess(true);
       router.push('/checkout-success');
       await clearCart();
