@@ -8,12 +8,20 @@ import { Clase, Reserva, Sesion } from '@/types';
 import CheckIcon from '@mui/icons-material/Check';
 import SearchClase from './SearchClase';
 import MainTitle from '@/components/MainTitle';
+import { useSearchParams } from 'next/navigation';
 
 export default function ClasesPage() {
     const [clases, setClases] = useState<Clase[]>([]);
     const [reservas, setReservas] = useState<Reserva[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
+
+    const searchParams = useSearchParams();
+
+    useEffect(()=> {
+        const search = searchParams.get('search-class');
+        if (search) setSearchTerm(search);
+    }, [searchParams])
 
     const alreadyReservado = (reservas: Reserva[], sesion: Sesion) => {
         const reserva = reservas.find(res => res.sesionId === sesion.id)

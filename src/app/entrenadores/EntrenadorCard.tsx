@@ -4,12 +4,15 @@
 import { Box, Button, Card, Tooltip, Typography } from '@mui/material';
 import { CldImage } from 'next-cloudinary';
 import { Entrenador, Clase } from '@/types';
+import { useRouter } from 'next/navigation';
+
 
 type EntrenadorCardProps = {
     ent: Entrenador
 }
 
 export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
+    const router = useRouter();
     const clasesList = (clases: Clase[]) => {
 
         return (
@@ -26,7 +29,7 @@ export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
                     <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{clase.nombre}</Typography>
                     <Typography variant="subtitle2">{clase.duracion} minutos</Typography>
                     <Typography variant="overline">Capacidad: {clase.capacidad} </Typography>
-                    <Button size="small">Inscribirse</Button>
+                    <Button size="small" onClick={()=> router.push('/clases?search-class=' + clase.nombre)}>Inscribirse</Button>
                 </Box>
             ))}
             </Box>)
@@ -48,8 +51,8 @@ export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
                     <Typography variant="body2">{ent.experiencia} años de experiencia</Typography>
                     <Typography variant="body2">{ent.certificaciones}</Typography>
 
-                    <Tooltip title={ent.clases?.length ? clasesList(ent.clases) : 'No tiene clases'} sx={{ background: "#ffffff" }}>
-                        <Button variant='text' sx={{ m: 1 }}>Ver clases</Button>
+                    <Tooltip title={ent.clases?.length ? clasesList(ent.clases) : null} sx={{ background: "#ffffff" }}>
+                        <Button variant='text' sx={{ m: 1, color: ent.clases?.length ? '#a43f4a' : '#c3c3c3' }}>{ent.clases?.length ? 'Ver clases' : 'No tiene clases'}</Button>
                     </Tooltip>
                 </Box>
             </Card>
