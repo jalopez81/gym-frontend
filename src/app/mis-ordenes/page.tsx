@@ -41,7 +41,7 @@ export default function OrdenesPage() {
   useEffect(() => {
     const fetchOrdenes = async () => {
       try {
-        const res = await apiClient.get('/ordenes')
+        const res = await apiClient.get('/ordenes/mis-ordenes')
         const data = res.data;
         setOrdenes(data);
       } catch (err) {
@@ -65,7 +65,10 @@ export default function OrdenesPage() {
         {ordenes.map((orden) => (
           <Paper className="orden" key={orden.id} sx={{ mb: 3, p: 2, maxWidth: 650, width: "100%" }}>
             <Box className="orden-header" sx={{ ml: 2, mr: 2 }}>
-              <Typography sx={{ color: getStatusColor(orden.estado as Estado) }}>Estado: {orden.estado}</Typography>
+              <Box sx={{ display: 'flex', gap: 1}}>
+                <Typography>Estado: </Typography>
+              <Typography sx={{ color: getStatusColor(orden.estado.toLowerCase() as Estado) }}>{orden.estado}</Typography>
+              </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography>Fecha: {new Date(orden.creado).toLocaleString()}</Typography>
                 <Typography variant="body2">Orden: <i>{orden.id}</i></Typography>
