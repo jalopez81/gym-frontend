@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Box, Typography, Paper, Button } from '@mui/material';
 import apiClient from '@/utils/apiClient';
 import MyContainer from '@/components/MyContainer';
@@ -10,7 +10,7 @@ import SearchClase from './SearchClase';
 import MainTitle from '@/components/MainTitle';
 import { useSearchParams } from 'next/navigation';
 
-export default function ClasesPage() {
+function ClasesPageContent() {
     const [clases, setClases] = useState<Clase[]>([]);
     const [reservas, setReservas] = useState<Reserva[]>([]);
     const [loading, setLoading] = useState(true);
@@ -122,5 +122,14 @@ export default function ClasesPage() {
             </Box>
 
         </MyContainer>
+    );
+}
+
+
+export default function ClasesPage() {
+    return (
+        <Suspense fallback={<Typography>Cargando clases...</Typography>}>
+            <ClasesPageContent />
+        </Suspense>
     );
 }
