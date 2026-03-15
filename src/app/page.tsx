@@ -9,8 +9,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react'; 
 
 export default function Home() {
-  const router = useRouter();
   const usuario = useAuthStore((s) => s.usuario);
+  const router = useRouter();
   const [rehidrated, setRehydrated] = useState(false);
 
   useEffect(() => {
