@@ -30,6 +30,7 @@ const AdminUsuarios = () => {
     const handleEditar = (usuario: Usuario) => {
         setUsuarioEditar(usuario);
         setOpenDialog(true);
+        setEditando(true);
     };
 
 

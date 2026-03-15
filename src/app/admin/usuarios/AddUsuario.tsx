@@ -58,7 +58,7 @@ export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardad
             if (usuario?.id) {
                 await apiClient.put(`/usuarios/${usuario.id}`, form);
             } else {
-                await apiClient.post('/usuarios', form);
+                await apiClient.post('auth/registro/admin', {...form, codigoGeneradoHash: '123456', codigoRecibido: '123456'});
             }
             await onGuardado();
             onClose();
@@ -70,7 +70,7 @@ export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardad
 
     return (
         <Dialog open={open} onClose={onClose} fullWidth>
-            <DialogTitle>Nuevo Usuario</DialogTitle>
+            <DialogTitle>{editando ? 'Editar Usuario' : 'Crear Usuario'}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
                 <TextField
                     label="Nombre"
@@ -78,6 +78,7 @@ export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardad
                     value={form.nombre}
                     onChange={handleInputChange}
                     fullWidth
+                    sx={{ mt: 2 }}
                 />
                 <TextField
                     label="Email"
@@ -86,14 +87,14 @@ export const AddUsuario: React.FC<AddUsuarioProps> = ({ open, onClose, onGuardad
                     onChange={handleInputChange}
                     fullWidth
                 />
-                <TextField
+                {!editando && <TextField
                     label="Contraseña"
                     name="password"
                     type="password"
                     value={form.password}
                     onChange={handleInputChange}
                     fullWidth
-                />
+                />}
                 <FormControl fullWidth>
                     <InputLabel>Rol</InputLabel>
                     <Select name="rol" value={form.rol} onChange={handleSelectChange} label="Rol">
