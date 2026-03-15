@@ -34,6 +34,9 @@ export default function AddAsistencia({
       .filter((s): s is Sesion => !!s)
     : [];
 
+    const clientesConReserva = reservas.map(r => r.clienteId)
+    console.log(clientesConReserva)
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth>
       <DialogTitle>Registrar Asistencia</DialogTitle>
@@ -45,7 +48,7 @@ export default function AddAsistencia({
             onChange={(e) => setNueva({ ...nueva, clienteId: e.target.value, sesionId: '' })}
             label="Cliente"
           >
-            {clientes.map((c) => (
+            {clientes.filter(c => clientesConReserva.includes(c.id)).map((c) => (
               <MenuItem key={c.id} value={c.id}>
                 {c.nombre}
               </MenuItem>

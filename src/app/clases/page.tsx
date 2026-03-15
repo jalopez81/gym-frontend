@@ -86,7 +86,8 @@ function ClasesPageContent() {
                     <Paper key={clase.id} sx={{ p: 2, width: 300 }}>
                         {/* Detalles de la clase */}
                         <Box className="clases-detalles">
-                            <Typography variant="h6">{clase.nombre}</Typography>
+                            <Typography variant="h4" sx={{ margin: 0}}>{clase.nombre}</Typography>
+                            <Typography variant="h6" color="primary">{clase.descripcion}</Typography>
                             <Typography>Instructor: {clase.entrenador.usuario.nombre}</Typography>
                             <Typography>Duración: {clase.duracion} minutos</Typography>
                             <Typography>Cupo: {clase.capacidad}</Typography>

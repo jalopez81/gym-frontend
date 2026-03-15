@@ -84,27 +84,6 @@ export default function Reportes() {
         />
         : <p>No hay datos</p>
       }
-
-
-      <TabPanel value={tab} index="suscripciones">
-        <h3>Suscripciones</h3>
-        {/* Aquí va tu contenido de suscripciones */}
-      </TabPanel>
-
-      <TabPanel value={tab} index="asistencias">
-        <h3>Asistencias</h3>
-        {/* Aquí va tu contenido de asistencias */}
-      </TabPanel>
-
-      <TabPanel value={tab} index="entrenadores">
-        <h3>Entrenadores</h3>
-        {/* Aquí va tu contenido de entrenadores */}
-      </TabPanel>
-
-      <TabPanel value={tab} index="productos">
-        <h3>Productos</h3>
-        {/* Aquí va tu contenido de productos */}
-      </TabPanel>
     </MyContainer>
   );
 }

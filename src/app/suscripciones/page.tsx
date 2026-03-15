@@ -67,7 +67,7 @@ export default function MiSuscripcionPage() {
 
   if (loading) return <CircularProgress />
 
-  if (!suscripcion) return router.push('/planes')
+  if (!suscripcion) router.push('/planes')
 
   if (modoCambiarPlan)
     return <Planes />
@@ -85,7 +85,7 @@ export default function MiSuscripcionPage() {
           boxShadow: 3,
         }}
       >
-        <CardContent>
+        {suscripcion && (<CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 2 }}>
             <Box>
               <Typography variant="h6" sx={{ mb: 0.5 }}>
@@ -138,7 +138,8 @@ export default function MiSuscripcionPage() {
               </Button>
             )}
           </Stack>
-        </CardContent>
+        </CardContent>          
+        )}
       </Card>
     </MyContainer>
   )
