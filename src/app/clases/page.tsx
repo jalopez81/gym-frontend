@@ -53,7 +53,6 @@ export default function ClasesPage() {
                 const newReserva = res.data;
                 setReservas(prev => [...prev, newReserva])
             }
-            console.log(res)
         } catch (err) {
             console.error(err);
         } finally {

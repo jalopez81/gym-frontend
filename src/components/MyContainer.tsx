@@ -19,6 +19,5 @@ export default function MyContainer({
     </Box>
   );
 
-  console.log('isAuthGuard::', isAuthGuard)
   return isAuthGuard ? <AuthGuard>{content}</AuthGuard> : content;
 }

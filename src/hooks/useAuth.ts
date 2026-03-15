@@ -26,7 +26,6 @@ export const useAuth = () => {
     const registro = async (nombre: string, email: string, password: string, codigoRecibido: string, codigoGeneradoHash: string) => {
         try {
             const response = await apiClient.post<AuthResponse>('/auth/registro', { nombre, email, password, codigoRecibido, codigoGeneradoHash })
-            console.log(response.data)
             const { usuario, token } = response.data;
             setAuth(usuario, token)
             return response;

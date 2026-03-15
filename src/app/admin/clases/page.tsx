@@ -79,7 +79,6 @@ export default function AdminClases() {
 
             const arrNewSesiones = sesiones.map(sesion => ({ fechaHora: sesion, claseId }))
             const resSesiones = await apiClient.post('/sesiones/multiple', [...arrNewSesiones])
-            console.log(resSesiones)
 
             setClases(prev => [...prev, resClases.data]);
             setOpen(false);

@@ -20,7 +20,6 @@ export default function Planes() {
       const resSuscripciones = await apiClient.get('/suscripciones')
       setPlanes(resPlanes.data)
       setSuscripcionId( resSuscripciones.data[0].planId)
-      console.log(':::::', resSuscripciones.data[0].planId )
     } finally {
       setLoading(false)
     }

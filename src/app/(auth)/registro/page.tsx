@@ -75,7 +75,6 @@ export default function RegistroPage() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.response?.data?.mensaje || 'Error al registrarse');
-      console.log(err)
     } finally {
       setIsLoading(false);
     }
