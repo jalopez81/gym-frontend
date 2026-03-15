@@ -17,9 +17,9 @@ export default function Planes() {
   const cargarPlanes = async () => {
     try {
       const resPlanes = await apiClient.get('/planes')
-      const resSuscripciones = await apiClient.get('/suscripciones')
+      const resSuscripciones = await apiClient.get('/suscripciones/mi-suscripcion')
       setPlanes(resPlanes.data)
-      setSuscripcionId( resSuscripciones.data[0].planId)
+      setSuscripcionId(resSuscripciones.data?.planId)
     } finally {
       setLoading(false)
     }
@@ -34,7 +34,7 @@ export default function Planes() {
     cargarPlanes()
   }, [])
 
-  if (loading) return <CircularProgress sx={{ margin: '0 auto'}} />
+  if (loading) return <CircularProgress sx={{ margin: '0 auto' }} />
 
   return (
     <MyContainer isAuthGuard={true}>
@@ -44,7 +44,7 @@ export default function Planes() {
       />
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         {planes.map((plan: Plan) => (
-          <Card key={plan.id} sx={{ width: 400, m: 2, position: "relative", background: '#ffeaea' }}>
+          <Card key={plan.id} sx={{ width: 400, m: 2, position: "relative", background: suscripcionId === plan.id ? '#fbf5e2' : '#ffeaea' }}>
             <CardContent sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
               <Box className="plan-details">
                 <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
@@ -68,19 +68,18 @@ export default function Planes() {
               </Typography>
 
               {suscripcionId !== plan.id && (
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ mt: 2 }}
-                onClick={() => suscribirse(plan.id)}
-              >
-                Suscribirme
-              </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ mt: 2 }}
+                  onClick={() => suscribirse(plan.id)}
+                >
+                  Suscribirme
+                </Button>
               )}
               {suscripcionId === plan.id && (
-                <Typography variant="h5" color="primary" sx={{ mt: 1 }}>
-                  Inscrito <CheckCircleOutlineIcon sx={{ color: 'green', transform: 'translateY(5px)'}}/>
-                </Typography>
+                <CheckCircleOutlineIcon sx={{ color: 'green', transform: 'translateY(5px)', fontSize: '5rem' }} />
+                
               )}
             </CardContent>
           </Card>
