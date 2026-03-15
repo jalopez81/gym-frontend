@@ -36,7 +36,7 @@ export default function DashboardPage() {
     { title: 'Productos', icon: <ShoppingBag fontSize="large" />, href: '/productos', color: '#1976d2' },
     { title: 'Clases', icon: <FitnessCenter fontSize="large" />, href: '/clases', color: '#2e7d32' },
     { title: 'Carrito', icon: <ShoppingCart fontSize="large" />, href: '/carrito', color: '#9c27b0' },
-    { title: 'Suscripción', icon: <CardMembership fontSize="large" />, href: '/mis-suscripciones', color: '#ed6c02' }
+    { title: 'Suscripción', icon: <CardMembership fontSize="large" />, href: '/suscripciones', color: '#ed6c02' }
   ];
 
   return (
