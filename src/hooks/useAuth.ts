@@ -14,7 +14,7 @@ export const useAuth = () => {
     const login = async (email: string, password: string) => {
         try {
             const response = await apiClient.post<AuthResponse>('/auth/login', { email, password })
-            const { usuario, token } = response.data.datos;
+            const { usuario, token } = response.data;
             setAuth(usuario, token)
             return response;
         } catch (error) {
@@ -23,15 +23,15 @@ export const useAuth = () => {
         }
     }
 
-    const registro = async (nombre: string, email: string, password: string) => {
+    const registro = async (nombre: string, email: string, password: string, codigoRecibido: string, codigoGeneradoHash: string) => {
         try {
-            const response = await apiClient.post<AuthResponse>('/auth/registro', { nombre, email, password })
-            const { usuario, token } = response.data.datos;
+            const response = await apiClient.post<AuthResponse>('/auth/registro', { nombre, email, password, codigoRecibido, codigoGeneradoHash })
+            console.log(response.data)
+            const { usuario, token } = response.data;
             setAuth(usuario, token)
             return response;
         } catch (error) {
             throw error;
-
         }
     }
 

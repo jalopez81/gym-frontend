@@ -155,11 +155,9 @@ export interface CarritoItem {
 
 export interface AuthResponse {
   message: string;
-  datos: {
-    usuario: Usuario;
-    token: string;
-  };
-}
+  usuario: Usuario;
+  token: string;
+  }
 
 export interface ProductPagination {
   total: number;
