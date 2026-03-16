@@ -4,6 +4,8 @@ import { alpha, styled } from '@mui/material/styles';
 import { useRef } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ProductPagination } from '@/types';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Link from 'next/link';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -119,6 +121,17 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                     </Select>
                     <Typography variant="body2" sx={{ ml: 1 }}>por página</Typography>
                     <Box sx={{ flexGrow: 1 }} />
+                    <Link href="/carrito" passHref>
+                        <Button
+                            variant="text"
+                            size="small"
+                            color='secondary'
+                            sx={{ mr: 2 }}
+                            startIcon={<ShoppingCartIcon />}
+                        >
+                            Carrito
+                        </Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
         </Box>
