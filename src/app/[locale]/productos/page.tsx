@@ -6,8 +6,8 @@ import {
   Typography
 } from '@mui/material';
 import ProductoGrid from "./ProductoGrid";
-import Searchbar from "./searchbar";
 import { useProductos } from "@/hooks/useProductos";
+import Searchbar from "./searchbar";
 
 export default function ProductosPage() {
   const { productos, pagination, setPagination, loading, error } = useProductos();

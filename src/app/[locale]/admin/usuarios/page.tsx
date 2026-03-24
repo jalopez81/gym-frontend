@@ -18,6 +18,7 @@ import { Usuario } from '@/types';
 import { formatDateTime } from '@/utils';
 import { AddUsuario } from './AddUsuario';
 import EditIcon from '@mui/icons-material/Edit';
+import { useTranslations } from 'next-intl';
 
 const AdminUsuarios = () => {
     const [usuarios, setUsuarios] = useState<Usuario[]>([]);
@@ -26,6 +27,7 @@ const AdminUsuarios = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [usuarioEditar, setUsuarioEditar] = useState<Usuario | null>(null);
     const [editando, setEditando] = useState(false);
+    const t = useTranslations('AdminUsers');
 
     const handleEditar = (usuario: Usuario) => {
         setUsuarioEditar(usuario);
@@ -45,19 +47,19 @@ const AdminUsuarios = () => {
 
 
     const columnas: GridColDef<Usuario>[] = [
-        { field: 'nombre', headerName: 'Nombre', flex: 1 },
-        { field: 'email', headerName: 'Email', flex: 1 },
-        { field: 'rol', headerName: 'Rol', flex: 1 },
-        { field: 'status', headerName: 'Status', flex: 1 },
+        { field: 'nombre', headerName: t('name'), flex: 1 },
+        { field: 'email', headerName: t('email'), flex: 1 },
+        { field: 'rol', headerName: t('role'), flex: 1 },
+        { field: 'status', headerName: t('status'), flex: 1 },
         {
             field: 'creado',
-            headerName: 'Fecha registro',
+            headerName: t('registrationDate'),
             flex: 1,
             valueGetter: (value) => formatDateTime(value),
         },
         {
             field: 'acciones',
-            headerName: 'Acciones',
+            headerName: t('actions'),
             renderCell: (params) => (
                 <IconButton onClick={() => handleEditar(params.row)}><EditIcon /></IconButton>
             ),
@@ -74,7 +76,7 @@ const AdminUsuarios = () => {
     return (
         <Box p={3}>
             <Typography variant="h5" mb={2}>
-                Usuarios
+                {t('title')}
             </Typography>
 
             <Box
@@ -89,20 +91,20 @@ const AdminUsuarios = () => {
             >
                 <Box sx={{ display: 'flex', gap: 2 }}>
                     <TextField
-                        label="Buscar por nombre"
+                        label={t('searchPlaceholder')}
                         value={busqueda}
                         onChange={(e) => setBusqueda(e.target.value)}
                         sx={{ minWidth: 200 }}
                     />
 
                     <FormControl sx={{ minWidth: 180 }}>
-                        <InputLabel>Rol</InputLabel>
+                        <InputLabel>{t('roleLabel')}</InputLabel>
                         <Select
                             value={filtroRol}
                             onChange={(e) => setFiltroRol(e.target.value)}
-                            label="Rol"
+                            label={t('roleLabel')}
                         >
-                            <MenuItem value="">Todos</MenuItem>
+                            <MenuItem value="">{t('allRoles')}</MenuItem>
                             <MenuItem value="admin">Admin</MenuItem>
                             <MenuItem value="entrenador">Entrenador</MenuItem>
                             <MenuItem value="cliente">Cliente</MenuItem>
@@ -113,9 +115,9 @@ const AdminUsuarios = () => {
                 <Button variant="contained" color="primary" onClick={() => {
                     setUsuarioEditar(null);
                     setEditando(false);
-                    setOpenDialog(true);                    
+                    setOpenDialog(true);
                 }}>
-                    Crear usuario
+                    {t('createButton')}
                 </Button>
             </Box>
 

@@ -23,9 +23,10 @@ import { useEffect, useState } from "react";
 import CreateClase from "./CreateClase";
 import EditClase from "./EditClase";
 import EditSesion from "./EditSesion";
-import SearchClase from "@/app/clases/SearchClase";
+import SearchClase from "@/app/[locale]/clases/SearchClase";
 import MainTitle from "@/components/MainTitle";
-import EntrenadorCard from "@/app/entrenadores/EntrenadorCard";
+import EntrenadorCard from "@/app/[locale]/entrenadores/EntrenadorCard";
+import { useTranslations } from 'next-intl';
 
 export default function AdminClases() {
     const [clases, setClases] = useState<Clase[]>([]);
@@ -38,6 +39,7 @@ export default function AdminClases() {
     const [claseEdit, setClaseEdit] = useState<Clase | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+    const t = useTranslations('AdminClasses');
 
 
     const [newClase, setNewClase] = useState<ClaseForm>({
@@ -95,7 +97,7 @@ export default function AdminClases() {
     };
 
     const handleDelete = async (claseId: string) => {
-        if (!confirm('¿Seguro que quieres eliminar esta clase?')) return;
+        if (!confirm(t('confirmDelete'))) return;
 
         try {
             await apiClient.delete(`/clases/${claseId}`);
@@ -125,29 +127,29 @@ export default function AdminClases() {
 
     return (
         <MyContainer className="classes-container" style={{ padding: 20 }}>
-            <MainTitle title="Administrar clases" subtitle="Organización de clases, horarios y cupos" />
+            <MainTitle title={t('title')} subtitle={t('subtitle')} />
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, justifyContent: 'space-between' }}>
                 <SearchClase onSearch={setSearchTerm} />
                 <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-                    Agregar Clase
+                    {t('addButton')}
                 </Button>
             </Box>
 
             {!clases.length && (
-                <Typography variant="h6" m={4}>No hay clases registradas</Typography>
+                <Typography variant="h6" m={4}>{t('noClasses')}</Typography>
             )}
 
 
             <Table sx={{ marginTop: 2 }}>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Nombre</TableCell>
-                        <TableCell>Descripción</TableCell>
-                        <TableCell>Duración</TableCell>
-                        <TableCell>Capacidad</TableCell>
-                        <TableCell>Entrenador</TableCell>
-                        <TableCell>Sesiones</TableCell>
-                        <TableCell>Acciones</TableCell>
+                        <TableCell>{t('name')}</TableCell>
+                        <TableCell>{t('description')}</TableCell>
+                        <TableCell>{t('duration')}</TableCell>
+                        <TableCell>{t('capacity')}</TableCell>
+                        <TableCell>{t('instructor')}</TableCell>
+                        <TableCell>{t('sessions')}</TableCell>
+                        <TableCell>{t('actions')}</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -156,7 +158,7 @@ export default function AdminClases() {
                             <TableCell>{clase.nombre}</TableCell>
                             <TableCell>{clase.descripcion}</TableCell>
                             <TableCell>{clase.duracion} min</TableCell>
-                            <TableCell>{clase.capacidad} personas</TableCell>
+                            <TableCell>{clase.capacidad} {t('people')}</TableCell>
 
                             <TableCell sx={{
                                 cursor: "pointer", '&:hover': {
@@ -187,14 +189,14 @@ export default function AdminClases() {
 
                             <TableCell>
                                 <Button size="small" onClick={() => handleVerSesiones(clase.id)}>
-                                    Ver sesiones
+                                    {t('viewSessions')}
                                 </Button>
                             </TableCell>
                             <TableCell>
-                                <Tooltip title="Editar clase">
+                                <Tooltip title={t('editClass')}>
                                     <IconButton onClick={() => { setClaseEdit(clase); setOpenEdit(true); }}><EditIcon /></IconButton>
                                 </Tooltip>
-                                <Tooltip title="Borrar clase">
+                                <Tooltip title={t('deleteClass')}>
                                     <IconButton onClick={() => handleDelete(clase.id)}><DeleteIcon /></IconButton>
                                 </Tooltip>
                             </TableCell>

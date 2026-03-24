@@ -9,12 +9,14 @@ import TabPanel from "./TabPanel";
 import { DataGrid } from "@mui/x-data-grid";
 import { colsDef } from './columns'
 import LoadingAnimation from "@/components/LoadingAnimatino";
+import { useTranslations } from 'next-intl';
 
 export default function Reportes() {
   const [report, setReport] = useState({ title: "", data: [] });
 
   const [tab, setTab] = useState("ordenes");
   const [loading, setLoading] = useState(false);
+  const t = useTranslations('AdminReports');
 
   const fetchReportes = useCallback(async () => {
     setLoading(true);
@@ -58,14 +60,14 @@ export default function Reportes() {
   return (
     <MyContainer className="reportes-container">
       <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
-        <MainTitle title="Reportes" />
+        <MainTitle title={t('title')} />
       </Box>
 
       <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 2 }}>
-        <Tab label="Ordenes" value="ordenes" />
-        <Tab label="Productos" value="productos" />
-        <Tab label="Suscripciones" value="suscripciones" />
-        <Tab label="Asistencias" value="asistencias" />
+        <Tab label={t('orders')} value="ordenes" />
+        <Tab label={t('products')} value="productos" />
+        <Tab label={t('subscriptions')} value="suscripciones" />
+        <Tab label={t('attendance')} value="asistencias" />
       </Tabs>
 
       {/* ordenes  */}
@@ -73,7 +75,7 @@ export default function Reportes() {
 
       {!loading && (
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={fetchReportesDownload}>Descargar</Button>
+          <Button onClick={fetchReportesDownload}>{t('download')}</Button>
         </Box>
       )}
 
@@ -82,7 +84,7 @@ export default function Reportes() {
           rows={report.data}
           columns={colsDef[tab as keyof typeof colsDef]}
         />
-        : <p>No hay datos</p>
+        : <p>{t('noData')}</p>
       }
     </MyContainer>
   );

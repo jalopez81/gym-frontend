@@ -161,5 +161,91 @@
     "capacity": "Cupo",
     "reserveSessions": "Reservar sesiones:",
     "noSessions": "No hay sesiones disponibles"
+  },
+  "AdminClasses": {
+    "title": "Administrar clases",
+    "subtitle": "Organización de clases, horarios y cupos",
+    "addButton": "Agregar Clase",
+    "noClasses": "No hay clases registradas",
+    "name": "Nombre",
+    "description": "Descripción",
+    "duration": "Duración",
+    "capacity": "Capacidad",
+    "instructor": "Entrenador",
+    "sessions": "Sesiones",
+    "actions": "Acciones",
+    "viewSessions": "Ver sesiones",
+    "editClass": "Editar clase",
+    "deleteClass": "Borrar clase",
+    "confirmDelete": "¿Seguro que quieres eliminar esta clase?",
+    "people": "personas"
+  },
+  "AdminUsers": {
+    "title": "Usuarios",
+    "searchPlaceholder": "Buscar por nombre",
+    "roleLabel": "Rol",
+    "allRoles": "Todos",
+    "createButton": "Crear usuario",
+    "name": "Nombre",
+    "email": "Email",
+    "role": "Rol",
+    "status": "Status",
+    "registrationDate": "Fecha registro",
+    "actions": "Acciones"
+  },
+  "AdminAttendance": {
+    "title": "Asistencias",
+    "clientLabel": "Cliente",
+    "statusLabel": "Estado",
+    "allStatus": "Todos",
+    "attended": "Asistió",
+    "absent": "Ausente",
+    "registerButton": "Registrar asistencia",
+    "client": "Cliente",
+    "class": "Clase",
+    "session": "Sesión",
+    "status": "Estado",
+    "entryTime": "Hora entrada"
+  },
+  "AdminReports": {
+    "title": "Reportes",
+    "orders": "Ordenes",
+    "products": "Productos",
+    "subscriptions": "Suscripciones",
+    "attendance": "Asistencias",
+    "download": "Descargar",
+    "noData": "No hay datos"
+  },
+  "MySubscription": {
+    "title": "Mis Suscripciones",
+    "price": "Precio",
+    "duration": "Duración",
+    "days": "días",
+    "starts": "Inicia",
+    "expires": "Vence",
+    "status": {
+      "active": "Activa",
+      "cancelled": "Cancelada",
+      "expired": "Vencida"
+    },
+    "cancelButton": "Cancelar",
+    "changeButton": "Cambiar",
+    "renewButton": "Renovar"
+  },
+  "CheckoutSuccess": {
+    "title": "¡Pago realizado con éxito!",
+    "message": "Gracias por tu compra. Tu pedido se ha procesado correctamente.",
+    "backToProducts": "Volver a productos",
+    "orders": "Órdenes"
+  },
+  "AdminProducts": {
+    "title": "Productos",
+    "searchPlaceholder": "Buscar por nombre",
+    "createButton": "Crear producto",
+    "name": "Nombre",
+    "description": "Descripción",
+    "price": "Precio",
+    "stock": "Stock",
+    "actions": "Acciones"
   }
 }

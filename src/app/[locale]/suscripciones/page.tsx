@@ -8,6 +8,7 @@ import MainTitle from '@/components/MainTitle'
 import Planes from '../planes/page'
 import { useRouter } from "@/i18n/routing";
 import { EstadoSuscripcion, Suscripcion } from '@/types'
+import { useTranslations } from 'next-intl';
 
 
 export default function MiSuscripcionPage() {
@@ -15,6 +16,7 @@ export default function MiSuscripcionPage() {
   const [loading, setLoading] = useState(true)
   const [modoCambiarPlan, setModoCambiarPlan] = useState(false)
   const router = useRouter();
+  const t = useTranslations('MySubscription');
 
   const cargar = async () => {
     try {
@@ -55,11 +57,11 @@ export default function MiSuscripcionPage() {
   const getSuscripcionEstadoLabel = (estado: string) => {
     switch (estado) {
       case EstadoSuscripcion.ACTIVA:
-        return { label: 'Activa', color: 'green' }
+        return { label: t('status.active'), color: 'green' }
       case EstadoSuscripcion.CANCELADA:
-        return { label: 'Cancelada', color: 'orange' }
+        return { label: t('status.cancelled'), color: 'orange' }
       case EstadoSuscripcion.VENCIDA:
-        return { label: 'Vencida', color: 'red' }
+        return { label: t('status.expired'), color: 'red' }
       default:
         return { label: estado, color: 'grey' }
     }
@@ -74,7 +76,7 @@ export default function MiSuscripcionPage() {
 
   return (
     <MyContainer className="suscripciones-container" isAuthGuard={true}>
-      <MainTitle title="Mis Suscripciones" />
+      <MainTitle title={t('title')} />
 
       <Card
         sx={{
@@ -92,16 +94,16 @@ export default function MiSuscripcionPage() {
                 {suscripcion.plan.nombre}
               </Typography>
               <Typography variant="body2" sx={{ mb: 0.5 }}>
-                Precio: ${suscripcion.plan.precio.toFixed(2)}
+                {t('price')}: ${suscripcion.plan.precio.toFixed(2)}
               </Typography>
               <Typography variant="body2" sx={{ mb: 0.5 }}>
-                Duración: {suscripcion.plan.duracionDias} días
+                {t('duration')}: {suscripcion.plan.duracionDias} {t('days')}
               </Typography>
               <Typography variant="body2" sx={{ mb: 0.5 }}>
-                Inicia: {new Date(suscripcion.fechaInicio).toLocaleDateString()}
+                {t('starts')}: {new Date(suscripcion.fechaInicio).toLocaleDateString()}
               </Typography>
               <Typography variant="body2">
-                Vence: {new Date(suscripcion.fechaVencimiento).toLocaleDateString()}
+                {t('expires')}: {new Date(suscripcion.fechaVencimiento).toLocaleDateString()}
               </Typography>
             </Box>
 
@@ -126,15 +128,15 @@ export default function MiSuscripcionPage() {
           <Stack direction="row" spacing={2} mt={2} justifyContent="center">
             {suscripcion.estado === EstadoSuscripcion.ACTIVA && (
               <Button variant="contained" color="error" onClick={cancelar}>
-                Cancelar
+                {t('cancelButton')}
               </Button>
             )}
             <Button variant="contained" color="secondary" onClick={() => setModoCambiarPlan(true)}>
-              Cambiar
+              {t('changeButton')}
             </Button>
             {suscripcion.estado === EstadoSuscripcion.VENCIDA || suscripcion.estado === EstadoSuscripcion.CANCELADA && (
               <Button variant="contained" color="primary" onClick={renovar}>
-                Renovar
+                {t('renewButton')}
               </Button>
             )}
           </Stack>

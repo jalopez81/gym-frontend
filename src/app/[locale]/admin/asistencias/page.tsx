@@ -17,6 +17,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import AddAsistencia from './AddAsistencia';
 import { formatDateTime } from '@/utils';
+import { useTranslations } from 'next-intl';
 
 const AdminAsistencias = () => {
     const [asistencias, setAsistencias] = useState<Asistencia[]>([]);
@@ -27,6 +28,7 @@ const AdminAsistencias = () => {
     const [filtroEstado, setFiltroEstado] = useState('');
     const [openDialog, setOpenDialog] = useState(false);
     const [nueva, setNueva] = useState({ clienteId: '', sesionId: '' });
+    const t = useTranslations('AdminAttendance');
 
     const fetchAsistencias = async () => {
         const res = await apiClient.get('/asistencias');
@@ -66,26 +68,26 @@ const AdminAsistencias = () => {
     const columnas: GridColDef<Asistencia>[] = [
         {
             field: 'cliente',
-            headerName: 'Cliente',
+            headerName: t('client'),
             flex: 1,
             valueGetter: (_, row) => row.cliente.nombre ?? 'Sin nombre',
         },
         {
             field: 'clase',
-            headerName: 'Clase',
+            headerName: t('class'),
             flex: 1,
             valueGetter: (_, row) => row.sesion.clase.nombre ?? 'Sin nombre',
         },
         {
             field: 'sesion',
-            headerName: 'Sesión',
+            headerName: t('session'),
             flex: 1,
             valueGetter: (_, row) => formatDateTime(row.sesion?.fechaHora) ?? 'Sin fecha',
         },
-        { field: 'estado', headerName: 'Estado', flex: 1 },
+        { field: 'estado', headerName: t('status'), flex: 1 },
         {
             field: 'horaEntrada',
-            headerName: 'Hora entrada',
+            headerName: t('entryTime'),
             flex: 1,
             valueGetter: (_, row) => formatDateTime(row.horaEntrada) ?? 'Sin hora',
         },
@@ -101,7 +103,7 @@ const AdminAsistencias = () => {
     return (
         <Box p={3}>
             <Typography variant="h5" mb={2}>
-                Asistencias
+                {t('title')}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, mb: 2, p: 1, justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
@@ -112,27 +114,27 @@ const AdminAsistencias = () => {
                             onChange={(_, nuevo) => setFiltroCliente(nuevo ? nuevo.id : '')}
                             options={clientes}
                             getOptionLabel={(option) => option.nombre}
-                            renderInput={(params) => <TextField {...params} label="Cliente" />}
+                            renderInput={(params) => <TextField {...params} label={t('clientLabel')} />}
                             sx={{ minWidth: 180 }}
                         />
                     </FormControl>
 
                     <FormControl sx={{ minWidth: 180 }}>
-                        <InputLabel>Estado</InputLabel>
+                        <InputLabel>{t('statusLabel')}</InputLabel>
                         <Select
                             value={filtroEstado}
                             onChange={(e) => setFiltroEstado(e.target.value)}
-                            label="Estado"
+                            label={t('statusLabel')}
                         >
-                            <MenuItem value="">Todos</MenuItem>
-                            <MenuItem value="asistio">Asistió</MenuItem>
-                            <MenuItem value="ausente">Ausente</MenuItem>
+                            <MenuItem value="">{t('allStatus')}</MenuItem>
+                            <MenuItem value="asistio">{t('attended')}</MenuItem>
+                            <MenuItem value="ausente">{t('absent')}</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>
 
                 <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)}>
-                    Registrar asistencia
+                    {t('registerButton')}
                 </Button>
             </Box>
 
