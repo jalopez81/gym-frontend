@@ -1,0 +1,165 @@
+{
+  "Index": {
+    "title": "Manage your training and subscription",
+    "login": "Log In",
+    "register": "Sign Up"
+  },
+  "Navbar": {
+    "logout": "Log Out",
+    "login": "Log In",
+    "greeting": "Hello, {name}!"
+  },
+  "Sidebar": {
+    "slogan": "Push your limits",
+    "adminTitle": "ADMINISTRATOR",
+    "menu_dashboard": "Dashboard",
+    "menu_productos": "Products",
+    "menu_carrito": "Cart",
+    "menu_mis_ordenes": "My Orders",
+    "menu_planes": "Plans",
+    "menu_clases": "Classes",
+    "menu_entrenadores": "Trainers",
+    "menu_mis_suscripciones": "My Subscriptions",
+    "menu_usuarios": "Users",
+    "menu_suscripciones": "Subscriptions",
+    "menu_ordenes": "Orders",
+    "menu_asistencias": "Attendance",
+    "menu_reportes": "Reports",
+    "menu_backups": "Backups",
+    "menu_configuracion": "Configuration"
+  },
+  "Login": {
+    "title": "Log In",
+    "subtitle": "Use email and password to log in",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Log In",
+    "loading": "Logging in...",
+    "noAccount": "Don't have an account?",
+    "register": "Sign Up",
+    "error": "Error logging in"
+  },
+  "Register": {
+    "title": "Create Account",
+    "verifyTitle": "Verify Email",
+    "subtitle": "Fill in your details to get started",
+    "verifySubtitle": "Enter the code we sent to {email}",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "next": "Next",
+    "confirmCode": "Confirmation Code",
+    "confirmAndRegister": "Confirm & Register",
+    "backToEdit": "Back to edit my details",
+    "hasAccount": "Already have an account?",
+    "login": "Log In",
+    "errorMismatch": "Passwords do not match",
+    "errorLength": "Password must be at least 6 characters"
+  },
+  "Cart": {
+    "empty": "Your cart is empty",
+    "goProducts": "Go to products",
+    "title": "Cart",
+    "subtitle": "Here you can remove items or change the quantity",
+    "total": "Total",
+    "clearCart": "Empty cart",
+    "checkout": "Proceed to checkout",
+    "errorOrder": "Error processing the order"
+  },
+  "Dashboard": {
+    "welcome": "Welcome, {name}!",
+    "role": "ROLE",
+    "email": "EMAIL",
+    "memberSince": "MEMBER SINCE",
+    "quickActions": "Quick Actions",
+    "roles": {
+      "admin": "Administrator",
+      "cliente": "Client",
+      "entrenador": "Trainer",
+      "recepcionista": "Receptionist"
+    },
+    "actions": {
+      "products": "Products",
+      "classes": "Classes",
+      "cart": "Cart",
+      "subscription": "Subscription"
+    }
+  },
+  "Products": {
+    "searchPlaceholder": "Search",
+    "searchButton": "Search",
+    "resultsFound": "{count} results found",
+    "perPage": "per page",
+    "cartButton": "Cart"
+  },
+  "AdminOrders": {
+    "title": "Orders",
+    "subtitle": "Supervision of all generated orders",
+    "loading": "Loading orders...",
+    "noOrders": "No orders registered.",
+    "searchLabel": "Search order...",
+    "statusLabel": "Status",
+    "allStatus": "ALL",
+    "status": {
+      "pending": "PENDING",
+      "completed": "COMPLETED",
+      "cancelled": "CANCELLED"
+    },
+    "orderId": "ID",
+    "user": "User",
+    "date": "Date",
+    "statusText": "Status",
+    "product": "Product",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "cancelButton": "Cancel",
+    "completeButton": "Complete",
+    "confirmCancel": "Are you sure you want to cancel this order?"
+  },
+  "AdminSubscriptions": {
+    "title": "Subscriptions",
+    "searchLabel": "Search by user or plan",
+    "noResults": "No results",
+    "user": "User",
+    "plan": "Plan",
+    "status": "Status",
+    "expires": "Expires",
+    "action": "Action",
+    "cancelButton": "Cancel"
+  },
+  "Plans": {
+    "title": "Select Plan",
+    "subtitle": "Choose the subscription plan that best fits your goals",
+    "duration": "Duration",
+    "days": "days",
+    "benefits": "Benefits",
+    "subscribeButton": "Subscribe"
+  },
+  "MyOrders": {
+    "title": "My Orders",
+    "subtitle": "History and status of your purchases",
+    "loading": "Loading orders...",
+    "noOrders": "You don't have any orders yet.",
+    "status": "Status",
+    "date": "Date",
+    "order": "Order",
+    "product": "Product",
+    "quantity": "Quantity",
+    "price": "Price",
+    "subtotal": "Subtotal",
+    "total": "Total"
+  },
+  "Classes": {
+    "title": "Classes",
+    "subtitle": "Organization of classes, schedules and capacity",
+    "loading": "Loading classes...",
+    "noClasses": "No classes available.",
+    "instructor": "Instructor",
+    "duration": "Duration",
+    "minutes": "minutes",
+    "capacity": "Capacity",
+    "reserveSessions": "Reserve sessions:",
+    "noSessions": "No sessions available"
+  }
+}

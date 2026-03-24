@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { useAuthStore } from "@/store/authStore";
 
 export default function AuthGuard({ children }: { children: React.ReactNode }) {

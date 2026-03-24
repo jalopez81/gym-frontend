@@ -13,24 +13,24 @@ import {
 } from '@mui/icons-material';
 
 export const menuItems = [
-  { text: 'Dashboard', icon: <Dashboard />, href: '/dashboard' },
-  { text: 'Productos', icon: <ShoppingBag />, href: '/productos' },
-  { text: 'Carrito', icon: <ShoppingCart />, href: '/carrito' },
-  { text: 'Mis Órdenes', icon: <LocalShipping />, href: '/mis-ordenes' },
-  { text: 'Planes', icon: <CardMembership />, href: '/planes' },
-  { text: 'Clases', icon: <FitnessCenter />, href: '/clases' },
-  { text: 'Entrenadores', icon: <People />, href: '/entrenadores' },
-  { text: 'Mis Suscripciones', icon: <CardMembership />, href: '/suscripciones' },
+  { textKey: 'menu_dashboard', icon: <Dashboard />, href: '/dashboard' },
+  { textKey: 'menu_productos', icon: <ShoppingBag />, href: '/productos' },
+  { textKey: 'menu_carrito', icon: <ShoppingCart />, href: '/carrito' },
+  { textKey: 'menu_mis_ordenes', icon: <LocalShipping />, href: '/mis-ordenes' },
+  { textKey: 'menu_planes', icon: <CardMembership />, href: '/planes' },
+  { textKey: 'menu_clases', icon: <FitnessCenter />, href: '/clases' },
+  { textKey: 'menu_entrenadores', icon: <People />, href: '/entrenadores' },
+  { textKey: 'menu_mis_suscripciones', icon: <CardMembership />, href: '/suscripciones' },
 ];
 
 export const adminMenuItems = [
-  { text: 'Usuarios', icon: <People />, href: '/admin/usuarios' },
-  { text: 'Suscripciones', icon: <CardMembership />, href: '/admin/suscripciones' },
-  { text: 'Productos', icon: <ShoppingBag />, href: '/admin/productos' },
-  { text: 'Órdenes', icon: <LocalShipping />, href: '/admin/ordenes' },
-  { text: 'Clases', icon: <FitnessCenter />, href: '/admin/clases' },
-  { text: 'Asistencias', icon: <Check />, href: '/admin/asistencias' },
-  { text: 'Reportes', icon: <BarChart />, href: '/admin/reportes' },
-  { text: 'Backups', icon: <Backup />, href: '/admin/backups' },
-  { text: 'Configuración', icon: <Settings />, href: '/admin/configuracion' },
+  { textKey: 'menu_usuarios', icon: <People />, href: '/admin/usuarios' },
+  { textKey: 'menu_suscripciones', icon: <CardMembership />, href: '/admin/suscripciones' },
+  { textKey: 'menu_productos', icon: <ShoppingBag />, href: '/admin/productos' },
+  { textKey: 'menu_ordenes', icon: <LocalShipping />, href: '/admin/ordenes' },
+  { textKey: 'menu_clases', icon: <FitnessCenter />, href: '/admin/clases' },
+  { textKey: 'menu_asistencias', icon: <Check />, href: '/admin/asistencias' },
+  { textKey: 'menu_reportes', icon: <BarChart />, href: '/admin/reportes' },
+  { textKey: 'menu_backups', icon: <Backup />, href: '/admin/backups' },
+  { textKey: 'menu_configuracion', icon: <Settings />, href: '/admin/configuracion' },
 ];
