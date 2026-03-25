@@ -5,6 +5,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { AppBar, Box, Button, Toolbar, Typography, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useRouter, usePathname } from "@/i18n/routing";
 import { useLocale, useTranslations } from 'next-intl';
+import ReactCountryFlag from "react-country-flag";
 
 export default function ButtonAppBar() {
   const usuario = useAuthStore(s => s.usuario);
@@ -69,8 +70,8 @@ export default function ButtonAppBar() {
                 },
               }}
             >
-              <ToggleButton value="es">🇪🇸 ES</ToggleButton>
-              <ToggleButton value="en">🇺🇸 EN</ToggleButton>
+              <ToggleButton value="es"><ReactCountryFlag countryCode="es" svg/><span style={{ marginLeft: "0.5rem" }}/>ES</ToggleButton>
+              <ToggleButton value="en"><ReactCountryFlag countryCode="us" svg/><span style={{ marginLeft: "0.5rem" }}/>EN</ToggleButton>
             </ToggleButtonGroup>
           </Box>
         </Toolbar>
