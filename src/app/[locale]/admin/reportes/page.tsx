@@ -5,7 +5,6 @@ import { Tabs, Tab, Box, Button } from "@mui/material";
 import MyContainer from "@/components/MyContainer";
 import apiClient from "@/utils/apiClient";
 import MainTitle from "@/components/MainTitle";
-import TabPanel from "./TabPanel";
 import { DataGrid } from "@mui/x-data-grid";
 import { colsDef } from './columns'
 import LoadingAnimation from "@/components/LoadingAnimatino";
