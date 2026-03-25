@@ -160,7 +160,10 @@
     "minutes": "minutos",
     "capacity": "Cupo",
     "reserveSessions": "Reservar sesiones:",
-    "noSessions": "No hay sesiones disponibles"
+    "noSessions": "No hay sesiones disponibles",
+    "searchPlaceholder": "Buscar clase",
+    "searchButton": "Buscar",
+    "showAll": "Mostrar todo"
   },
   "AdminClasses": {
     "title": "Administrar clases",
@@ -247,5 +250,61 @@
     "price": "Precio",
     "stock": "Stock",
     "actions": "Acciones"
+  },
+  "AdminBackups": {
+    "title": "Backups",
+    "createButton": "Crear backup",
+    "creating": "Creando...",
+    "restoreButton": "Restaurar",
+    "deleting": "Eliminando...",
+    "restored": "Base de datos restaurada exitosamente.",
+    "confirmDelete": "¿Está seguro que desea eliminar este backup?",
+    "name": "Nombre",
+    "date": "Fecha",
+    "size": "Tamaño",
+    "actions": "Acciones"
+  },
+  "AdminConfiguration": {
+    "title": "Configuración del Gimnasio",
+    "subtitle": "Ajustes generales y de funcionamiento",
+    "loading": "Cargando configuración...",
+    "gymName": "Nombre del gimnasio",
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "contactEmail": "Email de contacto",
+    "currency": "Moneda",
+    "taxes": "Impuestos (%)",
+    "sessionDuration": "Duración de sesión (min)",
+    "openingTime": "Horario apertura",
+    "closingTime": "Horario cierre",
+    "maxClassesPerDay": "Máx. clases por día",
+    "allowReservations": "Permitir reservas online",
+    "allowOnlinePayment": "Permitir pago online",
+    "paymentMethods": "Métodos de pago",
+    "notifyEmail": "Notificar por Email",
+    "notificationEmail": "Email de notificaciones",
+    "notifyWhatsapp": "Notificar por WhatsApp",
+    "whatsappNumber": "Número WhatsApp",
+    "logoUrl": "URL del logo",
+    "primaryColor": "Color principal",
+    "secondaryColor": "Color secundario",
+    "saveButton": "Guardar Cambios",
+    "saving": "Guardando...",
+    "resetButton": "Resetear",
+    "resetting": "Reseteando...",
+    "errorLoading": "Error al cargar configuración",
+    "errorSaving": "Error al guardar configuración.",
+    "errorResetting": "Error al resetear.",
+    "paymentMethodOptions": {
+      "card": "Tarjeta",
+      "cash": "Efectivo",
+      "transfer": "Transferencia",
+      "paypal": "PayPal"
+    }
+  },
+  "Footer": {
+    "rightsReserved": " Todos los derechos reservados.",
+    "privacyPolicy": "Política de privacidad",
+    "termsAndConditions": "Términos y condiciones"
   }
 }

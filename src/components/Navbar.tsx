@@ -51,6 +51,7 @@ export default function ButtonAppBar() {
               onChange={handleLanguageChange}
               size="small"
               sx={{
+                transform: "scale(0.8)",
                 '& .MuiToggleButton-root': {
                   color: 'white',
                   borderColor: 'rgba(255,255,255,0.3)',

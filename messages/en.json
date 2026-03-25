@@ -160,7 +160,10 @@
     "minutes": "minutes",
     "capacity": "Capacity",
     "reserveSessions": "Reserve sessions:",
-    "noSessions": "No sessions available"
+    "noSessions": "No sessions available",
+    "searchPlaceholder": "Search class",
+    "searchButton": "Search",
+    "showAll": "Show all"
   },
   "AdminClasses": {
     "title": "Manage Classes",
@@ -247,5 +250,60 @@
     "price": "Price",
     "stock": "Stock",
     "actions": "Actions"
+  },
+  "AdminBackups": {
+    "title": "Backups",
+    "createButton": "Create backup",
+    "creating": "Creating...",
+    "restoreButton": "Restore",
+    "restored": "Database restored successfully.",
+    "confirmDelete": "Are you sure you want to delete this backup?",
+    "name": "Name",
+    "date": "Date",
+    "size": "Size",
+    "actions": "Actions"
+  },
+  "AdminConfiguration": {
+    "title": "Gym Configuration",
+    "subtitle": "General and operational settings",
+    "loading": "Loading configuration...",
+    "gymName": "Gym name",
+    "address": "Address",
+    "phone": "Phone",
+    "contactEmail": "Contact email",
+    "currency": "Currency",
+    "taxes": "Taxes (%)",
+    "sessionDuration": "Session duration (min)",
+    "openingTime": "Opening time",
+    "closingTime": "Closing time",
+    "maxClassesPerDay": "Max. classes per day",
+    "allowReservations": "Allow online reservations",
+    "allowOnlinePayment": "Allow online payment",
+    "paymentMethods": "Payment methods",
+    "notifyEmail": "Notify by Email",
+    "notificationEmail": "Notification email",
+    "notifyWhatsapp": "Notify by WhatsApp",
+    "whatsappNumber": "WhatsApp number",
+    "logoUrl": "Logo URL",
+    "primaryColor": "Primary color",
+    "secondaryColor": "Secondary color",
+    "saveButton": "Save Changes",
+    "saving": "Saving...",
+    "resetButton": "Reset",
+    "resetting": "Resetting...",
+    "errorLoading": "Error loading configuration",
+    "errorSaving": "Error saving configuration.",
+    "errorResetting": "Error resetting.",
+    "paymentMethodOptions": {
+      "card": "Card",
+      "cash": "Cash",
+      "transfer": "Transfer",
+      "paypal": "PayPal"
+    }
+  },
+  "Footer": {
+    "rightsReserved": " All rights reserved.",
+    "privacyPolicy": "Privacy Policy",
+    "termsAndConditions": "Terms and Conditions"
   }
 }

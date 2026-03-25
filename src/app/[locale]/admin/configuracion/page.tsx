@@ -19,6 +19,7 @@ import MainTitle from '@/components/MainTitle';
 import MyContainer from '@/components/MyContainer';
 import apiClient from '@/utils/apiClient';
 import { useAuthStore } from '@/store/authStore';
+import { useTranslations } from 'next-intl';
 
 type Configuracion = {
     id: string;
@@ -47,13 +48,20 @@ type Configuracion = {
 };
 
 const monedas = ['USD', 'DOP', 'EUR', 'MXN'];
-const metodosPagoDisponibles = ['Tarjeta', 'Efectivo', 'Transferencia', 'PayPal'];
 
 export default function AdminConfiguracionPage() {
     const [config, setConfig] = useState<Configuracion | null>(null);
     const [saving, setSaving] = useState(false);
     const [reseteando, setReseteando] = useState(false);
     const { usuario, ROLES } = useAuthStore();
+    const t = useTranslations('AdminConfiguration');
+
+    const metodosPagoDisponibles = [
+        { value: 'Tarjeta', label: t('paymentMethodOptions.card') },
+        { value: 'Efectivo', label: t('paymentMethodOptions.cash') },
+        { value: 'Transferencia', label: t('paymentMethodOptions.transfer') },
+        { value: 'PayPal', label: t('paymentMethodOptions.paypal') }
+    ];
 
     useEffect(() => {
         const fetchConfig = async () => {
@@ -94,15 +102,15 @@ export default function AdminConfiguracionPage() {
                         setConfig(defaultConfig);
                         localStorage.setItem('config', JSON.stringify(defaultConfig));
                     } else {
-                        alert('Error al cargar configuración');
+                        alert(t('errorLoading'));
                     }
                 } else {
-                    alert('Error al cargar configuración');
+                    alert(t('errorLoading'));
                 }
             }
         };
         fetchConfig();
-    }, []);
+    }, [t]);
 
     const handleChange = (field: keyof Configuracion, value: string | number | boolean | string[]) => {
         if (config) {
@@ -127,7 +135,7 @@ export default function AdminConfiguracionPage() {
         } catch (err: unknown) {
             console.error(err);
             const error = err as { response?: { data?: { mensaje?: string } } };
-            alert(error.response?.data?.mensaje || 'Error al guardar configuración.');
+            alert(error.response?.data?.mensaje || t('errorSaving'));
         } finally {
             setSaving(false);
         }
@@ -140,43 +148,43 @@ export default function AdminConfiguracionPage() {
         } catch (err: unknown) {
             console.error(err);
             const error = err as { response?: { data?: { mensaje?: string } } };
-            alert(error.response?.data?.mensaje || 'Error al resetear.');
+            alert(error.response?.data?.mensaje || t('errorResetting'));
         } finally {
             setReseteando(false);
         }
     }
 
 
-    if (!config) return <Typography>Cargando configuración...</Typography>;
+    if (!config) return <Typography>{t('loading')}</Typography>;
 
     return (
         <MyContainer sx={{ py: 4 }}>
-            <MainTitle title="Configuración del Gimnasio" subtitle="Ajustes generales y de funcionamiento" />
+            <MainTitle title={t('title')} subtitle={t('subtitle')} />
 
             <Paper sx={{ p: 3, maxWidth: 950, mx: 'auto', mt: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             fullWidth
-                            label="Nombre del gimnasio"
+                            label={t('gymName')}
                             value={config.nombreGimnasio}
                             onChange={(e) => handleChange('nombreGimnasio', e.target.value)}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField fullWidth label="Dirección" value={config.direccion} onChange={(e) => handleChange('direccion', e.target.value)} />
+                        <TextField fullWidth label={t('address')} value={config.direccion} onChange={(e) => handleChange('direccion', e.target.value)} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField fullWidth label="Teléfono" value={config.telefono} onChange={(e) => handleChange('telefono', e.target.value)} />
+                        <TextField fullWidth label={t('phone')} value={config.telefono} onChange={(e) => handleChange('telefono', e.target.value)} />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField fullWidth label="Email de contacto" value={config.emailContacto} onChange={(e) => handleChange('emailContacto', e.target.value)} />
+                        <TextField fullWidth label={t('contactEmail')} value={config.emailContacto} onChange={(e) => handleChange('emailContacto', e.target.value)} />
                     </Grid>
 
                     <Grid item xs={12} sm={4}>
                         <FormControl fullWidth>
-                            <InputLabel>Moneda</InputLabel>
-                            <Select value={config.moneda} label="Moneda" onChange={(e) => handleChange('moneda', e.target.value)}>
+                            <InputLabel>{t('currency')}</InputLabel>
+                            <Select value={config.moneda} label={t('currency')} onChange={(e) => handleChange('moneda', e.target.value)}>
                                 {monedas.map((m) => (
                                     <MenuItem key={m} value={m}>{m}</MenuItem>
                                 ))}
@@ -186,74 +194,74 @@ export default function AdminConfiguracionPage() {
                     <Grid item xs={12} sm={4}>
                         <TextField
                             fullWidth
-                            label="Impuestos (%)"
+                            label={t('taxes')}
                             type="number"
                             value={config.impuestos}
                             onChange={(e) => handleChange('impuestos', parseFloat(e.target.value))}
                         />
                     </Grid>
                     <Grid item xs={12} sm={4}>
-                        <TextField fullWidth label="Duración de sesión (min)" type="number" value={config.duracionSesionMinutos} onChange={(e) => handleChange('duracionSesionMinutos', parseInt(e.target.value))} />
+                        <TextField fullWidth label={t('sessionDuration')} type="number" value={config.duracionSesionMinutos} onChange={(e) => handleChange('duracionSesionMinutos', parseInt(e.target.value))} />
                     </Grid>
 
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth label="Horario apertura" type="time" value={config.horarioApertura} onChange={(e) => handleChange('horarioApertura', e.target.value)} />
+                        <TextField fullWidth label={t('openingTime')} type="time" value={config.horarioApertura} onChange={(e) => handleChange('horarioApertura', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth label="Horario cierre" type="time" value={config.horarioCierre} onChange={(e) => handleChange('horarioCierre', e.target.value)} />
+                        <TextField fullWidth label={t('closingTime')} type="time" value={config.horarioCierre} onChange={(e) => handleChange('horarioCierre', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth label="Máx. clases por día" type="number" value={config.maxClasesPorDia} onChange={(e) => handleChange('maxClasesPorDia', parseInt(e.target.value))} />
+                        <TextField fullWidth label={t('maxClassesPerDay')} type="number" value={config.maxClasesPorDia} onChange={(e) => handleChange('maxClasesPorDia', parseInt(e.target.value))} />
                     </Grid>
 
                     <Grid item xs={12}>
-                        <FormControlLabel control={<Switch checked={config.permitirReservas} onChange={(e) => handleChange('permitirReservas', e.target.checked)} />} label="Permitir reservas online" />
-                        <FormControlLabel control={<Switch checked={config.permitirPagoOnline} onChange={(e) => handleChange('permitirPagoOnline', e.target.checked)} />} label="Permitir pago online" />
+                        <FormControlLabel control={<Switch checked={config.permitirReservas} onChange={(e) => handleChange('permitirReservas', e.target.checked)} />} label={t('allowReservations')} />
+                        <FormControlLabel control={<Switch checked={config.permitirPagoOnline} onChange={(e) => handleChange('permitirPagoOnline', e.target.checked)} />} label={t('allowOnlinePayment')} />
                     </Grid>
 
                     <Grid item xs={12}>
                         <FormControl fullWidth>
-                            <InputLabel>Métodos de pago</InputLabel>
-                            <Select multiple value={config.metodosPago} onChange={(e) => handleChange('metodosPago', e.target.value as string[])}>
+                            <InputLabel>{t('paymentMethods')}</InputLabel>
+                            <Select multiple value={config.metodosPago} label={t('paymentMethods')} onChange={(e) => handleChange('metodosPago', e.target.value as string[])}>
                                 {metodosPagoDisponibles.map((mp) => (
-                                    <MenuItem key={mp} value={mp}>{mp}</MenuItem>
+                                    <MenuItem key={mp.value} value={mp.value}>{mp.label}</MenuItem>
                                 ))}
                             </Select>
                         </FormControl>
                     </Grid>
 
                     <Grid item xs={12}>
-                        <FormControlLabel control={<Switch checked={config.notificarEmail} onChange={(e) => handleChange('notificarEmail', e.target.checked)} />} label="Notificar por Email" />
-                        <TextField fullWidth label="Email de notificaciones" value={config.emailNotificaciones} onChange={(e) => handleChange('emailNotificaciones', e.target.value)} sx={{ mt: 1 }} />
+                        <FormControlLabel control={<Switch checked={config.notificarEmail} onChange={(e) => handleChange('notificarEmail', e.target.checked)} />} label={t('notifyEmail')} />
+                        <TextField fullWidth label={t('notificationEmail')} value={config.emailNotificaciones} onChange={(e) => handleChange('emailNotificaciones', e.target.value)} sx={{ mt: 1 }} />
                     </Grid>
 
                     <Grid item xs={12}>
-                        <FormControlLabel control={<Switch checked={config.notificarWhatsapp} onChange={(e) => handleChange('notificarWhatsapp', e.target.checked)} />} label="Notificar por WhatsApp" />
+                        <FormControlLabel control={<Switch checked={config.notificarWhatsapp} onChange={(e) => handleChange('notificarWhatsapp', e.target.checked)} />} label={t('notifyWhatsapp')} />
                         {config.notificarWhatsapp && (
-                            <TextField fullWidth label="Número WhatsApp" value={config.whatsappNumero} onChange={(e) => handleChange('whatsappNumero', e.target.value)} sx={{ mt: 1 }} />
+                            <TextField fullWidth label={t('whatsappNumber')} value={config.whatsappNumero} onChange={(e) => handleChange('whatsappNumero', e.target.value)} sx={{ mt: 1 }} />
                         )}
                     </Grid>
 
                     <Grid item xs={12} sm={6}>
-                        <TextField fullWidth label="URL del logo" value={config.logoUrl} onChange={(e) => handleChange('logoUrl', e.target.value)} />
+                        <TextField fullWidth label={t('logoUrl')} value={config.logoUrl} onChange={(e) => handleChange('logoUrl', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth type="color" label="Color principal" value={config.colorPrincipal} onChange={(e) => handleChange('colorPrincipal', e.target.value)} />
+                        <TextField fullWidth type="color" label={t('primaryColor')} value={config.colorPrincipal} onChange={(e) => handleChange('colorPrincipal', e.target.value)} />
                     </Grid>
                     <Grid item xs={6} sm={3}>
-                        <TextField fullWidth type="color" label="Color secundario" value={config.colorSecundario} onChange={(e) => handleChange('colorSecundario', e.target.value)} />
+                        <TextField fullWidth type="color" label={t('secondaryColor')} value={config.colorSecundario} onChange={(e) => handleChange('colorSecundario', e.target.value)} />
                     </Grid>
                 </Grid>
 
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', gap: 2 }}>
                     {(process.env.NODE_ENV === 'development' && usuario?.rol === ROLES.ADMIN) && (<Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
                         <Button variant="contained" color="secondary" onClick={handleResetear} disabled={saving}>
-                            {reseteando ? 'Reseteando...' : 'Resetear'}
+                            {reseteando ? t('resetting') : t('resetButton')}
                         </Button>
                     </Box>)}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 3 }}>
                         <Button variant="contained" color="primary" onClick={handleGuardar} disabled={saving}>
-                            {saving ? 'Guardando...' : 'Guardar Cambios'}
+                            {saving ? t('saving') : t('saveButton')}
                         </Button>
                     </Box>
                 </Box>

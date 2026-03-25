@@ -6,6 +6,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid'
 import apiClient from '@/utils/apiClient'
 import { formatDateTime } from '@/utils'
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useTranslations } from 'next-intl';
 
 interface Backup {
   id: string
@@ -17,6 +18,7 @@ interface Backup {
 export default function AdminBackups() {
   const [backups, setBackups] = useState<Backup[]>([])
   const [loading, setLoading] = useState(false)
+  const t = useTranslations('AdminBackups');
 
   const fetchBackups = async () => {
     const res = await apiClient.get('/backups')
@@ -33,11 +35,11 @@ export default function AdminBackups() {
   const handleRestaurar = async (id: string) => {
     if (!confirm(`¿Restaurar backup ${id}?`)) return
     await apiClient.post(`/backups/${id}/restaurar`)
-    alert('Base de datos restaurada exitosamente.')
+    alert(t('restored'))
   }
   
   const handleEliminar = async (id: string) => {
-    if (!confirm(`¿Esta seguro de que desea eliminar el backup ${id}?`)) return
+    if (!confirm(t('confirmDelete'))) return
     const res = await apiClient.delete(`/backups/${id}/eliminar`)
     if(res.status === 200){
       setBackups(backups.filter(b=> b.id !== id));
@@ -49,12 +51,12 @@ export default function AdminBackups() {
   }, [])
 
   const columnas: GridColDef<Backup>[] = [
-    { field: 'nombre', headerName: 'Nombre', flex: 1 },
-    { field: 'fecha', headerName: 'Fecha', flex: 1, valueGetter: (value) => formatDateTime(value) },
-    { field: 'tamaño', headerName: 'Tamaño', flex: 1 },
+    { field: 'nombre', headerName: t('name'), flex: 1 },
+    { field: 'fecha', headerName: t('date'), flex: 1, valueGetter: (value) => formatDateTime(value) },
+    { field: 'tamaño', headerName: t('size'), flex: 1 },
     {
       field: 'acciones',
-      headerName: 'Acciones',
+      headerName: t('actions'),
       flex: 1,
       renderCell: (params) => (
         <>
@@ -64,7 +66,7 @@ export default function AdminBackups() {
           onClick={() => handleRestaurar(params.row.id)}
           sx={{ m: 1}}
         >
-          Restaurar
+          {t('restoreButton')}
         </Button>
         <IconButton onClick={() => handleEliminar(params.row.id)}><DeleteIcon /></IconButton>
         </>
@@ -74,7 +76,9 @@ export default function AdminBackups() {
 
   return (
     <Box p={3}>
-      <Typography variant="h5" mb={2}>Backups</Typography>
+      <Typography variant="h5" mb={2}>
+        {t('title')}
+      </Typography>
 
       <Button
         variant="contained"
@@ -83,7 +87,7 @@ export default function AdminBackups() {
         disabled={loading}
         sx={{ mb: 2 }}
       >
-        {loading ? 'Creando...' : 'Crear Backup'}
+        {loading ? t('creating') : t('createButton')}
       </Button>
 
       <DataGrid

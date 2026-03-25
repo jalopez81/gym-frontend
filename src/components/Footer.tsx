@@ -1,6 +1,8 @@
 import { Box, Typography, Link } from '@mui/material';
+import { useTranslations } from 'next-intl';
 
 export default function Footer() {
+  const t = useTranslations('Footer');
   return (
     <Box
       component="footer"
@@ -15,16 +17,15 @@ export default function Footer() {
       }}
     >
       <Typography variant="body2">
-        © {new Date().getFullYear()} PROFIT. 
-        Derechos reservados.
-      </Typography>
+        © {new Date().getFullYear()} PROFIT. {t('rightsReserved')}        
+      </Typography>      
       <Typography variant="body2" sx={{ mt: 0.5 }}>
         <Link href="/privacy" color="inherit" underline="hover">
-          Politica de privacidad
+          {t('privacyPolicy')}
         </Link>{' '}
         |{' '}
         <Link href="/terms" color="inherit" underline="hover">
-          Terminos y condiciones
+          {t('termsAndConditions')}
         </Link>
       </Typography>
     </Box>
