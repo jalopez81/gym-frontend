@@ -25,7 +25,7 @@ export default function DashboardPage() {
   const t = useTranslations('Dashboard');
 
   const getRolLabel = (rol: string) => {
-    return t(`roles.${rol}` as any) || rol;
+    return rol;
   };
 
   const actions = [
