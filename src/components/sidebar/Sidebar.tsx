@@ -4,14 +4,12 @@ import { useCartStore } from "@/store/cartStore";
 import theme from "@/theme/theme";
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, List, ListItemButton, ListItemIcon, ListItemText, Tooltip, Typography } from "@mui/material";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { useEffect, useState } from "react";
 import { adminMenuItems, menuItems } from "./menu-items";
 import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+import { useTranslations } from 'next-intl';
 
 export default function Sidebar() {
   const [open, setOpen] = useState(true);
@@ -22,6 +20,7 @@ export default function Sidebar() {
   const { fetch: fetchCart } = useCartStore();
   const { usuario, ROLES, isAuthenticated } = useAuthStore();
   const router = useRouter();
+  const t = useTranslations('Sidebar');
 
   useEffect(() => {
     const fetchRemoteCart = async () => {
@@ -111,29 +110,29 @@ export default function Sidebar() {
             transition: 'opacity 300ms'
           }}
         />
-        <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, transition: 'all 300ms' }}>Supera tus límites</Typography>
+        <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, transition: 'all 300ms' }}>{t('slogan')}</Typography>
       </Box>
 
       <Box className="items-container" sx={{ overflowY: 'auto', height: 'calc(100vh - 150px)', scrollbarWidth: 'none' }}>
         <List>{menuItems.map(item =>
-          <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
+          <Tooltip key={item.textKey} title={open ? "" : t(item.textKey as any)} placement="right" arrow>
             <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
               <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
               <ListItemText
-                primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                primary={t(item.textKey as any)} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
                 primaryTypographyProps={{ fontSize: '1rem' }} />
             </ListItemButton>
           </Tooltip>)}
         </List>
 
         {usuario?.rol === ROLES.ADMIN && <>
-          <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>ADMINISTRADOR</Typography>
+          <Typography variant="body2" sx={{ color: "#ffffff", mt: 7, opacity: `${open ? 1 : 0.5}`, fontSize: open ? "1rem" : 0, ml: 2, transition: 'all 300ms' }}>{t('adminTitle')}</Typography>
           <List>{adminMenuItems.map(item =>
-            <Tooltip key={item.text} title={open ? "" : item.text} placement="right" arrow>
+            <Tooltip key={item.textKey} title={open ? "" : t(item.textKey as any)} placement="right" arrow>
               <ListItemButton selected={isActive(item.href)} LinkComponent={Link} href={item.href} sx={listItemStyle}>
                 <ListItemIcon sx={{ color: isActive(item.href) ? '#a43f4a' : "#ffffff", }}>{item.icon}</ListItemIcon>
                 <ListItemText
-                  primary={item.text} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                  primary={t(item.textKey as any)} sx={{ overflow: 'hidden', textOverflow: "ellipsis", whiteSpace: "nowrap" }}
                   primaryTypographyProps={{ fontSize: '1rem' }}
                 />
               </ListItemButton>
