@@ -5,6 +5,7 @@ import { Box, Button, Card, Tooltip, Typography } from '@mui/material';
 import { CldImage } from 'next-cloudinary';
 import { Entrenador, Clase } from '@/types';
 import { useRouter } from "@/i18n/routing";
+import { useTranslations } from 'next-intl';
 
 
 type EntrenadorCardProps = {
@@ -13,6 +14,7 @@ type EntrenadorCardProps = {
 
 export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
     const router = useRouter();
+    const t = useTranslations('Trainers');
     const clasesList = (clases: Clase[]) => {
 
         return (
@@ -27,9 +29,9 @@ export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
                         padding: 1
                     }}>
                     <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{clase.nombre}</Typography>
-                    <Typography variant="subtitle2">{clase.duracion} minutos</Typography>
-                    <Typography variant="overline">Capacidad: {clase.capacidad} </Typography>
-                    <Button size="small" onClick={()=> router.push('/clases?search-class=' + clase.nombre)}>Inscribirse</Button>
+                    <Typography variant="subtitle2">{clase.duracion} {t('minutes')}</Typography>
+                    <Typography variant="overline">{t('capacity')}: {clase.capacidad} </Typography>
+                    <Button size="small" onClick={()=> router.push('/clases?search-class=' + clase.nombre)}>{t('subscribe')}</Button>
                 </Box>
             ))}
             </Box>)
@@ -48,11 +50,11 @@ export default function EntrenadorCard({ ent }: EntrenadorCardProps) {
                     <Typography variant="body2">{ent.usuario.email}</Typography>
                     <Box className="divider" sx={{ borderBottom: 'solid 1px #cecece', width: '100%', marginY: 1 }}></Box>
                     <Typography variant="body2">{ent.especialidad}</Typography>
-                    <Typography variant="body2">{ent.experiencia} años de experiencia</Typography>
+                    <Typography variant="body2">{ent.experiencia} {t('yearsOfExperience')}</Typography>
                     <Typography variant="body2">{ent.certificaciones}</Typography>
 
                     <Tooltip title={ent.clases?.length ? clasesList(ent.clases) : null} sx={{ background: "#ffffff" }}>
-                        <Button variant='text' sx={{ m: 1, color: ent.clases?.length ? '#a43f4a' : '#c3c3c3' }}>{ent.clases?.length ? 'Ver clases' : 'No tiene clases'}</Button>
+                        <Button variant='text' sx={{ m: 1, color: ent.clases?.length ? '#a43f4a' : '#c3c3c3' }}>{ent.clases?.length ? t('viewClasses') : t('noClasses')}</Button>
                     </Tooltip>
                 </Box>
             </Card>

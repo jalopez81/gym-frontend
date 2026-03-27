@@ -1,14 +1,20 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 
-export default function LoadingAnimation(){
+interface LoadingAnimationProps {
+    caption?: string
+}
+
+export default function LoadingAnimation({ caption } : LoadingAnimationProps){
     return(
         <Box sx={{
-            margin: '200px 0 0 0',
             display: 'flex', 
+            flexDirection: 'column',
             justifyContent: 'center',
-            width: '100%'
+            alignItems: 'center',
+            height: '70vh'
         }}>
             <CircularProgress sx={{ margin: '0 auto'}} />
+            {caption && <Typography variant="body1">{caption}</Typography>}
         </Box>
     )
 
