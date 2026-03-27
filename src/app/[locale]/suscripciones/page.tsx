@@ -9,6 +9,7 @@ import Planes from '../planes/page'
 import { useRouter } from "@/i18n/routing";
 import { EstadoSuscripcion, Suscripcion } from '@/types'
 import { useTranslations } from 'next-intl';
+import LoadingAnimation from '@/components/LoadingAnimatino'
 
 
 export default function MiSuscripcionPage() {
@@ -43,13 +44,6 @@ export default function MiSuscripcionPage() {
     cargar()
   }
 
-  // const cambiarPlan = async (nuevoPlanId: string) => {
-  //   if (!suscripcion) return
-  //   await apiClient.patch(`/suscripciones/${suscripcion.id}`, { planId: nuevoPlanId })
-  //   setModoCambiarPlan(false)
-  //   cargar()
-  // }
-
   useEffect(() => {
     cargar()
   }, [])
@@ -67,7 +61,7 @@ export default function MiSuscripcionPage() {
     }
   }
 
-  if (loading) return <CircularProgress />
+  if (loading) { return <LoadingAnimation caption={t('loading')} /> }
 
   if (!suscripcion) router.push('/planes')
 
@@ -120,7 +114,7 @@ export default function MiSuscripcionPage() {
           </Box>
 
           <Divider sx={{ my: 1.5 }} />
-          
+
           <Typography variant="body2" sx={{ textAlign: 'center', mb: 1, fontWeight: '500', my: 4 }}>
             {suscripcion.plan.beneficios}
           </Typography>
@@ -140,7 +134,7 @@ export default function MiSuscripcionPage() {
               </Button>
             )}
           </Stack>
-        </CardContent>          
+        </CardContent>
         )}
       </Card>
     </MyContainer>

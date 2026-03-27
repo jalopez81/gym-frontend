@@ -8,6 +8,7 @@ import MainTitle from '@/components/MainTitle'
 import { Plan } from '@/types'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { useTranslations } from 'next-intl'
+import LoadingAnimation from '@/components/LoadingAnimatino';
 
 export default function Planes() {
   const [planes, setPlanes] = useState<Plan[]>([])
@@ -36,7 +37,7 @@ export default function Planes() {
     cargarPlanes()
   }, [])
 
-  if (loading) return <CircularProgress sx={{ margin: '0 auto' }} />
+  if (loading) { return <LoadingAnimation caption={t('loading')} /> }
 
   return (
     <MyContainer isAuthGuard={true}>

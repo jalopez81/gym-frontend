@@ -15,6 +15,7 @@ import {
 import apiClient from '@/utils/apiClient'
 import { Suscripcion } from '@/types'
 import { useTranslations } from 'next-intl'
+import LoadingAnimation from '@/components/LoadingAnimatino'
 
 export default function SuscripcionesPage() {
     const [suscripciones, setSuscripciones] = useState<Suscripcion[]>([])
@@ -33,7 +34,7 @@ export default function SuscripcionesPage() {
 
     useEffect(() => { cargar() }, [])
 
-    if (loading) return <CircularProgress sx={{ margin: '0 auto'}} />
+    if (loading) { return <LoadingAnimation caption={t('loading')} /> }
 
     const filtradas = suscripciones.filter(
         (s: Suscripcion) =>

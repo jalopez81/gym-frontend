@@ -126,7 +126,8 @@
     "status": "Status",
     "expires": "Expires",
     "action": "Action",
-    "cancelButton": "Cancel"
+    "cancelButton": "Cancel",
+    "loading": "Loading subscriptions..."
   },
   "Plans": {
     "title": "Select Plan",
@@ -134,7 +135,8 @@
     "duration": "Duration",
     "days": "days",
     "benefits": "Benefits",
-    "subscribeButton": "Subscribe"
+    "subscribeButton": "Subscribe",
+    "loading": "Loading plans..."
   },
   "MyOrders": {
     "title": "My Orders",
@@ -233,7 +235,8 @@
     },
     "cancelButton": "Cancel",
     "changeButton": "Change",
-    "renewButton": "Renew"
+    "renewButton": "Renew",
+    "loading": "Loading subscription..."
   },
   "CheckoutSuccess": {
     "title": "Payment successful!",
@@ -305,5 +308,16 @@
     "rightsReserved": " All rights reserved.",
     "privacyPolicy": "Privacy Policy",
     "termsAndConditions": "Terms and Conditions"
+  },
+  "Trainers": {
+    "minutes": "minutes",
+    "capacity": "Capacity",
+    "subscribe": "Subscribe",
+    "viewClasses": "View classes",
+    "noClasses": "No classes",
+    "yearsOfExperience": "years of experience",
+    "title": "Trainers",
+    "subtitle": "Find your personal trainer",
+    "loading": "Loading trainers"
   }
 }

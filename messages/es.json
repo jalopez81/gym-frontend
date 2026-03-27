@@ -126,7 +126,8 @@
     "status": "Estado",
     "expires": "Vence",
     "action": "Acción",
-    "cancelButton": "Cancelar"
+    "cancelButton": "Cancelar",
+    "loading": "Cargando suscripciones..."
   },
   "Plans": {
     "title": "Seleccionar Plan",
@@ -134,7 +135,8 @@
     "duration": "Duración",
     "days": "días",
     "benefits": "Beneficios",
-    "subscribeButton": "Suscribirme"
+    "subscribeButton": "Suscribirme",
+    "loading": "Cargando planes..."
   },
   "MyOrders": {
     "title": "Mis órdenes",
@@ -233,7 +235,8 @@
     },
     "cancelButton": "Cancelar",
     "changeButton": "Cambiar",
-    "renewButton": "Renovar"
+    "renewButton": "Renovar",
+    "loading": "Cargando suscripción..."
   },
   "CheckoutSuccess": {
     "title": "¡Pago realizado con éxito!",
@@ -302,9 +305,21 @@
       "paypal": "PayPal"
     }
   },
+  
   "Footer": {
     "rightsReserved": " Todos los derechos reservados.",
     "privacyPolicy": "Política de privacidad",
     "termsAndConditions": "Términos y condiciones"
+  }, 
+  "Trainers": {
+    "minutes": "minutos",
+    "capacity": "Capacidad",
+    "subscribe": "Inscribirse",
+    "viewClasses": "Ver clases",
+    "noClasses": "No tiene clases",
+    "yearsOfExperience": "años de experiencia",
+    "title": "Entrenadores",
+    "subtitle": "Encuentra tu entrenador personal",
+    "loading": "Cargando entrenadores"
   }
 }
