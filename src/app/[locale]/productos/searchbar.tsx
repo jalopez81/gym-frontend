@@ -7,6 +7,7 @@ import { ProductPagination } from '@/types';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link } from "@/i18n/routing";
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -55,6 +56,7 @@ type SearchBarProps = {
 export default function Searchbar({ pagination, setPagination }: SearchBarProps) {
     const searchInput = useRef<HTMLInputElement>(null);
     const t = useTranslations('Products');
+    const { isMobile } = useBreakpoints();
 
     const updateItemsPerPage = (event: SelectChangeEvent<string>) => {
         const newValue = event.target.value;
@@ -83,7 +85,7 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
 
     return (
         <Box sx={{ flexGrow: 1, margin: "1rem 0", position: 'sticky', top: "56px", zIndex: 10, maxHeight: "100px" }}>
-            <AppBar position="sticky" sx={{ top: 0, zIndex: 10 }}>
+            <AppBar id="appbar-search" position="sticky" sx={{ top: 0, zIndex: 10, ...(isMobile && {maxWidth: "500px", flexWrap: 'wrap'}) }}>
                 <Toolbar>
                     <Search>
                         <SearchIconWrapper>
@@ -96,7 +98,7 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                             inputRef={searchInput}
                         />
                     </Search>
-                    <Button
+                     <Button
                         variant="text"
                         size="small"
                         color='secondary'
@@ -105,7 +107,7 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                     >
                         {t('searchButton')}
                     </Button>
-                    <Typography variant="body2" mr={4}>{t('resultsFound', { count: pagination.total })}</Typography>
+                    {!isMobile && <Typography variant="body2" mr={4}>{t('resultsFound', { count: pagination.total })}</Typography>}
                     <Select
                         value={pagination.limite.toString()}
                         onChange={updateItemsPerPage}
@@ -119,8 +121,9 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                     >
                         {[3, 5, 10, 15, 20, 30, 50].map((item) => (
                             <MenuItem key={item} value={item.toString()}>{item}</MenuItem>
-                        ))}
+                            ))}
                     </Select>
+                    {!isMobile && <>
                     <Typography variant="body2" sx={{ ml: 1 }}>{t('perPage')}</Typography>
                     <Box sx={{ flexGrow: 1 }} />
                     <Link href="/carrito" passHref>
@@ -133,7 +136,7 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                         >
                             {t('cartButton')}
                         </Button>
-                    </Link>
+                    </Link> </>}
                 </Toolbar>
             </AppBar>
         </Box>
