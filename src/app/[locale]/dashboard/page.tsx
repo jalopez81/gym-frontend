@@ -19,10 +19,12 @@ import { Link } from "@/i18n/routing";
 import { useAuthStore } from '@/store/authStore';
 import MyContainer from '@/components/MyContainer';
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 export default function DashboardPage() {
   const usuario = useAuthStore( s=> s.usuario);
   const t = useTranslations('Dashboard');
+  const { isMobile } = useBreakpoints();
 
   const getRolLabel = (rol: string) => {
     return rol;
@@ -76,7 +78,7 @@ export default function DashboardPage() {
         </Grid>
       </Grid>
 
-      <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mt: 4 }}>
+      <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mt: 4, textAlign: isMobile ? 'center' : 'left' }}>
         {t('quickActions')}
       </Typography>
 
