@@ -22,6 +22,7 @@ import { useRouter } from "@/i18n/routing";
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/authStore';
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 async function update(_id: string, producto: Producto, cantidad: number) { await apiClient.post(`/carrito`, { producto, cantidad }) }
 
@@ -33,6 +34,7 @@ export default function CartPage() {
   const { isAuthenticated } = useAuthStore()
   const [total, setTotal] = useState(0);
   const t = useTranslations('Cart');
+  const { isMobile } = useBreakpoints();
 
   useEffect(() => {
     let t = 0;
@@ -91,40 +93,82 @@ export default function CartPage() {
   return (
     <MyContainer isAuthGuard={true} sx={{ minHeight: '100vh', py: 4 }}>
       <MainTitle title={t('title')} subtitle={t('subtitle')} />
-      <Paper elevation={3} sx={{ p: 4, maxWidth: 770 }}>
+
+      <Paper
+        elevation={isMobile ? 0 : 3}
+        sx={{ p: isMobile ? 0 : 4, maxWidth: 770 }}
+      >
         <Stack spacing={2}>
           {items.map((item: CarritoItem) => (
-            <Paper key={item.producto.id} sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            <Paper
+              key={item.producto.id}
+              sx={{ display: 'flex', alignItems: 'stretch' }}
+            >
+              {/* Product Image */}
               <CldImage
                 src={item.producto.imagenSecureUrl}
-                width={50}
-                height={50}
+                width={90}
+                height={90}
                 crop="fill"
                 gravity="auto"
                 quality="auto"
                 alt="Producto"
                 loading="lazy"
               />
-              <Typography sx={{ flex: 1, marginX: 2 }}>{item.producto.nombre}</Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <Button size="small" onClick={() => handleSubtractQuantity(item)}>-</Button>
-                <Typography>{item.cantidad}</Typography>
-                <Button size="small" onClick={() => handleAddQuantity(item)}>+</Button>
+
+              {/* Product Info & Controls */}
+              <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                <Typography sx={{ flex: 1, textAlign: 'center' }}>
+                  {item.producto.nombre}
+                </Typography>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, width: 200 }}>
+                  <Button size="small" sx={{ width: 20, fontSize: '1.3rem' }} onClick={() => handleSubtractQuantity(item)}>-</Button>
+                  <Typography>{item.cantidad}</Typography>
+                  <Button size="small" sx={{ width: 20, fontSize: '1.3rem' }} onClick={() => handleAddQuantity(item)}>+</Button>
+                </Box>
+
+                <Typography sx={{ width: 130, textAlign: 'center', fontWeight: 700 }}>
+                  {item.producto.precio}
+                </Typography>
               </Box>
-              <Typography sx={{ width: 130, textAlign: 'right', }}>{item.producto.precio}</Typography>
-              <IconButton onClick={() => handleRemove(item)}>
-                <DeleteIcon />
-              </IconButton>
+
+              {/* Delete Action */}
+              <Box
+                sx={{
+                  backgroundColor: 'red',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <IconButton onClick={() => handleRemove(item)} sx={{ color: 'white' }}>
+                  <DeleteIcon />
+                </IconButton>
+              </Box>
             </Paper>
           ))}
         </Stack>
 
         <Divider sx={{ my: 3 }} />
 
-        <Typography align="right" gutterBottom mr={7} fontWeight={"bold"}>{t('total')}: ${total.toFixed(2)}</Typography>
+        {/* Summary & Footer Actions */}
+        <Typography
+          align="right"
+          gutterBottom
+          mr={7}
+          fontWeight="bold"
+        >
+          {t('total')}: ${total.toFixed(2)}
+        </Typography>
+
         <Stack direction="row" spacing={2} mt={4} justifyContent="flex-end">
-          <Button variant="outlined" color="primary" onClick={handleClearCart}>{t('clearCart')}</Button>
-          <Button variant="contained" color="primary" onClick={handleCheckout}>{t('checkout')}</Button>
+          <Button variant="outlined" color="primary" onClick={handleClearCart}>
+            {t('clearCart')}
+          </Button>
+          <Button variant="contained" color="primary" onClick={handleCheckout}>
+            {t('checkout')}
+          </Button>
         </Stack>
       </Paper>
     </MyContainer>
