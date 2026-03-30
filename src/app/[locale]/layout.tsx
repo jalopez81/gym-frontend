@@ -41,11 +41,45 @@ export default async function RootLayout({
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
-              <Box className="root-layout__container" sx={{ display: "flex", flex: 1, height: "100vh", overflow: "hidden" }}>
+              <Box 
+                className="root-layout__container" 
+                sx={{ 
+                  display: "flex", 
+                  flex: 1, 
+                  height: "100vh", 
+                  overflow: "hidden",
+                  position: 'relative' // Context for the floating sidebar
+                }}
+              >
+                {/* 1. Sidebar handles its own fixed/sticky logic based on screen size */}
                 <Sidebar />
-                <Box className="root-layout__main-wrapper" sx={{ display: 'flex', flexDirection: 'column', overflow: "auto", width: "100%", background: '#f3f7f7'}}>
+
+                <Box 
+                  className="root-layout__main-wrapper" 
+                  sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    overflow: "auto", 
+                    width: "100%", 
+                    background: '#f3f7f7',
+                    // 2. Add a left margin ONLY on mobile so the 55px icon strip 
+                    // doesn't cover your Navbar text or page content.
+                    // Desktop doesn't need this because 'sticky' already pushes the content.
+                    ml: { xs: '55px', md: 0 }, 
+                    transition: 'margin 300ms ease-in-out'
+                  }}
+                >
                   <Navbar />
-                  <Box component="main" className="root-layout__main" sx={{ display: 'flex', flexDirection: 'column', flex: 1, background: "#ffffff" }}>
+                  <Box 
+                    component="main" 
+                    className="root-layout__main" 
+                    sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      flex: 1, 
+                      background: "#ffffff" 
+                    }}
+                  >
                     {children}
                   </Box>
                   <Footer />
