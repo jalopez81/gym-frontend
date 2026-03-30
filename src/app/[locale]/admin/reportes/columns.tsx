@@ -1,118 +1,94 @@
-import { Box } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import { formatDateTime } from "@/utils";
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 
-type ColsDefType = {
-  ordenes: GridColDef[];
-  productos: GridColDef[];
-  suscripciones: GridColDef[];
-  asistencias: GridColDef[];
-};
-
-export const colsDef: ColsDefType = {
+export const getColsDef = (t: any) => ({
   ordenes: [
-    { field: "id", headerName: "ID", width: 100 },
+    { field: "id", headerName: "ID", width: 90 },
     {
       field: "fecha",
-      headerName: "Fecha",
-      width: 200,
-      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string),
+      headerName: t('date'),
+      width: 180,
+      renderCell: (params) => formatDateTime(params.value as string),
     },
-    { field: "cliente", headerName: "Cliente", width: 200 },
+    { field: "cliente", headerName: t('client'), width: 180 },
     {
       field: "total",
-      headerName: "Total",
-      width: 200,
-      renderCell: (params: GridRenderCellParams) => `$${params.value}`,
+      headerName: t('total'),
+      width: 120,
+      renderCell: (params) => `$${params.value}`,
     },
     {
       field: "estado",
-      headerName: "Estado",
-      width: 200,
-      renderCell: (params: GridRenderCellParams) => {
-        const v = (params.value as string)?.toUpperCase?.() ?? "";
-        const colorMap: Record<string, string> = {
-          PAGADA: "green",
-          COMPLETADA: "green",
-          ENVIADA: "blue",
-          CANCELADA: "red",
-          PENDIENTE: "orange",
+      headerName: t('status'),
+      width: 150,
+      renderCell: (params) => {
+        const v = (params.value as string)?.toUpperCase() || "";
+        const colorMap: Record<string, "success" | "info" | "error" | "warning" | "default"> = {
+          PAGADA: "success",
+          COMPLETADA: "success",
+          ENVIADA: "info",
+          CANCELADA: "error",
+          PENDIENTE: "warning",
         };
-        return <Box sx={{ color: colorMap[v] || "gray" }}>{v}</Box>;
+        return (
+          <Chip 
+            label={v} 
+            size="small" 
+            color={colorMap[v] || "default"} 
+            variant="outlined" 
+          />
+        );
       },
     },
-  ],
+  ] as GridColDef[],
 
   productos: [
-    { field: "id", headerName: "ID", width: 100 },
-    { field: "nombre", headerName: "Nombre", width: 200 },
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "nombre", headerName: t('name'), width: 200 },
     {
       field: "precio",
-      headerName: "Precio",
-      width: 200,
-      renderCell: (params: GridRenderCellParams) => `$${params.value}`,
+      headerName: t('price'),
+      width: 130,
+      renderCell: (params) => `$${params.value}`,
     },
-    { field: "stock", headerName: "Stock", width: 200 },
-    { field: "categoria", headerName: "Categoría", width: 200 },
-  ],
+    { field: "stock", headerName: t('stock'), width: 100 },
+    { field: "categoria", headerName: t('category'), width: 150 },
+  ] as GridColDef[],
 
   suscripciones: [
-    { field: "id", headerName: "ID", width: 100 },
-
-    {
-      field: "cliente",
-      headerName: "Cliente",
-      width: 200,
-    },
-
-    {
-      field: "plan",
-      headerName: "Plan",
-      width: 200,
-    },
-
-    {
-      field: "precio",
-      headerName: "Precio",
-      width: 150,
-    },
-
+    { field: "id", headerName: "ID", width: 90 },
+    { field: "cliente", headerName: t('client'), width: 180 },
+    { field: "plan", headerName: t('plan'), width: 150 },
+    { field: "precio", headerName: t('price'), width: 120 },
     {
       field: "inicio",
-      headerName: "Inicio",
+      headerName: t('start'),
       width: 150,
-      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string),
+      renderCell: (params) => formatDateTime(params.value as string),
     },
-
     {
       field: "fin",
-      headerName: "Fin",
-      width: 200,
-      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string),
+      headerName: t('end'),
+      width: 150,
+      renderCell: (params) => formatDateTime(params.value as string),
     },
-  ],
+  ] as GridColDef[],
 
   asistencias: [
-    { field: "id", headerName: "ID", width: 100 },
-
+    { field: "id", headerName: "ID", width: 90 },
     {
       field: "sesion",
-      headerName: "Sesión",
-      width: 220,
-      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string) || ""
+      headerName: t('session'),
+      width: 200,
+      renderCell: (params) => formatDateTime(params.value as string) || ""
     },
-
-    {
-      field: "cliente",
-      headerName: "Cliente",
-      width: 220,
-    },
-
+    { field: "cliente", headerName: t('client'), width: 200 },
     {
       field: "horaEntrada",
-      headerName: "Entrada",
+      headerName: t('entry'),
       width: 150,
-      renderCell: (params: GridRenderCellParams) => formatDateTime(params.value as string) || ""
+      renderCell: (params) => formatDateTime(params.value as string) || ""
     },
-  ],
-};
+  ] as GridColDef[],
+});
