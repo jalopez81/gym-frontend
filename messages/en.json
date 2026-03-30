@@ -136,7 +136,8 @@
     "days": "days",
     "benefits": "Benefits",
     "subscribeButton": "Subscribe",
-    "loading": "Loading plans..."
+    "loading": "Loading plans...",
+    "currentPlan": "Current plan"
   },
   "MyOrders": {
     "title": "My Orders",
