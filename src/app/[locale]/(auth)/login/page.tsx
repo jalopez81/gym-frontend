@@ -10,8 +10,11 @@ import {
   Button,
   Alert,
   Paper,
-  Stack
+  Stack,
+  InputAdornment,
+  CircularProgress
 } from '@mui/material';
+import { EmailOutlined, LockOutlined } from '@mui/icons-material';
 import { useAuthStore } from '@/store/authStore';
 import MyContainer from '@/components/MyContainer';
 import MainTitle from '@/components/MainTitle';
@@ -48,21 +51,29 @@ export default function LoginPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        py: 4
+        // Athletic background gradient
+        background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
+        px: 2
       }}
     >
-      <MyContainer className="page-login" maxWidth="sm" >
-        <Paper elevation={3} sx={{ p: 4 }}>
-          <MainTitle title={t('title')} subtitle={t('subtitle')}/>
+      <MyContainer className="page-login" maxWidth="sm">
+        <Paper 
+          elevation={6} 
+          sx={{ 
+            p: { xs: 3, md: 5 }, 
+            borderRadius: 4,
+            textAlign: 'center' 
+          }}
+        >
+          <MainTitle title={t('title')} subtitle={t('subtitle')} />
           
-
           {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
+            <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
               {error}
             </Alert>
           )}
 
-          <Box component="form" onSubmit={handleSubmit}>
+          <Box component="form" onSubmit={handleSubmit} noValidate>
             <Stack spacing={3}>
               <TextField
                 label={t('email')}
@@ -72,6 +83,14 @@ export default function LoginPage() {
                 fullWidth
                 required
                 autoComplete="email"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <EmailOutlined color="action" />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <TextField
@@ -82,6 +101,14 @@ export default function LoginPage() {
                 fullWidth
                 required
                 autoComplete="current-password"
+                variant="outlined"
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <LockOutlined color="action" />
+                    </InputAdornment>
+                  ),
+                }}
               />
 
               <Button
@@ -90,26 +117,28 @@ export default function LoginPage() {
                 size="large"
                 fullWidth
                 disabled={isLoading}
+                sx={{ 
+                  py: 1.5, 
+                  borderRadius: 2, 
+                  fontWeight: 'bold', 
+                  fontSize: '1.1rem',
+                  textTransform: 'none',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                }}
               >
-                {isLoading ? t('loading') : t('submit')}
+                {isLoading ? <CircularProgress size={24} color="inherit" /> : t('submit')}
               </Button>
             </Stack>
           </Box>
 
-          <Typography align="center" sx={{ mt: 3 }}>
-            {t('noAccount')}{' '}
-            <Link href="/registro" style={{ color: '#1976d2', fontWeight: 'bold' }}>
-              {t('register')}
-            </Link>
-          </Typography>
-
-          {/* <Alert severity="info" sx={{ mt: 3 }}>
-            <Typography variant="subtitle2" fontWeight="bold">
-              Cuentas de prueba:
+          <Box sx={{ mt: 4, pt: 2, borderTop: '1px solid #eee' }}>
+            <Typography variant="body2" color="text.secondary">
+              {t('noAccount')}{' '}
+              <Link href="/registro" style={{ color: '#a43f4a', fontWeight: 'bold', textDecoration: 'none' }}>
+                {t('register')}
+              </Link>
             </Typography>
-            <Typography variant="body2">Admin: admin@gym.com / 123456</Typography>
-            <Typography variant="body2">Cliente: juan@gym.com / 123456</Typography>
-          </Alert> */}
+          </Box>
         </Paper>
       </MyContainer>
     </Box>
