@@ -1,21 +1,27 @@
-'use client'
+'use client';
 
-import { useEffect, useState, useCallback } from "react";
-import { Tabs, Tab, Box, Button } from "@mui/material";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { Tabs, Tab, Box, Button, Paper, Typography, Stack, useTheme, useMediaQuery } from "@mui/material";
 import MyContainer from "@/components/MyContainer";
 import apiClient from "@/utils/apiClient";
 import MainTitle from "@/components/MainTitle";
 import { DataGrid } from "@mui/x-data-grid";
-import { colsDef } from './columns'
+import { getColsDef } from './columns'
 import LoadingAnimation from "@/components/LoadingAnimatino";
 import { useTranslations } from 'next-intl';
+import DownloadIcon from '@mui/icons-material/Download';
 
 export default function Reportes() {
   const [report, setReport] = useState({ title: "", data: [] });
-
   const [tab, setTab] = useState("ordenes");
   const [loading, setLoading] = useState(false);
+  const [downloading, setDownloading] = useState(false);
+  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const t = useTranslations('AdminReports');
+  
+  const columns = useMemo(() => getColsDef(t), [t]);
 
   const fetchReportes = useCallback(async () => {
     setLoading(true);
@@ -30,61 +36,90 @@ export default function Reportes() {
   }, [tab]);
 
   const fetchReportesDownload = async () => {
-    setLoading(true);
+    setDownloading(true);
     try {
-      const res = await apiClient.get(`/reportes/${tab}/download`, {
-        responseType: 'blob'
-      });
-
-      const blob = res.data;
-      const url = window.URL.createObjectURL(blob);
+      const res = await apiClient.get(`/reportes/${tab}/download`, { responseType: 'blob' });
+      const url = window.URL.createObjectURL(new Blob([res.data]));
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'report.xlsx';
+      a.download = `Reporte_${tab}.xlsx`;
       a.click();
-
-      URL.revokeObjectURL(url);
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      setDownloading(false);
     }
   };
 
-
-  useEffect(() => {
-    fetchReportes();
-  }, [fetchReportes]);
+  useEffect(() => { fetchReportes(); }, [fetchReportes]);
 
   return (
-    <MyContainer className="reportes-container">
-      <Box sx={{ display: 'flex', justifyContent: "space-between" }}>
+    <MyContainer>
+      {/* Header Stack: Stacks on mobile, side-by-side on desktop */}
+      <Stack 
+        direction={{ xs: 'column', sm: 'row' }} 
+        spacing={2} 
+        justifyContent="space-between" 
+        alignItems={{ xs: 'flex-start', sm: 'center' }}
+        mb={3}
+      >
         <MainTitle title={t('title')} />
-      </Box>
+        
+        <Button 
+          variant="contained" 
+          startIcon={<DownloadIcon />}
+          onClick={fetchReportesDownload}
+          disabled={downloading || report.data.length === 0}
+          fullWidth={isMobile} // Big button for easy tapping on mobile
+        >
+          {downloading ? t('processing') : t('download')}
+        </Button>
+      </Stack>
 
-      <Tabs value={tab} onChange={(_, v) => setTab(v)} sx={{ mb: 2 }}>
-        <Tab label={t('orders')} value="ordenes" />
-        <Tab label={t('products')} value="productos" />
-        <Tab label={t('subscriptions')} value="suscripciones" />
-        <Tab label={t('attendance')} value="asistencias" />
-      </Tabs>
+      <Paper sx={{ borderRadius: 2, overflow: 'hidden', mb: 3 }}>
+        {/* Scrollable Tabs for small screens */}
+        <Tabs 
+          value={tab} 
+          onChange={(_, v) => setTab(v)} 
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          sx={{ borderBottom: 1, borderColor: 'divider' }}
+        >
+          <Tab label={t('orders')} value="ordenes" />
+          <Tab label={t('products')} value="productos" />
+          <Tab label={t('subscriptions')} value="suscripciones" />
+          <Tab label={t('attendance')} value="asistencias" />
+        </Tabs>
 
-      {/* ordenes  */}
-      {loading && <LoadingAnimation />}
-
-      {!loading && (
-        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'flex-end' }}>
-          <Button onClick={fetchReportesDownload}>{t('download')}</Button>
+        <Box sx={{ height: 600, width: '100%', p: { xs: 1, sm: 2 } }}>
+          {loading ? (
+            <Box sx={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+                <LoadingAnimation />
+            </Box>
+          ) : report.data.length > 0 ? (
+            <DataGrid
+              rows={report.data}
+              columns={columns[tab as keyof typeof columns]}
+              pageSizeOptions={[10, 25]}
+              initialState={{
+                pagination: { paginationModel: { pageSize: 10 } },
+              }}
+              // Density "compact" helps fit more data on small screens
+              density={isMobile ? "compact" : "standard"}
+              disableRowSelectionOnClick
+              sx={{ 
+                border: 'none',
+                '& .MuiDataGrid-columnHeaderTitle': { fontWeight: 'bold' }
+              }}
+            />
+          ) : (
+            <Box sx={{ display: 'flex', height: '100%', alignItems: 'center', justifyContent: 'center', py: 10 }}>
+                <Typography color="text.secondary">{t('noData')}</Typography>
+            </Box>
+          )}
         </Box>
-      )}
-
-      {report.data.length > 0
-        ? <DataGrid
-          rows={report.data}
-          columns={colsDef[tab as keyof typeof colsDef]}
-        />
-        : <p>{t('noData')}</p>
-      }
+      </Paper>
     </MyContainer>
   );
 }
