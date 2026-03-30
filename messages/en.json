@@ -70,7 +70,13 @@
     "total": "Total",
     "clearCart": "Empty cart",
     "checkout": "Proceed to checkout",
-    "errorOrder": "Error processing the order"
+    "errorOrder": "Error processing the order",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "taxes": "Taxes",
+    "discount": "Discount",
+    "summary": "Order Summary"
   },
   "Dashboard": {
     "welcome": "Welcome, {name}!",

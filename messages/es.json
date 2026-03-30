@@ -70,7 +70,13 @@
     "total": "Total",
     "clearCart": "Vaciar carrito",
     "checkout": "Proceder al pago",
-    "errorOrder": "Error al procesar el pedido"
+    "errorOrder": "Error al procesar el pedido",
+    "subtotal": "Subtotal",
+    "shipping": "Envío",
+    "free": "Gratis",
+    "taxes": "Impuestos",
+    "discount": "Descuento",
+    "summary": "Resumen del Pedido"
   },
   "Dashboard": {
     "welcome": "Bienvenido, {name}!",

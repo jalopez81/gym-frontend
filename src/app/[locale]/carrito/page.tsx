@@ -6,7 +6,10 @@ import { useCartStore } from '@/store/cartStore';
 import { Producto, CarritoItem } from '@/types';
 import apiClient from '@/utils/apiClient';
 import { debounce } from '@/utils/debounce';
-import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import {
   Box,
   Button,
@@ -14,7 +17,9 @@ import {
   IconButton,
   Paper,
   Stack,
-  Typography
+  Typography,
+  Grid,
+  useTheme
 } from '@mui/material';
 import { CldImage } from 'next-cloudinary';
 import { Link } from "@/i18n/routing";
@@ -24,12 +29,14 @@ import { useAuthStore } from '@/store/authStore';
 import { useTranslations } from 'next-intl';
 import { useBreakpoints } from '@/utils/useMediaQuery';
 
-async function update(_id: string, producto: Producto, cantidad: number) { await apiClient.post(`/carrito`, { producto, cantidad }) }
-
+const update = async (_id: string, producto: Producto, cantidad: number) => { 
+  await apiClient.post(`/carrito`, { producto, cantidad }) 
+}
 const debouncedUpdate = debounce(update, 1500)
 
 export default function CartPage() {
   const router = useRouter();
+  const theme = useTheme();
   const { remove, clearCart, setQty, fetch, items } = useCartStore();
   const { isAuthenticated } = useAuthStore()
   const [total, setTotal] = useState(0);
@@ -37,140 +44,129 @@ export default function CartPage() {
   const { isMobile } = useBreakpoints();
 
   useEffect(() => {
-    let t = 0;
-    items.forEach((item: CarritoItem) => t += item.producto.precio * item.cantidad);
-    setTotal(t);
+    const totalCalc = items.reduce((acc, item) => acc + (item.producto.precio * item.cantidad), 0);
+    setTotal(totalCalc);
   }, [items]);
 
-  useEffect(() => {
-    fetch();
-  }, [fetch])
-
-
-  const handleCheckout = async () => {
-    try {
-      router.push('/pago');
-    } catch (err) {
-      console.error(err);
-      alert(t('errorOrder'));
-    }
-  };
-
-  const handleClearCart = async () => {
-    clearCart();
-    if (isAuthenticated()) { await apiClient.delete('/carrito') }
-  }
-
-  const handleSubtractQuantity = async (item: CarritoItem) => {
-    const cantidad = item.cantidad - 1;
-
-    if (cantidad === 0) return
-
-    setQty(item.producto.id, cantidad)
-    if (isAuthenticated()) { debouncedUpdate(item.producto.id, item.producto, cantidad) }
-  }
-
-  const handleAddQuantity = async (item: CarritoItem) => {
-    const cantidad = item.cantidad + 1;
-    setQty(item.producto.id, cantidad)
-    debouncedUpdate(item.producto.id, item.producto, cantidad)
-  }
-
-  const handleRemove = async (item: CarritoItem) => {
-    remove(item.producto.id)
-    if (isAuthenticated()) { await apiClient.delete(`/carrito/${item.producto.id}`) }
-  }
+  useEffect(() => { fetch(); }, [fetch]);
 
   if (items.length === 0) {
     return (
-      <MyContainer isAuthGuard={true} sx={{ minHeight: '100vh', py: 4 }}>
-        <Typography>{t('empty')}</Typography>
-        <Link href="/productos" style={{ marginLeft: 10, color: '#1976d2' }}>{t('goProducts')}</Link>
+      <MyContainer isAuthGuard={true} sx={{ minHeight: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <Typography variant="h5" color="text.secondary" gutterBottom>{t('empty')}</Typography>
+        <Button component={Link} href="/productos" variant="contained" sx={{ mt: 2 }}>
+          {t('goProducts')}
+        </Button>
       </MyContainer>
     );
   }
 
   return (
-    <MyContainer isAuthGuard={true} sx={{ minHeight: '100vh', py: 4 }}>
+    <MyContainer isAuthGuard={true} sx={{ py: 4 }}>
       <MainTitle title={t('title')} subtitle={t('subtitle')} />
 
-      <Paper
-        elevation={isMobile ? 0 : 3}
-        sx={{ p: isMobile ? 0 : 4, maxWidth: 770 }}
-      >
-        <Stack spacing={2}>
-          {items.map((item: CarritoItem) => (
-            <Paper
-              key={item.producto.id}
-              sx={{ display: 'flex', alignItems: 'stretch' }}
-            >
-              {/* Product Image */}
-              <CldImage
-                src={item.producto.imagenSecureUrl}
-                width={90}
-                height={90}
-                crop="fill"
-                gravity="auto"
-                quality="auto"
-                alt="Producto"
-                loading="lazy"
-              />
-
-              {/* Product Info & Controls */}
-              <Box sx={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
-                <Typography sx={{ flex: 1, textAlign: 'center' }}>
-                  {item.producto.nombre}
-                </Typography>
-
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 1, width: 200 }}>
-                  <Button size="small" sx={{ width: 20, fontSize: '1.3rem' }} onClick={() => handleSubtractQuantity(item)}>-</Button>
-                  <Typography>{item.cantidad}</Typography>
-                  <Button size="small" sx={{ width: 20, fontSize: '1.3rem' }} onClick={() => handleAddQuantity(item)}>+</Button>
-                </Box>
-
-                <Typography sx={{ width: 130, textAlign: 'center', fontWeight: 700 }}>
-                  {item.producto.precio}
-                </Typography>
-              </Box>
-
-              {/* Delete Action */}
-              <Box
-                sx={{
-                  backgroundColor: 'red',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+      <Grid container spacing={4}>
+        {/* LIST OF ITEMS */}
+        <Grid item xs={12} md={8}>
+          <Stack spacing={2}>
+            {items.map((item: CarritoItem) => (
+              <Paper 
+                key={item.producto.id} 
+                elevation={0} 
+                sx={{ 
+                  display: 'flex', 
+                  p: 2, 
+                  borderRadius: 3, 
+                  border: '1px solid #eee',
+                  position: 'relative',
+                  overflow: 'hidden'
                 }}
               >
-                <IconButton onClick={() => handleRemove(item)} sx={{ color: 'white' }}>
-                  <DeleteIcon />
-                </IconButton>
-              </Box>
-            </Paper>
-          ))}
-        </Stack>
+                <Box sx={{ borderRadius: 2, overflow: 'hidden', flexShrink: 0 }}>
+                  <CldImage
+                    src={item.producto.imagenSecureUrl}
+                    width={isMobile ? 80 : 100}
+                    height={isMobile ? 80 : 100}
+                    crop="fill"
+                    alt={item.producto.nombre}
+                  />
+                </Box>
 
-        <Divider sx={{ my: 3 }} />
+                <Box sx={{ flex: 1, ml: 2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', pr: 4 }}>
+                    <Typography fontWeight="bold" variant="subtitle1">{item.producto.nombre}</Typography>
+                    <Typography fontWeight="bold" color="primary.main">${(item.producto.precio * item.cantidad).toFixed(2)}</Typography>
+                  </Box>
 
-        {/* Summary & Footer Actions */}
-        <Typography
-          align="right"
-          gutterBottom
-          mr={7}
-          fontWeight="bold"
-        >
-          {t('total')}: ${total.toFixed(2)}
-        </Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Stack direction="row" alignItems="center" sx={{ bgcolor: '#f5f5f5', borderRadius: 2, px: 1 }}>
+                      <IconButton size="small" onClick={() => item.cantidad > 1 && setQty(item.producto.id, item.cantidad - 1)}>
+                        <RemoveIcon fontSize="small" />
+                      </IconButton>
+                      <Typography sx={{ mx: 2, fontWeight: 'bold' }}>{item.cantidad}</Typography>
+                      <IconButton size="small" onClick={() => {
+                        setQty(item.producto.id, item.cantidad + 1);
+                        debouncedUpdate(item.producto.id, item.producto, item.cantidad + 1);
+                      }}>
+                        <AddIcon fontSize="small" />
+                      </IconButton>
+                    </Stack>
 
-        <Stack direction="row" spacing={2} mt={4} justifyContent="flex-end">
-          <Button variant="outlined" color="primary" onClick={handleClearCart}>
+                    <IconButton 
+                      onClick={() => remove(item.producto.id)} 
+                      sx={{ color: theme.palette.error.light }}
+                    >
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </Paper>
+            ))}
+          </Stack>
+          
+          <Button 
+            variant="text" 
+            color="inherit" 
+            onClick={clearCart} 
+            sx={{ mt: 2, textTransform: 'none', color: 'text.secondary' }}
+          >
             {t('clearCart')}
           </Button>
-          <Button variant="contained" color="primary" onClick={handleCheckout}>
-            {t('checkout')}
-          </Button>
-        </Stack>
-      </Paper>
+        </Grid>
+
+        {/* SUMMARY SIDEBAR */}
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 3, borderRadius: 4, bgcolor: '#fafafa', position: 'sticky', top: 20 }}>
+            <Typography variant="h6" fontWeight="bold" gutterBottom>{t('summary')}</Typography>
+            <Box sx={{ my: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                <Typography color="text.secondary">{t('subtotal')}</Typography>
+                <Typography>${total.toFixed(2)}</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography color="text.secondary">{t('shipping')}</Typography>
+                <Typography color="success.main">{t('free')}</Typography>
+              </Box>
+            </Box>
+            <Divider sx={{ my: 2 }} />
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+              <Typography variant="h5" fontWeight="900">{t('total')}</Typography>
+              <Typography variant="h5" fontWeight="900" color="primary">${total.toFixed(2)}</Typography>
+            </Box>
+            
+            <Button 
+              fullWidth 
+              variant="contained" 
+              size="large" 
+              startIcon={<ShoppingCartCheckoutIcon />}
+              onClick={() => router.push('/pago')}
+              sx={{ py: 2, borderRadius: 3, fontWeight: 'bold' }}
+            >
+              {t('checkout')}
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
     </MyContainer>
   );
 }
