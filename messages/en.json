@@ -150,7 +150,8 @@
     "quantity": "Quantity",
     "price": "Price",
     "subtotal": "Subtotal",
-    "total": "Total"
+    "total": "Total",
+    "copySuccess": "Order ID copied to clipboard"
   },
   "Classes": {
     "title": "Classes",

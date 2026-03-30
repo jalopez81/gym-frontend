@@ -150,7 +150,8 @@
     "quantity": "Cantidad",
     "price": "Precio",
     "subtotal": "Subtotal",
-    "total": "Total"
+    "total": "Total",
+    "copySuccess": "ID de la orden copiado al portapapeles"
   },
   "Classes": {
     "title": "Clases",
