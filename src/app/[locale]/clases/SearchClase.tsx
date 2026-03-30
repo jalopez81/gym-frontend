@@ -4,6 +4,7 @@ import { Box, TextField, Button, Stack } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 interface SearchClaseProps {
   onSearch: (query: string) => void;
@@ -12,6 +13,7 @@ interface SearchClaseProps {
 export default function SearchClase({ onSearch }: SearchClaseProps) {
   const [query, setQuery] = useState('');
   const t = useTranslations('Classes');
+  const { isMobile } = useBreakpoints();
 
   const handleSearch = () => {
     onSearch(query.trim());
@@ -23,7 +25,11 @@ export default function SearchClase({ onSearch }: SearchClaseProps) {
 
   return (
     <Box sx={{ p: 2, my: 2, background: "#ffffff" }}>
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack 
+        direction={isMobile ? "column" : "row"} 
+        spacing={2} 
+        alignItems={isMobile ? "stretch" : "center"}
+      >
         <TextField
           label={t('searchPlaceholder')}
           variant="outlined"
@@ -31,11 +37,15 @@ export default function SearchClase({ onSearch }: SearchClaseProps) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyPress}
-          sx={{background: "#ffffff"}}
+          sx={{ 
+            background: "#ffffff",
+            flexGrow: 1 // Takes up remaining space on desktop
+          }}
         />
         <Button
           variant="contained"
           color="primary"
+          fullWidth={isMobile}
           startIcon={<SearchIcon />}
           onClick={handleSearch}
         >
@@ -44,7 +54,11 @@ export default function SearchClase({ onSearch }: SearchClaseProps) {
         <Button
           variant="outlined"
           color="primary"
-          onClick={()=>onSearch('')}
+          fullWidth={isMobile}
+          onClick={() => {
+            setQuery(''); // Optional: clear input when showing all
+            onSearch('');
+          }}
         >
           {t('showAll')}
         </Button>
