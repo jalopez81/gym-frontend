@@ -325,12 +325,57 @@
       "paypal": "PayPal"
     }
   },
-  
+  "AdminConfiguration": {
+    "title": "Configuración del Gimnasio",
+    "subtitle": "Gestiona la información general, políticas y apariencia de tu centro.",
+    "loading": "Cargando configuración...",
+    "saveButton": "Guardar Cambios",
+    "saving": "Guardando...",
+    "saveSuccess": "Configuración actualizada correctamente",
+    "resetButton": "Resetear Base de Datos",
+    "resetting": "Reseteando...",
+    "errorLoading": "Error al cargar la configuración",
+    "errorSaving": "No se pudo guardar la configuración",
+    "errorResetting": "Error al resetear la base de datos",
+    "gymName": "Nombre del Gimnasio",
+    "contactEmail": "Email de Contacto",
+    "address": "Dirección Física",
+    "phone": "Teléfono",
+    "openingTime": "Hora de Apertura",
+    "closingTime": "Hora de Cierre",
+    "currency": "Moneda",
+    "sessionDuration": "Duración de Sesión (Min)",
+    "maxClassesPerDay": "Máx. Clases por Día",
+    "taxes": "Impuestos (%)",
+    "allowReservations": "Permitir Reservas",
+    "allowOnlinePayment": "Permitir Pagos Online",
+    "notifyEmail": "Notificaciones por Email",
+    "notificationEmail": "Email para Notificaciones",
+    "notifyWhatsapp": "Notificaciones por WhatsApp",
+    "whatsappNumber": "Número de WhatsApp",
+    "logoUrl": "URL del Logo",
+    "primaryColor": "Color Principal",
+    "secondaryColor": "Color Secundario",
+    "paymentMethods": "Métodos de Pago Aceptados",
+    "sections": {
+      "general": "Información General",
+      "operations": "Operaciones y Horarios",
+      "policies": "Políticas y Reservas",
+      "notifications": "Sistema de Notificaciones",
+      "appearance": "Apariencia y Branding"
+    },
+    "paymentMethodOptions": {
+      "card": "Tarjeta de Crédito/Débito",
+      "cash": "Efectivo",
+      "transfer": "Transferencia Bancaria",
+      "paypal": "PayPal"
+    }
+  },
   "Footer": {
     "rightsReserved": " Todos los derechos reservados.",
     "privacyPolicy": "Política de privacidad",
     "termsAndConditions": "Términos y condiciones"
-  }, 
+  },
   "Trainers": {
     "minutes": "minutos",
     "capacity": "Capacidad",
