@@ -10,6 +10,7 @@ import SearchClase from './SearchClase';
 import MainTitle from '@/components/MainTitle';
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 function ClasesPageContent() {
     const [clases, setClases] = useState<Clase[]>([]);
@@ -17,6 +18,7 @@ function ClasesPageContent() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const t = useTranslations('Classes');
+    const { isMobile } = useBreakpoints();
 
     const searchParams = useSearchParams();
 
@@ -83,7 +85,7 @@ function ClasesPageContent() {
 
             {clases.length === 0 && <Typography>{t('noClasses')}</Typography>}
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mt: 2, ...(isMobile && { justifyContent: 'center' }) }}>
                 {filteredClases.map((clase) => (
                     <Paper key={clase.id} sx={{ p: 2, width: 300 }}>
                         {/* Detalles de la clase */}
