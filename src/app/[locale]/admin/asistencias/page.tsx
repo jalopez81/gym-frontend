@@ -11,15 +11,22 @@ import {
     MenuItem,
     Select,
     TextField,
-    Typography
+    Typography,
+    Stack,
+    Paper,
+    Chip,
+    Divider
 } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import AddAsistencia from './AddAsistencia';
 import { formatDateTime } from '@/utils';
 import { useTranslations } from 'next-intl';
+import MainTitle from '@/components/MainTitle';
+import { useBreakpoints } from '@/utils/useMediaQuery'; // Asumiendo que tienes este hook
 
 const AdminAsistencias = () => {
+    const { isMobile } = useBreakpoints();
     const [asistencias, setAsistencias] = useState<Asistencia[]>([]);
     const [clientes, setClientes] = useState<Usuario[]>([]);
     const [sesiones, setSesiones] = useState<Sesion[]>([]);
@@ -30,69 +37,24 @@ const AdminAsistencias = () => {
     const [nueva, setNueva] = useState({ clienteId: '', sesionId: '' });
     const t = useTranslations('AdminAttendance');
 
-    const fetchAsistencias = async () => {
-        const res = await apiClient.get('/asistencias');
-        setAsistencias(res.data);
+    const fetchData = async () => {
+        try {
+            const [resAsist, resUsers, resSes, resRes] = await Promise.all([
+                apiClient.get('/asistencias'),
+                apiClient.get('/usuarios'),
+                apiClient.get('/sesiones'),
+                apiClient.get('/reservas/admin'),
+            ]);
+            setAsistencias(resAsist.data);
+            setClientes(resUsers.data);
+            setSesiones(resSes.data);
+            setReservas(resRes.data);
+        } catch (error) {
+            console.error("Error fetching data", error);
+        }
     };
 
-    const fetchReservas = async () => {
-        const res = await apiClient.get('/reservas/admin');
-        setReservas(res.data);
-    };
-
-    const fetchClientes = async () => {
-        const res = await apiClient.get('/usuarios');
-        setClientes(res.data);
-    };
-
-    const fetchSesiones = async () => {
-        const res = await apiClient.get('/sesiones');
-        setSesiones(res.data);
-    };
-
-
-    useEffect(() => {
-        fetchAsistencias();
-        fetchClientes();
-        fetchSesiones();
-        fetchReservas();
-    }, []);
-
-    const handleCrear = async () => {
-        await apiClient.post('/asistencias', nueva);
-        setOpenDialog(false);
-        setNueva({ clienteId: '', sesionId: '' });
-        fetchAsistencias();
-    };
-
-    const columnas: GridColDef<Asistencia>[] = [
-        {
-            field: 'cliente',
-            headerName: t('client'),
-            flex: 1,
-            valueGetter: (_, row) => row.cliente.nombre ?? 'Sin nombre',
-        },
-        {
-            field: 'clase',
-            headerName: t('class'),
-            flex: 1,
-            valueGetter: (_, row) => row.sesion.clase.nombre ?? 'Sin nombre',
-        },
-        {
-            field: 'sesion',
-            headerName: t('session'),
-            flex: 1,
-            valueGetter: (_, row) => formatDateTime(row.sesion?.fechaHora) ?? 'Sin fecha',
-        },
-        { field: 'estado', headerName: t('status'), flex: 1 },
-        {
-            field: 'horaEntrada',
-            headerName: t('entryTime'),
-            flex: 1,
-            valueGetter: (_, row) => formatDateTime(row.horaEntrada) ?? 'Sin hora',
-        },
-    ];
-
+    useEffect(() => { fetchData(); }, []);
 
     const asistFiltradas = asistencias.filter(
         (a) =>
@@ -100,53 +62,126 @@ const AdminAsistencias = () => {
             (!filtroEstado || a.estado === filtroEstado)
     );
 
+    const columnas: GridColDef<Asistencia>[] = [
+        {
+            field: 'cliente',
+            headerName: t('client'),
+            flex: 1,
+            valueGetter: (_, row) => row.cliente?.nombre ?? '—',
+        },
+        {
+            field: 'clase',
+            headerName: t('class'),
+            flex: 1,
+            valueGetter: (_, row) => row.sesion?.clase?.nombre ?? '—',
+        },
+        {
+            field: 'sesion',
+            headerName: t('session'),
+            flex: 1,
+            valueGetter: (_, row) => formatDateTime(row.sesion?.fechaHora) ?? '—',
+        },
+        { 
+            field: 'estado', 
+            headerName: t('status'), 
+            width: 130,
+            renderCell: (params) => (
+                <Chip 
+                    label={params.value} 
+                    size="small" 
+                    color={params.value === 'asistio' ? 'success' : 'error'} 
+                    variant="outlined" 
+                />
+            )
+        },
+    ];
+
     return (
-        <Box p={3}>
-            <Typography variant="h5" mb={2}>
-                {t('title')}
-            </Typography>
+        <Box p={{ xs: 1, sm: 3 }}>
+            <MainTitle title={t('title')} />
 
-            <Box sx={{ display: 'flex', gap: 2, mb: 2, p: 1, justifyContent: 'space-between', backgroundColor: '#ffffff' }}>
-                <Box>
-                    <FormControl sx={{ minWidth: 180 }}>
-                        <Autocomplete
-                            value={clientes.find(c => c.id === filtroCliente) || null}
-                            onChange={(_, nuevo) => setFiltroCliente(nuevo ? nuevo.id : '')}
-                            options={clientes}
-                            getOptionLabel={(option) => option.nombre}
-                            renderInput={(params) => <TextField {...params} label={t('clientLabel')} />}
-                            sx={{ minWidth: 180 }}
-                        />
-                    </FormControl>
-
-                    <FormControl sx={{ minWidth: 180 }}>
+            {/* Filtros Adaptables */}
+            <Paper sx={{ p: 2, mb: 3, borderRadius: 2 }}>
+                <Stack direction={{ xs: 'column', md: 'row' }} spacing={2} alignItems="center">
+                    <Autocomplete
+                        fullWidth
+                        size="small"
+                        options={clientes}
+                        getOptionLabel={(option) => option.nombre || ''}
+                        value={clientes.find(c => c.id === filtroCliente) || null}
+                        onChange={(_, v) => setFiltroCliente(v ? v.id : '')}
+                        renderInput={(params) => <TextField {...params} label={t('clientLabel')} />}
+                    />
+                    <FormControl fullWidth size="small">
                         <InputLabel>{t('statusLabel')}</InputLabel>
                         <Select
                             value={filtroEstado}
-                            onChange={(e) => setFiltroEstado(e.target.value)}
                             label={t('statusLabel')}
+                            onChange={(e) => setFiltroEstado(e.target.value)}
                         >
                             <MenuItem value="">{t('allStatus')}</MenuItem>
                             <MenuItem value="asistio">{t('attended')}</MenuItem>
                             <MenuItem value="ausente">{t('absent')}</MenuItem>
                         </Select>
                     </FormControl>
+                    <Button 
+                        fullWidth={isMobile}
+                        variant="contained" 
+                        onClick={() => setOpenDialog(true)}
+                        sx={{ minWidth: 200, height: 40 }}
+                    >
+                        {t('registerButton')}
+                    </Button>
+                </Stack>
+            </Paper>
+
+            {/* Vista Condicional: DataGrid o Cards */}
+            {isMobile ? (
+                <Stack spacing={2}>
+                    {asistFiltradas.map((asist) => (
+                        <Paper key={asist.id} sx={{ p: 2, borderRadius: 2, borderLeft: `5px solid ${asist.estado === 'asistio' ? '#4caf50' : '#f44336'}` }}>
+                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+                                <Box>
+                                    <Typography variant="subtitle1" fontWeight="bold">
+                                        {asist.cliente?.nombre}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {asist.sesion?.clase?.nombre}
+                                    </Typography>
+                                </Box>
+                                <Chip 
+                                    label={asist.estado} 
+                                    size="small" 
+                                    color={asist.estado === 'asistio' ? 'success' : 'error'} 
+                                />
+                            </Box>
+                            <Divider sx={{ my: 1 }} />
+                            <Typography variant="caption" display="block">
+                                📅 {formatDateTime(asist.sesion?.fechaHora)}
+                            </Typography>
+                            {asist.horaEntrada && (
+                                <Typography variant="caption" color="primary">
+                                    🕒 Entrada: {formatDateTime(asist.horaEntrada)}
+                                </Typography>
+                            )}
+                        </Paper>
+                    ))}
+                    {asistFiltradas.length === 0 && (
+                        <Typography textAlign="center" py={4} color="text.secondary">No hay asistencias</Typography>
+                    )}
+                </Stack>
+            ) : (
+                <Box sx={{ height: 650, width: '100%', backgroundColor: 'white', borderRadius: 2, overflow: 'hidden' }}>
+                    <DataGrid
+                        rows={asistFiltradas}
+                        columns={columnas}
+                        getRowId={(r) => r.id}
+                        initialState={{ pagination: { paginationModel: { pageSize: 10 } } }}
+                        pageSizeOptions={[10, 20]}
+                        disableRowSelectionOnClick
+                    />
                 </Box>
-
-                <Button variant="contained" color="primary" onClick={() => setOpenDialog(true)}>
-                    {t('registerButton')}
-                </Button>
-            </Box>
-
-            <DataGrid
-                rows={asistFiltradas}
-                columns={columnas}
-                getRowId={(r) => r.id}
-                pageSizeOptions={[5, 10, 20]}
-                initialState={{
-                    pagination: { paginationModel: { pageSize: 10 } },
-                }}
-            />
+            )}
 
             <AddAsistencia
                 open={openDialog}
@@ -156,9 +191,12 @@ const AdminAsistencias = () => {
                 reservas={reservas}
                 nueva={nueva}
                 setNueva={setNueva}
-                onGuardar={handleCrear}
+                onGuardar={async () => {
+                    await apiClient.post('/asistencias', nueva);
+                    setOpenDialog(false);
+                    fetchData();
+                }}
             />
-
         </Box>
     );
 };
