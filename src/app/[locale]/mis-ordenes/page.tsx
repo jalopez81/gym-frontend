@@ -6,6 +6,7 @@ import apiClient from '@/utils/apiClient';
 import { Box, Paper, Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 interface OrdenItem {
   producto: {
@@ -39,6 +40,7 @@ export default function OrdenesPage() {
   const [ordenes, setOrdenes] = useState<Orden[]>([]);
   const [loading, setLoading] = useState(true);
   const t = useTranslations('MyOrders');
+  const { isMobile } = useBreakpoints();
 
   useEffect(() => {
     const fetchOrdenes = async () => {
@@ -55,25 +57,34 @@ export default function OrdenesPage() {
     fetchOrdenes();
   }, []);
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    alert(t('copySuccess'));
+  };
+
   if (loading) return <Typography>{t('loading')}</Typography>;
 
   return (
     <MyContainer className="mis-ordenes" isAuthGuard={true} sx={{ py: 4 }}>
-      <MainTitle title={t('title')} subtitle={t('subtitle')}/>
+      <MainTitle title={t('title')} subtitle={t('subtitle')} />
 
       {ordenes.length === 0 && <Typography>{t('noOrders')}</Typography>}
 
       <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
         {ordenes.map((orden) => (
-          <Paper className="orden" key={orden.id} sx={{ mb: 3, p: 2, maxWidth: 650, width: "100%" }}>
+          <Paper className="orden" key={orden.id} sx={{ mb: 3, p: 2, maxWidth: isMobile ? '100%' : 650, width: '100%' }}>
             <Box className="orden-header" sx={{ ml: 2, mr: 2 }}>
-              <Box sx={{ display: 'flex', gap: 1}}>
+              <Box sx={{ display: 'flex', gap: 1 }}>
                 <Typography>{t('status')}: </Typography>
-              <Typography sx={{ color: getStatusColor(orden.estado.toLowerCase() as Estado) }}>{orden.estado}</Typography>
+                <Typography sx={{ color: getStatusColor(orden.estado.toLowerCase() as Estado) }}>{orden.estado}</Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography>{t('date')}: {new Date(orden.creado).toLocaleString()}</Typography>
-                <Typography variant="body2">{t('order')}: <i>{orden.id}</i></Typography>
+                <Typography variant="body2"
+                sx={{ ...(isMobile && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }) }}
+                title={t('order') + ': ' + orden.id}
+                onClick={() => copyToClipboard(orden.id)}
+                >{t('order')}: <i>{orden.id}</i></Typography>
               </Box>
             </Box>
 
@@ -82,8 +93,12 @@ export default function OrdenesPage() {
                 <TableRow>
                   <TableCell>{t('product')}</TableCell>
                   <TableCell align="right">{t('quantity')}</TableCell>
-                  <TableCell align="right">{t('price')}</TableCell>
-                  <TableCell align="right">{t('subtotal')}</TableCell>
+                  {!isMobile && (
+                    <>
+                      <TableCell align="right">{t('price')}</TableCell>
+                      <TableCell align="right">{t('subtotal')}</TableCell>
+                    </>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -91,8 +106,13 @@ export default function OrdenesPage() {
                   <TableRow key={idx}>
                     <TableCell>{item.producto.nombre}</TableCell>
                     <TableCell align="right">{item.cantidad}</TableCell>
-                    <TableCell align="right">${item.producto.precio.toFixed(2)}</TableCell>
-                    <TableCell align="right">${item.subtotal.toFixed(2)}</TableCell>
+                    {!isMobile && (
+                      <>
+                        <TableCell align="right">${item.producto.precio.toFixed(2)}</TableCell>
+                        <TableCell align="right">${item.subtotal.toFixed(2)}</TableCell>
+                      </>
+                    )
+                    }
                   </TableRow>
                 ))}
               </TableBody>
