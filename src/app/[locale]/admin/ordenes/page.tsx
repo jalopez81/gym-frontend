@@ -20,11 +20,15 @@ import {
     TableRow,
     TextField,
     Typography,
+    Chip,
+    Divider,
+    Stack
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import MainTitle from '@/components/MainTitle';
 import { useTranslations } from 'next-intl';
+import { useBreakpoints } from '@/utils/useMediaQuery';
 
 const ESTADO_ORDEN = {
     PENDIENTE: 'PENDIENTE',
@@ -32,32 +36,22 @@ const ESTADO_ORDEN = {
     CANCELADA: 'CANCELADA',
 }
 
-const getStatusColor = (estado: string) => {
-    const COLORS: Record<string, string> = {
-        'PENDIENTE': 'orange',
-        'COMPLETADA': 'green',
-        'CANCELADA': 'red',
-    };
-    return COLORS[estado] || 'gray';
-};
-
-
 export default function AdminOrdenesPage() {
+    const { isMobile } = useBreakpoints();
     const [ordenes, setOrdenes] = useState<Orden[]>([]);
     const [loading, setLoading] = useState(true);
     const [busqueda, setBusqueda] = useState('');
-    const [estado, setEstado] = useState('');
+    const [estado, setEstado] = useState('TODAS');
     const t = useTranslations('AdminOrders');
 
-    const ordenesFiltradas = ordenes.filter(o => {
-        const terms = busqueda.toLowerCase().trim().split(/\s+/);
-        return terms.every(term =>
-            o.usuario.nombre.toLowerCase().includes(term) ||
-            o.id.toLowerCase().includes(term) ||
-            o.estado.toLowerCase().includes(term)
-        );
-    });
-
+    const getStatusColor = (estado: string): "warning" | "success" | "error" | "default" => {
+        switch (estado) {
+            case 'PENDIENTE': return 'warning';
+            case 'COMPLETADA': return 'success';
+            case 'CANCELADA': return 'error';
+            default: return 'default';
+        }
+    };
 
     const fetchOrdenes = async () => {
         try {
@@ -70,11 +64,12 @@ export default function AdminOrdenesPage() {
         }
     };
 
-    useEffect(() => {
-        fetchOrdenes();
-    }, []);
+    useEffect(() => { fetchOrdenes(); }, []);
 
-    const handleCompletar = async (id: string, nuevoEstado: string) => {
+    const handleUpdateStatus = async (id: string, nuevoEstado: string) => {
+        if (nuevoEstado === ESTADO_ORDEN.CANCELADA && !confirm(t('confirmCancel'))) return;
+        if (nuevoEstado === ESTADO_ORDEN.COMPLETADA && !confirm(t('confirmComplete'))) return;
+        
         try {
             await apiClient.put(`/ordenes/${id}`, { estado: nuevoEstado });
             setOrdenes((prev) =>
@@ -85,54 +80,45 @@ export default function AdminOrdenesPage() {
         }
     };
 
-    const handleCancelar = async (id: string) => {
-        if (!confirm(t('confirmCancel'))) return;
-        try {
-            const res = await apiClient.delete(`/ordenes/${id}`);
-            if (res.status === 200) {
-                setOrdenes(prev =>
-                    prev.map(o =>
-                        o.id === id ? { ...o, estado: ESTADO_ORDEN.CANCELADA } : o
-                    )
-                );
-            }
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    const ordenesFiltradas = ordenes.filter(o => {
+        const matchesEstado = estado === 'TODAS' || o.estado === estado;
+        const terms = busqueda.toLowerCase().trim().split(/\s+/);
+        const matchesSearch = terms.every(term =>
+            o.usuario?.nombre.toLowerCase().includes(term) ||
+            o.id.toLowerCase().includes(term)
+        );
+        return matchesEstado && matchesSearch;
+    });
 
-
-    if (loading) return <Typography>{t('loading')}</Typography>;
+    if (loading) return <Box sx={{ p: 4 }}><Typography>{t('loading')}</Typography></Box>;
 
     return (
         <MyContainer sx={{ py: 4 }}>
             <MainTitle title={t('title')} subtitle={t('subtitle')}/>
 
-            {ordenes.length === 0 && <Typography>{t('noOrders')}</Typography>}
-
-            <Box sx={{ display: 'flex', gap: 1, my: 2 }}>
+            <Stack 
+                direction={{ xs: 'column', sm: 'row' }} 
+                spacing={2} 
+                sx={{ mb: 4, mt: 2 }}
+            >
                 <TextField
                     label={t('searchLabel')}
                     variant="outlined"
                     value={busqueda}
                     onChange={(e) => setBusqueda(e.target.value)}
                     size="small"
+                    fullWidth
                     InputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        ),
+                        startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
                     }}
-                    sx={{ width: 400}}
+                    sx={{ maxWidth: { sm: 400 } }}
                 />
-                <FormControl sx={{ minWidth: 180 }}>
+                <FormControl size="small" sx={{ minWidth: 200 }}>
                     <InputLabel>{t('statusLabel')}</InputLabel>
                     <Select
                         value={estado}
-                        onChange={(e) => { setEstado(e.target.value); setBusqueda(e.target.value === 'TODAS' ? '' : e.target.value) }}
+                        onChange={(e) => setEstado(e.target.value)}
                         label={t('statusLabel')}
-                        size='small'
                     >
                         <MenuItem value='TODAS'>{t('allStatus')}</MenuItem>
                         <MenuItem value={ESTADO_ORDEN.PENDIENTE}>{t('status.pending')}</MenuItem>
@@ -140,55 +126,91 @@ export default function AdminOrdenesPage() {
                         <MenuItem value={ESTADO_ORDEN.CANCELADA}>{t('status.cancelled')}</MenuItem>
                     </Select>
                 </FormControl>
+            </Stack>
 
-            </Box>
+            {ordenesFiltradas.length === 0 && <Typography color="text.secondary">{t('noOrders')}</Typography>}
 
-            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: 3 }}>
                 {ordenesFiltradas.map((orden) => (
-                    <Paper key={orden.id} sx={{ mb: 3, p: 2, minWidth: 600, maxWidth: 950, flexDirection: 'column', justifyContent: 'space-between', display: 'flex' }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', mb: 1 }}>
-                                <Typography>
-                                    <b>{t('orderId')}:</b> {orden.id}
+                    <Paper 
+                        key={orden.id} 
+                        elevation={0} 
+                        sx={{ 
+                            p: { xs: 2, sm: 3 }, 
+                            border: '1px solid #e0e0e0', 
+                            borderRadius: 2 
+                        }}
+                    >
+                        {/* Header Area */}
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+                            <Box>
+                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                                    ID: {orden.id.slice(-8).toUpperCase()}
                                 </Typography>
-
-                                <Typography>
-                                    <b>{t('user')}:</b> {orden.usuario?.nombre || '—'}
+                                <Typography variant="subtitle1" fontWeight="bold">
+                                    {orden.usuario?.nombre || '—'}
                                 </Typography>
-                                <Typography mb={2}>
-                                    <b>{t('date')}:</b> {formatDateTime(orden.creado)}
+                                <Typography variant="caption" color="text.secondary">
+                                    {formatDateTime(orden.creado)}
                                 </Typography>
                             </Box>
-                            <Typography sx={{ color: getStatusColor(orden.estado), fontWeight: 'bold' }}>
-                                {t('statusText')}: {orden.estado.toUpperCase()}
-                            </Typography>
+                            <Chip 
+                                label={t(`status.${orden.estado.toLowerCase()}`)} 
+                                color={getStatusColor(orden.estado)} 
+                                size="small"
+                                sx={{ fontWeight: 'bold' }}
+                            />
                         </Box>
 
-                        <Table size="small">
+                        <Divider sx={{ mb: 2 }} />
+
+                        {/* Items Table */}
+                        <Table size="small" sx={{ mb: 2 }}>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>{t('product')}</TableCell>
-                                    <TableCell align="right">{t('quantity')}</TableCell>
-                                    <TableCell align="right">{t('subtotal')}</TableCell>
+                                    <TableCell sx={{ pl: 0, fontWeight: 'bold' }}>{t('product')}</TableCell>
+                                    <TableCell align="right" sx={{ fontWeight: 'bold' }}>{t('quantity')}</TableCell>
+                                    {!isMobile && <TableCell align="right" sx={{ pr: 0, fontWeight: 'bold' }}>{t('subtotal')}</TableCell>}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {orden.items.map((item, idx) => (
                                     <TableRow key={idx}>
-                                        <TableCell>{item.producto.nombre}</TableCell>
+                                        <TableCell sx={{ pl: 0 }}>{item.producto.nombre}</TableCell>
                                         <TableCell align="right">{item.cantidad}</TableCell>
-                                        <TableCell align="right">${item.subtotal.toFixed(2)}</TableCell>
+                                        {!isMobile && <TableCell align="right" sx={{ pr: 0 }}>${item.subtotal.toFixed(2)}</TableCell>}
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
 
-                        {orden.estado === ESTADO_ORDEN.PENDIENTE && (
-                            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'end', mt: 1, flex: 1, alignItems: 'end' }}>
-                                <Button variant="outlined" color="error" size="small" sx={{ mt: 1 }} onClick={() => handleCancelar(orden.id)}>{t('cancelButton')}</Button>
-                                <Button variant="contained" color="error" size="small" sx={{ mt: 1 }} onClick={() => handleCompletar(orden.id, ESTADO_ORDEN.COMPLETADA)}>{t('completeButton')}</Button>
-                            </Box>
-                        )}
+                        {/* Actions Area */}
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 'auto' }}>
+                            <Typography variant="h6" color="primary.main" fontWeight="bold">
+                                Total: ${orden.items.reduce((acc, curr) => acc + curr.subtotal, 0).toFixed(2)}
+                            </Typography>
+                            
+                            {orden.estado === ESTADO_ORDEN.PENDIENTE && (
+                                <Stack direction="row" spacing={1}>
+                                    <Button 
+                                        variant="outlined" 
+                                        color="error" 
+                                        size="small" 
+                                        onClick={() => handleUpdateStatus(orden.id, ESTADO_ORDEN.CANCELADA)}
+                                    >
+                                        {t('cancelButton')}
+                                    </Button>
+                                    <Button 
+                                        variant="contained" 
+                                        color="success" 
+                                        size="small" 
+                                        onClick={() => handleUpdateStatus(orden.id, ESTADO_ORDEN.COMPLETADA)}
+                                    >
+                                        {t('completeButton')}
+                                    </Button>
+                                </Stack>
+                            )}
+                        </Box>
                     </Paper>
                 ))}
             </Box>
