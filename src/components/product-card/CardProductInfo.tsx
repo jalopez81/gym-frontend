@@ -14,10 +14,11 @@ export const CardProductInfo = ({ producto }: Props) => {
     return (
         <Box
             className="info-panel"
+            onClick={() => setShowInfo(!showInfo)} 
             onMouseEnter={() => setShowInfo(true)}
             onMouseLeave={() => setShowInfo(false)}
             sx={{
-                background: "#ffeaea",
+                background: "rgba(255, 234, 234, 0.95)", 
                 height: "90%",
                 width: 280,
                 position: "absolute",

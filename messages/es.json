@@ -84,7 +84,18 @@
       "classes": "Clases",
       "cart": "Carrito",
       "subscription": "Suscripción"
-    }
+    },
+    "actionDesc": {
+      "products": "Administrar y comprar productos",
+      "productos": "Administrar y comprar productos",
+      "classes": "Ver y reservar clases",
+      "clases": "Ver y reservar clases",
+      "cart": "Ver y pagar por tu carrito",
+      "carrito": "Ver y pagar por tu carrito",
+      "subscription": "Ver y administrar tu suscripción",
+      "suscription": "Ver y administrar tu suscripción"
+    },
+    "subtitle": "Listo para tu entrenamiento de hoy?"
   },
   "Products": {
     "searchPlaceholder": "Búsqueda",
