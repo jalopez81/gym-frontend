@@ -103,8 +103,11 @@
     "allStatus": "TODAS",
     "status": {
       "pending": "PENDIENTE",
+      "pendiente": "PENDIENTE",
       "completed": "COMPLETADA",
-      "cancelled": "CANCELADA"
+      "completada": "COMPLETADA",
+      "cancelled": "CANCELADA",
+      "cancelada": "CANCELADA"
     },
     "orderId": "ID",
     "user": "Usuario",
@@ -115,7 +118,8 @@
     "subtotal": "Subtotal",
     "cancelButton": "Cancelar",
     "completeButton": "Completar",
-    "confirmCancel": "¿Está seguro que desea cancelar esta orden?"
+    "confirmCancel": "¿Está seguro que desea cancelar esta orden?",
+    "confirmComplete": "¿Está seguro que desea completar esta orden?"
   },
   "AdminSubscriptions": {
     "title": "Suscripciones",
