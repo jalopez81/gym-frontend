@@ -47,6 +47,8 @@
     "fullName": "Full Name",
     "email": "Email",
     "password": "Password",
+    "stepInfo": "User Info",
+    "stepVerify": "Verify Email",
     "confirmPassword": "Confirm Password",
     "next": "Next",
     "confirmCode": "Confirmation Code",
@@ -54,6 +56,9 @@
     "backToEdit": "Back to edit my details",
     "hasAccount": "Already have an account?",
     "login": "Log In",
+    "codeInstruction": "Enter the code we sent to your email",
+    "errorRequest": "Error sending verification code",
+    "errorRegister": "Error registering user",
     "errorMismatch": "Passwords do not match",
     "errorLength": "Password must be at least 6 characters"
   },

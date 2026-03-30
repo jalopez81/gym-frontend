@@ -47,6 +47,8 @@
     "fullName": "Nombre Completo",
     "email": "Email",
     "password": "Contraseña",
+    "stepInfo": "Información de usuario",
+    "stepVerify": "Verificar Correo",
     "confirmPassword": "Confirmar Contraseña",
     "next": "Siguiente",
     "confirmCode": "Código de Confirmación",
@@ -54,6 +56,9 @@
     "backToEdit": "Volver a editar mis datos",
     "hasAccount": "¿Ya tienes cuenta?",
     "login": "Iniciar Sesión",
+    "codeInstruction": "Introduce el código que enviamos a tu email",
+    "errorRequest": "Error al enviar el código de verificación",
+    "errorRegister": "Error al registrar el usuario",
     "errorMismatch": "Las contraseñas no coinciden",
     "errorLength": "La contraseña debe tener al menos 6 caracteres"
   },
