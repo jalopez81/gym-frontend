@@ -84,7 +84,14 @@
       "classes": "Classes",
       "cart": "Cart",
       "subscription": "Subscription"
-    }
+    },
+    "actionDesc": {
+      "products": "Manage and purchase products",
+      "classes": "View and reserve classes",
+      "cart": "View and pay for your cart",
+      "subscription": "View and manage your subscription"
+    },
+    "subtitle": "Ready for your training today?"
   },
   "Products": {
     "searchPlaceholder": "Search",

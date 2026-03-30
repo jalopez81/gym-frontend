@@ -7,13 +7,18 @@ import {
   Paper,
   Card,
   CardContent,
-  CardActionArea
+  CardActionArea,
+  Avatar,
+  useTheme
 } from '@mui/material';
 import {
   ShoppingBag,
   FitnessCenter,
   ShoppingCart,
-  CardMembership
+  CardMembership,
+  PersonOutline,
+  EmailOutlined,
+  EventAvailableOutlined
 } from '@mui/icons-material';
 import { Link } from "@/i18n/routing";
 import { useAuthStore } from '@/store/authStore';
@@ -22,13 +27,9 @@ import { useTranslations } from 'next-intl';
 import { useBreakpoints } from '@/utils/useMediaQuery';
 
 export default function DashboardPage() {
-  const usuario = useAuthStore( s=> s.usuario);
+  const usuario = useAuthStore(s => s.usuario);
   const t = useTranslations('Dashboard');
   const { isMobile } = useBreakpoints();
-
-  const getRolLabel = (rol: string) => {
-    return rol;
-  };
 
   const actions = [
     { title: t('actions.products'), icon: <ShoppingBag fontSize="large" />, href: '/productos', color: '#1976d2' },
@@ -37,62 +38,113 @@ export default function DashboardPage() {
     { title: t('actions.subscription'), icon: <CardMembership fontSize="large" />, href: '/suscripciones', color: '#ed6c02' }
   ];
 
+  const statCards = [
+    { 
+      label: t('role'), 
+      value: usuario?.rol || '-', 
+      icon: <PersonOutline color="primary" />, 
+      gradient: 'linear-gradient(135deg, #fff 0%, #f0f7ff 100%)' 
+    },
+    { 
+      label: t('email'), 
+      value: usuario?.email || '-', 
+      icon: <EmailOutlined color="primary" />, 
+      gradient: 'linear-gradient(135deg, #fff 0%, #fdf0ff 100%)' 
+    },
+    { 
+      label: t('memberSince'), 
+      value: usuario?.creado ? new Date(usuario.creado).toLocaleDateString() : '-', 
+      icon: <EventAvailableOutlined color="primary" />, 
+      gradient: 'linear-gradient(135deg, #fff 0%, #f0fff4 100%)' 
+    }
+  ];
+
   return (
-    <MyContainer className="page-dashboard" isAuthGuard={true}>
-      <Typography variant="h4" gutterBottom fontWeight="bold">
-        {t('welcome', { name: usuario?.nombre || '' })}
-      </Typography>
+    <MyContainer className="page-dashboard" isAuthGuard={true} sx={{ py: 4 }}>
+      {/* --- HERO SECTION --- */}
+      <Box sx={{ mb: 6, textAlign: isMobile ? 'center' : 'left' }}>
+        <Typography variant={isMobile ? "h4" : "h3"} fontWeight="800" sx={{ color: '#333', mb: 1 }}>
+          {t('welcome', { name: usuario?.nombre || '' })} 👋
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          {t('subtitle', { defaultMessage: 'Ready for your workout today?' })}
+        </Typography>
+      </Box>
 
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('role')}
-            </Typography>
-            <Typography variant="h5" color="primary" fontWeight="bold">
-              {usuario?.rol && getRolLabel(usuario.rol)}
-            </Typography>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('email')}
-            </Typography>
-            <Typography variant="h6" color="text.primary">
-              {usuario?.email}
-            </Typography>
-          </Paper>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3 }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('memberSince')}
-            </Typography>
-            <Typography variant="h6" color="text.primary">
-              {usuario?.creado ? new Date(usuario.creado).toLocaleDateString('es-ES') : '-'}
-            </Typography>
-          </Paper>
-        </Grid>
+      {/* --- STATS SECTION --- */}
+      <Grid container spacing={3} sx={{ mb: 6 }}>
+        {statCards.map((stat, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <Paper 
+              elevation={0}
+              sx={{ 
+                p: 3, 
+                borderRadius: 4, 
+                border: '1px solid #eee',
+                background: stat.gradient,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2
+              }}
+            >
+              <Avatar sx={{ bgcolor: 'white', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', p: 1 }}>
+                {stat.icon}
+              </Avatar>
+              <Box>
+                <Typography variant="overline" color="text.secondary" fontWeight="bold" sx={{ lineHeight: 1 }}>
+                  {stat.label}
+                </Typography>
+                <Typography variant="h6" fontWeight="bold" sx={{ color: '#2c3e50', wordBreak: 'break-all' }}>
+                  {stat.value}
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
+        ))}
       </Grid>
 
-      <Typography variant="h5" gutterBottom fontWeight="bold" sx={{ mt: 4, textAlign: isMobile ? 'center' : 'left' }}>
+      {/* --- QUICK ACTIONS SECTION --- */}
+      <Typography variant="h5" gutterBottom fontWeight="800" sx={{ mb: 3, textAlign: isMobile ? 'center' : 'left' }}>
         {t('quickActions')}
       </Typography>
 
       <Grid container spacing={3}>
         {actions.map((action) => (
           <Grid item xs={12} sm={6} md={3} key={action.title}>
-            <Card>
-              <CardActionArea component={Link} href={action.href}>
-                <CardContent sx={{ textAlign: 'center', py: 4 }}>
-                  <Box sx={{ color: action.color, mb: 2 }}>
+            <Card 
+              elevation={0}
+              sx={{ 
+                borderRadius: 4, 
+                border: '1px solid #f0f0f0',
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-8px)',
+                  boxShadow: '0 12px 30px rgba(0,0,0,0.08)',
+                  borderColor: action.color
+                }
+              }}
+            >
+              <CardActionArea component={Link} href={action.href} sx={{ height: '100%' }}>
+                <CardContent sx={{ textAlign: 'center', py: 5 }}>
+                  <Box 
+                    sx={{ 
+                      display: 'inline-flex',
+                      p: 2,
+                      borderRadius: '50%',
+                      bgcolor: `${action.color}15`, // 15% opacity version of color
+                      color: action.color,
+                      mb: 2,
+                      transition: '0.3s'
+                    }}
+                    className="icon-container"
+                  >
                     {action.icon}
                   </Box>
-                  <Typography variant="h6" fontWeight="bold">
+                  <Typography variant="h6" fontWeight="bold" sx={{ color: '#2c3e50' }}>
                     {action.title}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {t(`actionDesc.${action.title.toLowerCase()}`, { defaultMessage: 'Click to explore' })}
                   </Typography>
                 </CardContent>
               </CardActionArea>
