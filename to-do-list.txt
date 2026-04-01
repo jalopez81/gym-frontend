@@ -1,0 +1,6 @@
+AGREGAR REPORTES 
+
+Ventas: Reportes de ventas trimestrales o dentro de rangos de fechas personalizados.
+Análisis de Productos: Identificación de los productos más vendidos.
+Demanda de Servicios: Listado de los entrenamientos más solicitados por los usuarios.
+Gestión de Personal: Reportes sobre los entrenadores más solicitados para evaluar el desempeño y la preferencia del cliente.
