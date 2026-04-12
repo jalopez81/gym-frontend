@@ -91,4 +91,40 @@ export const getColsDef = (t: any) => ({
       renderCell: (params) => formatDateTime(params.value as string) || ""
     },
   ] as GridColDef[],
+
+  "productos-mas-vendidos": [
+    { field: "ranking", headerName: t('ranking'), width: 90 },
+    { field: "productoId", headerName: t('productId'), width: 110 },
+    { field: "nombre", headerName: t('name'), width: 220 },
+    { field: "categoria", headerName: t('category'), width: 150 },
+    {
+      field: "precioLista",
+      headerName: t('listPrice'),
+      width: 120,
+      renderCell: (params) =>
+        params.value != null && params.value !== "" ? `$${params.value}` : "—",
+    },
+    { field: "unidadesVendidas", headerName: t('unitsSold'), width: 140, type: "number" },
+    {
+      field: "ingresosTotales",
+      headerName: t('totalRevenue'),
+      width: 140,
+      type: "number",
+      renderCell: (params) => `$${params.value}`,
+    },
+    { field: "lineasEnOrdenes", headerName: t('orderLines'), width: 140, type: "number" },
+  ] as GridColDef[],
+
+  "ventas-por-categoria": [
+    { field: "ranking", headerName: t('ranking'), width: 90 },
+    { field: "categoria", headerName: t('category'), width: 220 },
+    { field: "unidadesVendidas", headerName: t('unitsSold'), width: 150, type: "number" },
+    {
+      field: "ingresosTotales",
+      headerName: t('totalRevenue'),
+      width: 150,
+      type: "number",
+      renderCell: (params) => `$${params.value}`,
+    },
+  ] as GridColDef[],
 });

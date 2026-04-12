@@ -246,6 +246,8 @@
     "products": "Productos",
     "subscriptions": "Suscripciones",
     "attendance": "Asistencias",
+    "topProducts": "Productos más vendidos",
+    "salesByCategory": "Ventas por categoría",
     "download": "Descargar",
     "processing": "Procesando...",
     "noData": "No hay datos",
@@ -264,7 +266,13 @@
     "stock": "Stock",
     "quantity": "Cantidad",
     "subtotal": "Subtotal",
-    "status": "Estado"
+    "status": "Estado",
+    "ranking": "Ranking",
+    "productId": "ID producto",
+    "listPrice": "Precio lista",
+    "unitsSold": "Unidades vendidas",
+    "totalRevenue": "Ingresos totales",
+    "orderLines": "Líneas en órdenes"
   },
   "MySubscription": {
     "title": "Mis Suscripciones",

@@ -155,7 +155,7 @@ export default function Sidebar() {
                     opacity: open ? 1 : 0,
                     transition: 'opacity 200ms'
                   }}
-                  primaryTypographyProps={{ fontSize: '1rem' }} />
+                  primaryTypographyProps={{ fontSize: '0.8rem' }} />
               </ListItemButton>
             </Tooltip>)}
           </List>
@@ -174,7 +174,7 @@ export default function Sidebar() {
                       whiteSpace: "nowrap",
                       opacity: open ? 1 : 0
                     }}
-                    primaryTypographyProps={{ fontSize: '1rem' }}
+                    primaryTypographyProps={{ fontSize: '0.8rem' }}
                   />
                 </ListItemButton>
               </Tooltip>)}

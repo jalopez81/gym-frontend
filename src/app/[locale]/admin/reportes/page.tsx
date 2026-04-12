@@ -11,9 +11,23 @@ import LoadingAnimation from "@/components/LoadingAnimatino";
 import { useTranslations } from 'next-intl';
 import DownloadIcon from '@mui/icons-material/Download';
 
+type ReportTab =
+  | "ordenes"
+  | "productos"
+  | "suscripciones"
+  | "asistencias"
+  | "productos-mas-vendidos"
+  | "ventas-por-categoria";
+
+function getRowIdForTab(tab: ReportTab, row: Record<string, unknown>): string {
+  if (tab === "productos-mas-vendidos") return String(row.productoId ?? row.ranking);
+  if (tab === "ventas-por-categoria") return String(row.categoria ?? row.ranking);
+  return String(row.id);
+}
+
 export default function Reportes() {
   const [report, setReport] = useState({ title: "", data: [] });
-  const [tab, setTab] = useState("ordenes");
+  const [tab, setTab] = useState<ReportTab>("ordenes");
   const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
   
@@ -80,7 +94,7 @@ export default function Reportes() {
         {/* Scrollable Tabs for small screens */}
         <Tabs 
           value={tab} 
-          onChange={(_, v) => setTab(v)} 
+          onChange={(_, v) => setTab(v as ReportTab)} 
           variant="scrollable"
           scrollButtons="auto"
           allowScrollButtonsMobile
@@ -90,6 +104,8 @@ export default function Reportes() {
           <Tab label={t('products')} value="productos" />
           <Tab label={t('subscriptions')} value="suscripciones" />
           <Tab label={t('attendance')} value="asistencias" />
+          <Tab label={t('topProducts')} value="productos-mas-vendidos" />
+          <Tab label={t('salesByCategory')} value="ventas-por-categoria" />
         </Tabs>
 
         <Box sx={{ height: 600, width: '100%', p: { xs: 1, sm: 2 } }}>
@@ -100,7 +116,8 @@ export default function Reportes() {
           ) : report.data.length > 0 ? (
             <DataGrid
               rows={report.data}
-              columns={columns[tab as keyof typeof columns]}
+              columns={columns[tab]}
+              getRowId={(row) => getRowIdForTab(tab, row as Record<string, unknown>)}
               pageSizeOptions={[10, 25]}
               initialState={{
                 pagination: { paginationModel: { pageSize: 10 } },

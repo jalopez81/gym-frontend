@@ -242,6 +242,8 @@
     "products": "Products",
     "subscriptions": "Subscriptions",
     "attendance": "Attendance",
+    "topProducts": "Top selling products",
+    "salesByCategory": "Sales by category",
     "download": "Download",
     "processing": "Processing...",
     "noData": "No data",
@@ -260,7 +262,13 @@
     "stock": "Stock",
     "quantity": "Quantity",
     "subtotal": "Subtotal",
-    "status": "Status"
+    "status": "Status",
+    "ranking": "Rank",
+    "productId": "Product ID",
+    "listPrice": "List price",
+    "unitsSold": "Units sold",
+    "totalRevenue": "Total revenue",
+    "orderLines": "Order lines"
   },
   "MySubscription": {
     "title": "My Subscriptions",

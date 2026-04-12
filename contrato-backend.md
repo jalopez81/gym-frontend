@@ -124,6 +124,10 @@ Reportes (admin-only)
 - GET /api/reportes/ordenes
 - GET /api/reportes/suscripciones
 - GET /api/reportes/asistencia
+- GET /api/reportes/productos-mas-vendidos
+- GET /api/reportes/ventas-por-categoria
+
+Each report also supports Excel download via `GET /api/reportes/:reporte/download` (same `:reporte` slug).
 
 Backups (admin-only)
 
