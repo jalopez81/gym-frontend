@@ -112,8 +112,7 @@ export const getColsDef = (t: any) => ({
       width: 140,
       type: "number",
       renderCell: (params) => formatMoney(params.value),
-    },
-    { field: "lineasEnOrdenes", headerName: t('orderLines'), width: 140, type: "number" },
+    }
   ] as GridColDef[],
 
   "ventas-por-categoria": [
