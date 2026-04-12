@@ -73,7 +73,10 @@ export default function DashboardPage() {
         </Typography>
       </Box>
 
-      {/* statistics */}
+      {isAdmin ? <AdminReportSummary /> : null}
+
+      {isAdmin ? <AdminReportSummary /> : null}
+
       <Grid container spacing={3} sx={{ mb: 6 }}>
         {statCards.map((stat, index) => (
           <Grid item xs={12} md={4} key={index}>
