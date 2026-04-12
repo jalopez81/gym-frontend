@@ -102,7 +102,24 @@
       "cart": "View and pay for your cart",
       "subscription": "View and manage your subscription"
     },
-    "subtitle": "Ready for your training today?"
+    "subtitle": "Ready for your training today?",
+    "adminReports": {
+      "title": "Reports snapshot",
+      "subtitle": "Same data as in admin; links open the full report.",
+      "error": "Could not load report data.",
+      "viewReport": "View report",
+      "noData": "No data",
+      "orders": "Orders",
+      "ordersSales": "{count} sales (PAID/COMPLETED/SHIPPED) · {amount}",
+      "topProducts": "Top selling products (top 3)",
+      "topCategories": "Sales by category (top 3)",
+      "topClasses": "Most popular classes (top 3)",
+      "topTrainers": "Most popular trainers (top 3)",
+      "subscriptions": "Subscriptions",
+      "subscriptionsHint": "Rows in the current report",
+      "attendance": "Attendance",
+      "attendanceHint": "Rows in the current report"
+    }
   },
   "Products": {
     "searchPlaceholder": "Search",
