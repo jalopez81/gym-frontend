@@ -64,6 +64,7 @@ export default function DashboardPage() {
   return (
     <MyContainer className="page-dashboard" isAuthGuard={true} sx={{ py: 4 }}>
       {/* hero */}
+      {/* hero */}
       <Box sx={{ mb: 6, textAlign: isMobile ? 'center' : 'left' }}>
         <Typography variant={isMobile ? "h4" : "h3"} fontWeight="800" sx={{ color: '#333', mb: 1 }}>
           {t('welcome', { name: usuario?.nombre || '' })} 👋
@@ -115,7 +116,7 @@ export default function DashboardPage() {
 
       <Grid container spacing={3}>
         {actions.map((action) => (
-          <Grid item xs={12} sm={6} md={3} mb={6} key={action.descKey}>
+          <Grid item xs={12} sm={6} md={3} mb={6} key={action.title}>
             <Card 
               elevation={0}
               sx={{ 
