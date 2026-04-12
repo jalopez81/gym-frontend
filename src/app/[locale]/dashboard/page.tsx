@@ -9,7 +9,6 @@ import {
   CardContent,
   CardActionArea,
   Avatar,
-  useTheme
 } from '@mui/material';
 import {
   ShoppingBag,
