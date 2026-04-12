@@ -285,7 +285,11 @@
     "activeClients": "Active PT clients",
     "errorAuth": "Unauthorized. Sign in as admin, or retry once the API requires a token.",
     "errorGeneric": "Could not load the report.",
-    "errorDownload": "Could not download the file."
+    "errorDownload": "Could not download the file.",
+    "viewProduct": "View product",
+    "viewClass": "View class",
+    "viewTrainer": "View trainer",
+    "viewSpotlightCategory": "Browse catalog"
   },
   "MySubscription": {
     "title": "My Subscriptions",
@@ -399,6 +403,7 @@
     "yearsOfExperience": "years of experience",
     "title": "Trainers",
     "subtitle": "Find your personal trainer",
-    "loading": "Loading trainers"
+    "loading": "Loading trainers",
+    "noMatch": "No trainers match this search."
   }
 }

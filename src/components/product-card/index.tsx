@@ -35,7 +35,8 @@ export function ProductoCard({ producto }: Props) {
             <Box sx={{ width: '100%', aspectRatio: '280/380', position: 'relative', overflow: 'hidden' }}>
                 <CldImage
                     src={producto.imagenSecureUrl}
-                    fill // Makes it responsive to the parent container
+                    fill
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 280px"
                     style={{ objectFit: 'cover' }}
                     quality="auto"
                     alt={producto.nombre}

@@ -289,7 +289,11 @@
     "activeClients": "Clientes PT activos",
     "errorAuth": "No autorizado. Inicia sesión como administrador o vuelve a intentar cuando el backend exija token.",
     "errorGeneric": "No se pudo cargar el reporte.",
-    "errorDownload": "No se pudo descargar el archivo."
+    "errorDownload": "No se pudo descargar el archivo.",
+    "viewProduct": "Ver producto",
+    "viewClass": "Ver clase",
+    "viewTrainer": "Ver entrenador",
+    "viewSpotlightCategory": "Ver en catálogo"
   },
   "MySubscription": {
     "title": "Mis Suscripciones",
@@ -432,6 +436,7 @@
     "yearsOfExperience": "años de experiencia",
     "title": "Entrenadores",
     "subtitle": "Encuentra tu entrenador personal",
-    "loading": "Cargando entrenadores"
+    "loading": "Cargando entrenadores",
+    "noMatch": "No hay entrenadores que coincidan con la búsqueda."
   }
 }
