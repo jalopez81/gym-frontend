@@ -1,6 +1,7 @@
-import { Chip } from "@mui/material";
+import { Chip, Link as MuiLink } from "@mui/material";
 import { formatDateTime, formatMoney } from "@/utils";
 import { GridColDef } from "@mui/x-data-grid";
+import { Link } from "@/i18n/routing";
 
 export const getColsDef = (t: any) => ({
   ordenes: [
@@ -112,7 +113,26 @@ export const getColsDef = (t: any) => ({
       width: 140,
       type: "number",
       renderCell: (params) => formatMoney(params.value),
-    }
+    },
+    {
+      field: "verProducto",
+      headerName: t("viewProduct"),
+      width: 130,
+      sortable: false,
+      filterable: false,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        const nombre = String((params.row as { nombre?: string }).nombre ?? "").trim();
+        if (!nombre) return "—";
+        const href = `/productos?busqueda=${encodeURIComponent(nombre)}`;
+        return (
+          <MuiLink component={Link} href={href} underline="hover" variant="body2">
+            {t("viewProduct")}
+          </MuiLink>
+        );
+      },
+    },
   ] as GridColDef[],
 
   "ventas-por-categoria": [
@@ -135,6 +155,25 @@ export const getColsDef = (t: any) => ({
     { field: "capacidad", headerName: t('classCapacity'), width: 110, type: "number" },
     { field: "totalAsistencias", headerName: t('totalAttendances'), width: 140, type: "number" },
     { field: "totalReservas", headerName: t('totalReservations'), width: 140, type: "number" },
+    {
+      field: "verClase",
+      headerName: t("viewClass"),
+      width: 120,
+      sortable: false,
+      filterable: false,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        const nombre = String((params.row as { nombre?: string }).nombre ?? "").trim();
+        if (!nombre) return "—";
+        const href = `/clases?search-class=${encodeURIComponent(nombre)}`;
+        return (
+          <MuiLink component={Link} href={href} underline="hover" variant="body2">
+            {t("viewClass")}
+          </MuiLink>
+        );
+      },
+    },
   ] as GridColDef[],
 
   "entrenadores-mas-populares": [
@@ -145,5 +184,24 @@ export const getColsDef = (t: any) => ({
     { field: "totalAsistencias", headerName: t('totalAttendances'), width: 130, type: "number" },
     { field: "totalReservas", headerName: t('totalReservations'), width: 130, type: "number" },
     { field: "clientesActivos", headerName: t('activeClients'), width: 140, type: "number" },
+    {
+      field: "verEntrenador",
+      headerName: t("viewTrainer"),
+      width: 130,
+      sortable: false,
+      filterable: false,
+      align: "center",
+      headerAlign: "center",
+      renderCell: (params) => {
+        const nombre = String((params.row as { nombre?: string }).nombre ?? "").trim();
+        if (!nombre) return "—";
+        const href = `/entrenadores?nombre=${encodeURIComponent(nombre)}`;
+        return (
+          <MuiLink component={Link} href={href} underline="hover" variant="body2">
+            {t("viewTrainer")}
+          </MuiLink>
+        );
+      },
+    },
   ] as GridColDef[],
 });

@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { ProductPagination } from '@/types';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link } from "@/i18n/routing";
+import { Link, usePathname, useRouter } from "@/i18n/routing";
 import { useTranslations } from 'next-intl';
 import { useBreakpoints } from '@/utils/useMediaQuery';
 
@@ -57,6 +57,8 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
     const searchInput = useRef<HTMLInputElement>(null);
     const t = useTranslations('Products');
     const { isMobile } = useBreakpoints();
+    const router = useRouter();
+    const pathname = usePathname();
 
     const updateItemsPerPage = (event: SelectChangeEvent<string>) => {
         const newValue = event.target.value;
@@ -83,6 +85,18 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
         });
     };
 
+    const showAllClick = () => {
+        if (searchInput.current) searchInput.current.value = "";
+        setPagination({
+            ...pagination,
+            busqueda: "",
+            pagina: 1,
+        });
+        router.replace(pathname);
+    };
+
+    const hasActiveSearch = Boolean(pagination.busqueda?.trim());
+
     return (
         <Box sx={{ flexGrow: 1, margin: "1rem 0", position: 'sticky', top: "56px", zIndex: 10, maxHeight: "100px" }}>
             <AppBar id="appbar-search" position="sticky" sx={{ top: 0, zIndex: 10, ...(isMobile && {maxWidth: "500px", flexWrap: 'wrap'}) }}>
@@ -107,6 +121,17 @@ export default function Searchbar({ pagination, setPagination }: SearchBarProps)
                     >
                         {t('searchButton')}
                     </Button>
+                    {hasActiveSearch ? (
+                        <Button
+                            variant="outlined"
+                            size="small"
+                            color="secondary"
+                            sx={{ mr: 2, borderColor: 'rgba(255,255,255,0.6)', color: '#fff' }}
+                            onClick={showAllClick}
+                        >
+                            {t('showAll')}
+                        </Button>
+                    ) : null}
                     {!isMobile && <Typography variant="body2" mr={4}>{t('resultsFound', { count: pagination.total })}</Typography>}
                     <Select
                         value={pagination.limite.toString()}

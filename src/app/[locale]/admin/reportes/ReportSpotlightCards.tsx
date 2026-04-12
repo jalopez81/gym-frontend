@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, Card, CardContent, Grid, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, Grid, Link as MuiLink, Stack, Typography } from '@mui/material';
 import { alpha, useTheme } from '@mui/material/styles';
 import { useTranslations } from 'next-intl';
 import { formatMoney } from '@/utils';
+import { Link } from '@/i18n/routing';
 
 export type SpotlightVariant =
   | 'productos-mas-vendidos'
@@ -16,6 +17,44 @@ const RANK_STYLES = [
   { bar: '#90A4AE', label: '2' },
   { bar: '#A1887F', label: '3' },
 ] as const;
+
+type SpotlightLinkKey = 'viewProduct' | 'viewSpotlightCategory' | 'viewClass' | 'viewTrainer';
+
+function spotlightRowLink(
+  variant: SpotlightVariant,
+  row: Record<string, unknown>
+): { href: string; labelKey: SpotlightLinkKey } | null {
+  if (variant === 'productos-mas-vendidos') {
+    const nombre = String(row.nombre ?? '').trim();
+    if (!nombre) return null;
+    return {
+      href: `/productos?busqueda=${encodeURIComponent(nombre)}`,
+      labelKey: 'viewProduct',
+    };
+  }
+  if (variant === 'ventas-por-categoria') {
+    const categoria = String(row.categoria ?? '').trim();
+    if (!categoria) return null;
+    return {
+      href: `/productos?busqueda=${encodeURIComponent(categoria)}`,
+      labelKey: 'viewSpotlightCategory',
+    };
+  }
+  if (variant === 'clases-mas-populares') {
+    const nombre = String(row.nombre ?? '').trim();
+    if (!nombre) return null;
+    return {
+      href: `/clases?search-class=${encodeURIComponent(nombre)}`,
+      labelKey: 'viewClass',
+    };
+  }
+  const nombre = String(row.nombre ?? '').trim();
+  if (!nombre) return null;
+  return {
+    href: `/entrenadores?nombre=${encodeURIComponent(nombre)}`,
+    labelKey: 'viewTrainer',
+  };
+}
 
 function SpotlightStats({ variant, row }: { variant: SpotlightVariant; row: Record<string, unknown> }) {
   const t = useTranslations('AdminReports');
@@ -129,6 +168,8 @@ export default function ReportSpotlightCards({
                 ? String(row.especialidad)
                 : null;
 
+          const rowLink = spotlightRowLink(variant, row);
+
           return (
             <Grid item xs={12} sm={4} key={`${rank}-${name}`}>
               <Card
@@ -178,6 +219,17 @@ export default function ReportSpotlightCards({
                         </Typography>
                       ) : null}
                       <SpotlightStats variant={variant} row={row} />
+                      {rowLink ? (
+                        <MuiLink
+                          component={Link}
+                          href={rowLink.href}
+                          underline="hover"
+                          variant="body2"
+                          sx={{ mt: 1.25, display: 'inline-block', fontWeight: 600 }}
+                        >
+                          {t(rowLink.labelKey)}
+                        </MuiLink>
+                      ) : null}
                     </Box>
                   </Stack>
                 </CardContent>
