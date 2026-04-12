@@ -270,7 +270,22 @@
     "totalRevenue": "Total revenue",
     "orderLines": "Order lines",
     "podiumProductsTitle": "Top 3 — best-selling products",
-    "podiumCategoriesTitle": "Top 3 — categories by revenue"
+    "podiumCategoriesTitle": "Top 3 — categories by revenue",
+    "podiumClassesTitle": "Top 3 — most popular classes",
+    "podiumTrainersTitle": "Top 3 — most popular trainers",
+    "popularClasses": "Most popular classes",
+    "popularTrainers": "Most popular trainers",
+    "class": "Class",
+    "classCapacity": "Capacity",
+    "classId": "Class ID",
+    "trainerId": "Trainer ID",
+    "specialty": "Specialty",
+    "totalAttendances": "Check-ins",
+    "totalReservations": "Reservations",
+    "activeClients": "Active PT clients",
+    "errorAuth": "Unauthorized. Sign in as admin, or retry once the API requires a token.",
+    "errorGeneric": "Could not load the report.",
+    "errorDownload": "Could not download the file."
   },
   "MySubscription": {
     "title": "My Subscriptions",

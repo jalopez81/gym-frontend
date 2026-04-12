@@ -119,15 +119,18 @@ Entrenadores
 
 Reportes (admin-only)
 
-- GET /api/reportes/usuarios
-- GET /api/reportes/productos
-- GET /api/reportes/ordenes
-- GET /api/reportes/suscripciones
-- GET /api/reportes/asistencia
-- GET /api/reportes/productos-mas-vendidos
-- GET /api/reportes/ventas-por-categoria
+Prefijo: `GET {API_BASE}/api/reportes/...` donde `NEXT_PUBLIC_API_URL` en el frontend apunta al origen que **ya incluye** `/api` (p. ej. `http://localhost:5001/api`). Las rutas JSON llevan **barra final** (`/:reporte/`) para coincidir con Express.
 
-Each report also supports Excel download via `GET /api/reportes/:reporte/download` (same `:reporte` slug).
+- JSON: `GET /api/reportes/:reporte/` → `Content-Type: application/json`
+- Excel: `GET /api/reportes/:reporte/download` → XLSX; nombre sugerido en `Content-Disposition` o `<reporte>.xlsx`
+
+Reportes válidos (`:reporte` en kebab-case):
+
+- `ordenes`, `productos`, `suscripciones`, `asistencias`
+- `productos-mas-vendidos`, `ventas-por-categoria`
+- `clases-mas-populares`, `entrenadores-mas-populares`
+
+El cliente envía `Authorization: Bearer <jwt>` cuando hay sesión (p. ej. admin). Ante `401`/`403` o `{ "error": "..." }` en JSON, el panel muestra mensaje de error.
 
 Backups (admin-only)
 

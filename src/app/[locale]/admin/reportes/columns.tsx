@@ -1,4 +1,4 @@
-import { Box, Chip } from "@mui/material";
+import { Chip } from "@mui/material";
 import { formatDateTime, formatMoney } from "@/utils";
 import { GridColDef } from "@mui/x-data-grid";
 
@@ -78,17 +78,18 @@ export const getColsDef = (t: any) => ({
   asistencias: [
     { field: "id", headerName: "ID", width: 90 },
     {
+      field: "horaEntrada",
+      headerName: t('entry'),
+      width: 160,
+      renderCell: (params) => formatDateTime(params.value as string) || "",
+    },
+    { field: "cliente", headerName: t('client'), width: 200 },
+    { field: "clase", headerName: t('class'), width: 180 },
+    {
       field: "sesion",
       headerName: t('session'),
       width: 200,
-      renderCell: (params) => formatDateTime(params.value as string) || ""
-    },
-    { field: "cliente", headerName: t('client'), width: 200 },
-    {
-      field: "horaEntrada",
-      headerName: t('entry'),
-      width: 150,
-      renderCell: (params) => formatDateTime(params.value as string) || ""
+      renderCell: (params) => formatDateTime(params.value as string) || "",
     },
   ] as GridColDef[],
 
@@ -102,7 +103,7 @@ export const getColsDef = (t: any) => ({
       headerName: t('listPrice'),
       width: 120,
       renderCell: (params) =>
-        params.value != null && params.value !== "" ? `$${params.value}` : "—",
+        params.value != null && params.value !== "" ? formatMoney(params.value) : "—",
     },
     { field: "unidadesVendidas", headerName: t('unitsSold'), width: 140, type: "number" },
     {
@@ -126,5 +127,24 @@ export const getColsDef = (t: any) => ({
       type: "number",
       renderCell: (params) => formatMoney(params.value),
     },
+  ] as GridColDef[],
+
+  "clases-mas-populares": [
+    { field: "ranking", headerName: t('ranking'), width: 90 },
+    { field: "claseId", headerName: t('classId'), width: 110 },
+    { field: "nombre", headerName: t('name'), width: 220 },
+    { field: "capacidad", headerName: t('classCapacity'), width: 110, type: "number" },
+    { field: "totalAsistencias", headerName: t('totalAttendances'), width: 140, type: "number" },
+    { field: "totalReservas", headerName: t('totalReservations'), width: 140, type: "number" },
+  ] as GridColDef[],
+
+  "entrenadores-mas-populares": [
+    { field: "ranking", headerName: t('ranking'), width: 90 },
+    { field: "entrenadorId", headerName: t('trainerId'), width: 120 },
+    { field: "nombre", headerName: t('name'), width: 200 },
+    { field: "especialidad", headerName: t('specialty'), width: 160 },
+    { field: "totalAsistencias", headerName: t('totalAttendances'), width: 130, type: "number" },
+    { field: "totalReservas", headerName: t('totalReservations'), width: 130, type: "number" },
+    { field: "clientesActivos", headerName: t('activeClients'), width: 140, type: "number" },
   ] as GridColDef[],
 });

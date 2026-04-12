@@ -274,7 +274,22 @@
     "totalRevenue": "Ingresos totales",
     "orderLines": "Líneas en órdenes",
     "podiumProductsTitle": "Top 3 — productos más vendidos",
-    "podiumCategoriesTitle": "Top 3 — categorías con más ingresos"
+    "podiumCategoriesTitle": "Top 3 — categorías con más ingresos",
+    "podiumClassesTitle": "Top 3 — clases más populares",
+    "podiumTrainersTitle": "Top 3 — entrenadores más populares",
+    "popularClasses": "Clases más populares",
+    "popularTrainers": "Entrenadores más populares",
+    "class": "Clase",
+    "classCapacity": "Capacidad",
+    "classId": "ID clase",
+    "trainerId": "ID entrenador",
+    "specialty": "Especialidad",
+    "totalAttendances": "Asistencias",
+    "totalReservations": "Reservas",
+    "activeClients": "Clientes PT activos",
+    "errorAuth": "No autorizado. Inicia sesión como administrador o vuelve a intentar cuando el backend exija token.",
+    "errorGeneric": "No se pudo cargar el reporte.",
+    "errorDownload": "No se pudo descargar el archivo."
   },
   "MySubscription": {
     "title": "Mis Suscripciones",
