@@ -63,7 +63,7 @@ export default function DashboardPage() {
 
   return (
     <MyContainer className="page-dashboard" isAuthGuard={true} sx={{ py: 4 }}>
-      {/* --- HERO SECTION --- */}
+      {/* hero */}
       <Box sx={{ mb: 6, textAlign: isMobile ? 'center' : 'left' }}>
         <Typography variant={isMobile ? "h4" : "h3"} fontWeight="800" sx={{ color: '#333', mb: 1 }}>
           {t('welcome', { name: usuario?.nombre || '' })} 👋
@@ -73,9 +73,7 @@ export default function DashboardPage() {
         </Typography>
       </Box>
 
-      {isAdmin ? <AdminReportSummary /> : null}
-
-      {/* --- STATS SECTION --- */}
+      {/* statistics */}
       <Grid container spacing={3} sx={{ mb: 6 }}>
         {statCards.map((stat, index) => (
           <Grid item xs={12} md={4} key={index}>
@@ -107,14 +105,14 @@ export default function DashboardPage() {
         ))}
       </Grid>
 
-      {/* --- QUICK ACTIONS SECTION --- */}
+      {/*  QUICK ACTIONS  */}
       <Typography variant="h5" gutterBottom fontWeight="800" sx={{ mb: 3, textAlign: isMobile ? 'center' : 'left' }}>
         {t('quickActions')}
       </Typography>
 
       <Grid container spacing={3}>
         {actions.map((action) => (
-          <Grid item xs={12} sm={6} md={3} key={action.title}>
+          <Grid item xs={12} sm={6} md={3} mb={6} key={action.title}>
             <Card 
               elevation={0}
               sx={{ 
@@ -135,7 +133,7 @@ export default function DashboardPage() {
                       display: 'inline-flex',
                       p: 2,
                       borderRadius: '50%',
-                      bgcolor: `${action.color}15`, // 15% opacity version of color
+                      bgcolor: `${action.color}15`,
                       color: action.color,
                       mb: 2,
                       transition: '0.3s'
@@ -156,6 +154,10 @@ export default function DashboardPage() {
           </Grid>
         ))}
       </Grid>
+
+      
+
+      {isAdmin ? <AdminReportSummary /> : null}
     </MyContainer>
   );
 }
