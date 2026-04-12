@@ -268,7 +268,9 @@
     "listPrice": "List price",
     "unitsSold": "Units sold",
     "totalRevenue": "Total revenue",
-    "orderLines": "Order lines"
+    "orderLines": "Order lines",
+    "podiumProductsTitle": "Top 3 — best-selling products",
+    "podiumCategoriesTitle": "Top 3 — categories by revenue"
   },
   "MySubscription": {
     "title": "My Subscriptions",

@@ -1,5 +1,5 @@
 import { Box, Chip } from "@mui/material";
-import { formatDateTime } from "@/utils";
+import { formatDateTime, formatMoney } from "@/utils";
 import { GridColDef } from "@mui/x-data-grid";
 
 export const getColsDef = (t: any) => ({
@@ -16,7 +16,7 @@ export const getColsDef = (t: any) => ({
       field: "total",
       headerName: t('total'),
       width: 120,
-      renderCell: (params) => `$${params.value}`,
+      renderCell: (params) => formatMoney(params.value),
     },
     {
       field: "estado",
@@ -50,7 +50,7 @@ export const getColsDef = (t: any) => ({
       field: "precio",
       headerName: t('price'),
       width: 130,
-      renderCell: (params) => `$${params.value}`,
+      renderCell: (params) => formatMoney(params.value),
     },
     { field: "stock", headerName: t('stock'), width: 100 },
     { field: "categoria", headerName: t('category'), width: 150 },
@@ -110,7 +110,7 @@ export const getColsDef = (t: any) => ({
       headerName: t('totalRevenue'),
       width: 140,
       type: "number",
-      renderCell: (params) => `$${params.value}`,
+      renderCell: (params) => formatMoney(params.value),
     },
     { field: "lineasEnOrdenes", headerName: t('orderLines'), width: 140, type: "number" },
   ] as GridColDef[],
@@ -124,7 +124,7 @@ export const getColsDef = (t: any) => ({
       headerName: t('totalRevenue'),
       width: 150,
       type: "number",
-      renderCell: (params) => `$${params.value}`,
+      renderCell: (params) => formatMoney(params.value),
     },
   ] as GridColDef[],
 });

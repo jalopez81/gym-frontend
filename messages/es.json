@@ -272,7 +272,9 @@
     "listPrice": "Precio lista",
     "unitsSold": "Unidades vendidas",
     "totalRevenue": "Ingresos totales",
-    "orderLines": "Líneas en órdenes"
+    "orderLines": "Líneas en órdenes",
+    "podiumProductsTitle": "Top 3 — productos más vendidos",
+    "podiumCategoriesTitle": "Top 3 — categorías con más ingresos"
   },
   "MySubscription": {
     "title": "Mis Suscripciones",
