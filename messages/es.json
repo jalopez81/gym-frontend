@@ -269,7 +269,7 @@
     "status": "Estado",
     "ranking": "Ranking",
     "productId": "ID producto",
-    "listPrice": "Precio lista",
+    "listPrice": "Precio",
     "unitsSold": "Unidades vendidas",
     "totalRevenue": "Ingresos totales",
     "orderLines": "Líneas en órdenes",

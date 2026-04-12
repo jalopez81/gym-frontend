@@ -22,6 +22,14 @@ import { getColsDef } from './columns'
 import LoadingAnimation from "@/components/LoadingAnimatino";
 import { useTranslations } from 'next-intl';
 import DownloadIcon from '@mui/icons-material/Download';
+import LocalShippingOutlined from '@mui/icons-material/LocalShippingOutlined';
+import Inventory2Outlined from '@mui/icons-material/Inventory2Outlined';
+import CardMembershipOutlined from '@mui/icons-material/CardMembershipOutlined';
+import FactCheckOutlined from '@mui/icons-material/FactCheckOutlined';
+import EmojiEventsOutlined from '@mui/icons-material/EmojiEventsOutlined';
+import CategoryOutlined from '@mui/icons-material/CategoryOutlined';
+import FitnessCenterOutlined from '@mui/icons-material/FitnessCenterOutlined';
+import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
 import ReportSpotlightCards, { type SpotlightVariant } from "./ReportSpotlightCards";
 import {
   reportesJsonPath,
@@ -208,16 +216,65 @@ export default function Reportes() {
           variant="scrollable"
           scrollButtons="auto"
           allowScrollButtonsMobile
-          sx={{ borderBottom: 1, borderColor: 'divider' }}
+          sx={{
+            borderBottom: 1,
+            borderColor: 'divider',
+            '& .MuiTab-root': {
+              minHeight: 48,
+              textTransform: 'none',
+              gap: 0.75,
+            },
+            '& .MuiTab-iconWrapper': { mr: 0 },
+          }}
         >
-          <Tab label={t('orders')} value="ordenes" />
-          <Tab label={t('products')} value="productos" />
-          <Tab label={t('subscriptions')} value="suscripciones" />
-          <Tab label={t('attendance')} value="asistencias" />
-          <Tab label={t('topProducts')} value="productos-mas-vendidos" />
-          <Tab label={t('salesByCategory')} value="ventas-por-categoria" />
-          <Tab label={t('popularClasses')} value="clases-mas-populares" />
-          <Tab label={t('popularTrainers')} value="entrenadores-mas-populares" />
+          <Tab
+            icon={<LocalShippingOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('orders')}
+            value="ordenes"
+          />
+          <Tab
+            icon={<Inventory2Outlined fontSize="small" />}
+            iconPosition="start"
+            label={t('products')}
+            value="productos"
+          />
+          <Tab
+            icon={<CardMembershipOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('subscriptions')}
+            value="suscripciones"
+          />
+          <Tab
+            icon={<FactCheckOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('attendance')}
+            value="asistencias"
+          />
+          <Tab
+            icon={<EmojiEventsOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('topProducts')}
+            value="productos-mas-vendidos"
+          />
+          <Tab
+            icon={<CategoryOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('salesByCategory')}
+            value="ventas-por-categoria"
+          />
+          <Tab
+            icon={<FitnessCenterOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('popularClasses')}
+            value="clases-mas-populares"
+          />
+          <Tab
+            icon={<PersonOutlineOutlined fontSize="small" />}
+            iconPosition="start"
+            label={t('popularTrainers')}
+            value="entrenadores-mas-populares"
+          />
         </Tabs>
 
         <Box
