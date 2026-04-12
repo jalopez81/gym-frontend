@@ -24,9 +24,12 @@ import { useAuthStore } from '@/store/authStore';
 import MyContainer from '@/components/MyContainer';
 import { useTranslations } from 'next-intl';
 import { useBreakpoints } from '@/utils/useMediaQuery';
+import AdminReportSummary from './AdminReportSummary';
 
 export default function DashboardPage() {
   const usuario = useAuthStore(s => s.usuario);
+  const ROLES = useAuthStore(s => s.ROLES);
+  const isAdmin = usuario?.rol === ROLES.ADMIN;
   const t = useTranslations('Dashboard');
   const { isMobile } = useBreakpoints();
 
@@ -69,6 +72,8 @@ export default function DashboardPage() {
           {t('subtitle', { defaultMessage: 'Ready for your workout today?' })}
         </Typography>
       </Box>
+
+      {isAdmin ? <AdminReportSummary /> : null}
 
       {/* --- STATS SECTION --- */}
       <Grid container spacing={3} sx={{ mb: 6 }}>
