@@ -27,10 +27,12 @@ const fetchProductos = useCallback(async () => {
     });
     
     setProductos(response.data.productos);
-    
-    setPagination(prev => ({
+
+  
+    setPagination((prev) => ({
       ...prev,
-      ...response.data.paginacion
+      ...response.data.paginacion,
+      busqueda: prev.busqueda,
     }));
   } catch (err: unknown) {
     const error = err as { message: string };

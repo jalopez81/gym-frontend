@@ -109,7 +109,10 @@
     "searchButton": "Search",
     "resultsFound": "{count} results found",
     "perPage": "per page",
-    "cartButton": "Cart"
+    "cartButton": "Cart",
+    "noSearchResults": "No products match \"{query}\". Try a different search.",
+    "noProducts": "No products available at the moment.",
+    "showAll": "Show all"
   },
   "AdminOrders": {
     "title": "Orders",

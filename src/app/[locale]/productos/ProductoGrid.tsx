@@ -30,14 +30,16 @@ export default function ProductoGrid({ productos, pagination, setPagination }: P
                 </Grid>
             ))}
         </Box>
-        <Box sx={{ width: "100%", display: 'flex', justifyContent: "center", margin: "1rem 0" }}>
-            <Pagination
-                count={pagination?.totalPaginas || 1}
-                page={pagination.pagina}
-                onChange={(e, value) => setPagination(prev => {
-                    return { ...prev, pagina: value }
-                })}
-            />
-        </Box>
+        {(pagination?.totalPaginas ?? 0) > 1 ? (
+            <Box sx={{ width: "100%", display: 'flex', justifyContent: "center", margin: "1rem 0" }}>
+                <Pagination
+                    count={pagination.totalPaginas}
+                    page={pagination.pagina}
+                    onChange={(e, value) => setPagination(prev => {
+                        return { ...prev, pagina: value }
+                    })}
+                />
+            </Box>
+        ) : null}
     </>)
 }

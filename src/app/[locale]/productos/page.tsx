@@ -7,9 +7,11 @@ import { useProductos } from "@/hooks/useProductos";
 import Searchbar from "./searchbar";
 import { Suspense, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 function ProductosPageContent() {
   const searchParams = useSearchParams();
+  const t = useTranslations("Products");
   const { productos, pagination, setPagination, loading, error } = useProductos();
   const lastBusquedaParam = useRef<string | undefined>(undefined);
 
@@ -29,9 +31,17 @@ function ProductosPageContent() {
 
       {loading && <CircularProgress sx={{ margin: '0 auto'}} />}
 
-      {!loading && (
+      {!loading && productos.length === 0 ? (
+        <Typography color="text.secondary" sx={{ mt: 3, textAlign: "center", px: 2 }}>
+          {pagination.busqueda?.trim()
+            ? t("noSearchResults", { query: pagination.busqueda.trim() })
+            : t("noProducts")}
+        </Typography>
+      ) : null}
+
+      {!loading && productos.length > 0 ? (
         <ProductoGrid productos={productos} pagination={pagination} setPagination={setPagination}/>
-      )}
+      ) : null}
     </MyContainer>
   );
 }

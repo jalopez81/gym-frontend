@@ -113,7 +113,10 @@
     "searchButton": "Buscar",
     "resultsFound": "{count} resultados encontrados",
     "perPage": "por página",
-    "cartButton": "Carrito"
+    "cartButton": "Carrito",
+    "noSearchResults": "No hay productos que coincidan con «{query}». Prueba con otra búsqueda.",
+    "noProducts": "No hay productos disponibles por ahora.",
+    "showAll": "Mostrar todo"
   },
   "AdminOrders": {
     "title": "Órdenes",
