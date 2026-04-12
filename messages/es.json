@@ -106,7 +106,24 @@
       "subscription": "Ver y administrar tu suscripción",
       "suscription": "Ver y administrar tu suscripción"
     },
-    "subtitle": "Listo para tu entrenamiento de hoy?"
+    "subtitle": "Listo para tu entrenamiento de hoy?",
+    "adminReports": {
+      "title": "Resumen de reportes",
+      "subtitle": "Mismos datos que en administración; enlaces al reporte completo.",
+      "error": "No se pudieron cargar los datos de reportes.",
+      "viewReport": "Ver reporte",
+      "noData": "Sin datos",
+      "orders": "Órdenes",
+      "ordersSales": "{count} ventas (PAGADA/COMPLETADA/ENVIADA) · {amount}",
+      "topProducts": "Productos más vendidos (top 3)",
+      "topCategories": "Ventas por categoría (top 3)",
+      "topClasses": "Clases más populares (top 3)",
+      "topTrainers": "Entrenadores más populares (top 3)",
+      "subscriptions": "Suscripciones",
+      "subscriptionsHint": "Registros en el reporte actual",
+      "attendance": "Asistencias",
+      "attendanceHint": "Registros en el reporte actual"
+    }
   },
   "Products": {
     "searchPlaceholder": "Búsqueda",

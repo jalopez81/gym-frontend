@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, Suspense, type SyntheticEvent } from "react";
+import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/routing";
 import {
   Tabs,
   Tab,
@@ -49,6 +51,22 @@ type ReportTab =
   | "clases-mas-populares"
   | "entrenadores-mas-populares";
 
+const REPORT_TABS: ReportTab[] = [
+  "ordenes",
+  "productos",
+  "suscripciones",
+  "asistencias",
+  "productos-mas-vendidos",
+  "ventas-por-categoria",
+  "clases-mas-populares",
+  "entrenadores-mas-populares",
+];
+
+function parseReportTabParam(value: string | null): ReportTab | null {
+  if (!value) return null;
+  return REPORT_TABS.includes(value as ReportTab) ? (value as ReportTab) : null;
+}
+
 function getRowIdForTab(tab: ReportTab, row: Record<string, unknown>): string {
   if (tab === "productos-mas-vendidos") return String(row.productoId ?? row.ranking);
   if (tab === "ventas-por-categoria") return String(row.categoria ?? row.ranking);
@@ -84,9 +102,12 @@ function tabToSpotlightVariant(tab: ReportTab): SpotlightVariant | null {
   return null;
 }
 
-export default function Reportes() {
+function ReportesContent() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
   const [report, setReport] = useState<{ title: string; data: unknown[] }>({ title: "", data: [] });
-  const [tab, setTab] = useState<ReportTab>("ordenes");
+  const [tab, setTab] = useState<ReportTab>(() => parseReportTabParam(searchParams.get("tab")) ?? "ordenes");
   const [loading, setLoading] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [fetchError, setFetchError] = useState<string | null>(null);
@@ -115,6 +136,18 @@ export default function Reportes() {
     setFetchError(null);
     setDownloadError(null);
   }, [tab]);
+
+  useEffect(() => {
+    const parsed = parseReportTabParam(searchParams.get("tab"));
+    if (parsed) setTab(parsed);
+  }, [searchParams]);
+
+  const handleTabChange = (_: SyntheticEvent, value: ReportTab) => {
+    setTab(value);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", value);
+    router.replace(`${pathname}?${params.toString()}`);
+  };
 
   const fetchReportes = useCallback(async () => {
     setLoading(true);
@@ -212,7 +245,7 @@ export default function Reportes() {
 
         <Tabs 
           value={tab} 
-          onChange={(_, v) => setTab(v as ReportTab)} 
+          onChange={handleTabChange} 
           variant="scrollable"
           scrollButtons="auto"
           allowScrollButtonsMobile
@@ -338,5 +371,21 @@ export default function Reportes() {
         </Box>
       </Paper>
     </MyContainer>
+  );
+}
+
+export default function Reportes() {
+  return (
+    <Suspense
+      fallback={
+        <MyContainer>
+          <Box sx={{ display: 'flex', minHeight: 320, alignItems: 'center', justifyContent: 'center' }}>
+            <LoadingAnimation />
+          </Box>
+        </MyContainer>
+      }
+    >
+      <ReportesContent />
+    </Suspense>
   );
 }
