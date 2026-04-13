@@ -9,6 +9,10 @@
     "login": "Acceder",
     "greeting": "Hola, {name}!"
   },
+  "ApiStatus": {
+    "connecting": "Conectando con el servidor…",
+    "slowHint": "Por favor, espere. Si tarda, el backend puede estar despertando (hosting gratuito). La barra desaparece cuando la respuesta llega."
+  },
   "Sidebar": {
     "slogan": "Supera tus límites",
     "adminTitle": "ADMINISTRADOR",

@@ -34,10 +34,10 @@ export default function DashboardPage() {
   const { isMobile } = useBreakpoints();
 
   const actions = [
-    { title: t('actions.products'), icon: <ShoppingBag fontSize="large" />, href: '/productos', color: '#1976d2' },
-    { title: t('actions.classes'), icon: <FitnessCenter fontSize="large" />, href: '/clases', color: '#2e7d32' },
-    { title: t('actions.cart'), icon: <ShoppingCart fontSize="large" />, href: '/carrito', color: '#9c27b0' },
-    { title: t('actions.subscription'), icon: <CardMembership fontSize="large" />, href: '/suscripciones', color: '#ed6c02' }
+    { descKey: 'products' as const, title: t('actions.products'), icon: <ShoppingBag fontSize="large" />, href: '/productos', color: '#1976d2' },
+    { descKey: 'classes' as const, title: t('actions.classes'), icon: <FitnessCenter fontSize="large" />, href: '/clases', color: '#2e7d32' },
+    { descKey: 'cart' as const, title: t('actions.cart'), icon: <ShoppingCart fontSize="large" />, href: '/carrito', color: '#9c27b0' },
+    { descKey: 'subscription' as const, title: t('actions.subscription'), icon: <CardMembership fontSize="large" />, href: '/suscripciones', color: '#ed6c02' }
   ];
 
   const statCards = [
@@ -72,6 +72,8 @@ export default function DashboardPage() {
           {t('subtitle', { defaultMessage: 'Ready for your workout today?' })}
         </Typography>
       </Box>
+
+      {isAdmin ? <AdminReportSummary /> : null}
 
       {/* statistics */}
       <Grid container spacing={3} sx={{ mb: 6 }}>
@@ -112,7 +114,7 @@ export default function DashboardPage() {
 
       <Grid container spacing={3}>
         {actions.map((action) => (
-          <Grid item xs={12} sm={6} md={3} mb={6} key={action.title}>
+          <Grid item xs={12} sm={6} md={3} mb={6} key={action.descKey}>
             <Card 
               elevation={0}
               sx={{ 
@@ -146,7 +148,7 @@ export default function DashboardPage() {
                     {action.title}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    {t(`actionDesc.${action.title.toLowerCase()}`, { defaultMessage: 'Click to explore' })}
+                    {t(`actionDesc.${action.descKey}`)}
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -154,10 +156,6 @@ export default function DashboardPage() {
           </Grid>
         ))}
       </Grid>
-
-      
-
-      {isAdmin ? <AdminReportSummary /> : null}
     </MyContainer>
   );
 }

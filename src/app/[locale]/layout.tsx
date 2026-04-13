@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import ApiConnectionBar from '@/components/ApiConnectionBar';
 import Sidebar from '@/components/sidebar/Sidebar';
 import theme from '@/theme/theme';
 import { Box } from '@mui/material';
@@ -41,6 +42,7 @@ export default async function RootLayout({
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <ThemeProvider theme={theme}>
               <CssBaseline />
+              <ApiConnectionBar />
               <Box 
                 className="root-layout__container" 
                 sx={{ 
