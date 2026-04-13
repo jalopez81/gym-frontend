@@ -73,40 +73,6 @@ export default function DashboardPage() {
         </Typography>
       </Box>
 
-      {isAdmin ? <AdminReportSummary /> : null}
-
-      {/* statistics */}
-      <Grid container spacing={3} sx={{ mb: 6 }}>
-        {statCards.map((stat, index) => (
-          <Grid item xs={12} md={4} key={index}>
-            <Paper 
-              elevation={0}
-              sx={{ 
-                p: 3, 
-                borderRadius: 4, 
-                border: '1px solid #eee',
-                background: stat.gradient,
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2
-              }}
-            >
-              <Avatar sx={{ bgcolor: 'white', boxShadow: '0 4px 10px rgba(0,0,0,0.05)', p: 1 }}>
-                {stat.icon}
-              </Avatar>
-              <Box>
-                <Typography variant="overline" color="text.secondary" fontWeight="bold" sx={{ lineHeight: 1 }}>
-                  {stat.label}
-                </Typography>
-                <Typography variant="h6" fontWeight="bold" sx={{ color: '#2c3e50', wordBreak: 'break-all' }}>
-                  {stat.value}
-                </Typography>
-              </Box>
-            </Paper>
-          </Grid>
-        ))}
-      </Grid>
-
       {/*  QUICK ACTIONS  */}
       <Typography variant="h5" gutterBottom fontWeight="800" sx={{ mb: 3, textAlign: isMobile ? 'center' : 'left' }}>
         {t('quickActions')}
@@ -156,6 +122,8 @@ export default function DashboardPage() {
           </Grid>
         ))}
       </Grid>
+
+      {isAdmin ? <AdminReportSummary /> : null}
     </MyContainer>
   );
 }
