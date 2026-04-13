@@ -15,6 +15,7 @@ import { reportesJsonPath } from '@/utils/reportesApi';
 import { formatMoney } from '@/utils';
 import { Link } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
+import { ReportTabIcon, type ReportTabId } from '@/utils/reportTabIcons';
 
 type OrdenRow = { estado?: string; total?: number };
 type RankingRow = { ranking?: number; nombre?: string; categoria?: string; ingresosTotales?: number };
@@ -40,7 +41,7 @@ function topByRanking<T extends { ranking?: number }>(rows: T[], take: number): 
     .slice(0, take);
 }
 
-function reportHref(tab: string) {
+function reportHref(tab: ReportTabId) {
   return `/admin/reportes?tab=${encodeURIComponent(tab)}`;
 }
 
@@ -140,10 +141,19 @@ export default function AdminReportSummary() {
     return null;
   }
 
-  const miniLink = (tab: string) => (
+  const miniLink = (tab: ReportTabId) => (
     <MuiLink component={Link} href={reportHref(tab)} variant="body2" fontWeight={600} sx={{ mt: 1, display: 'inline-block' }}>
       {t('viewReport')}
     </MuiLink>
+  );
+
+  const sectionHeader = (tab: ReportTabId, label: string) => (
+    <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 1 }}>
+      <ReportTabIcon tab={tab} color="primary" />
+      <Typography variant="overline" color="text.secondary" fontWeight="bold" sx={{ lineHeight: 1.2 }}>
+        {label}
+      </Typography>
+    </Stack>
   );
 
   const topNames = (rows: RankingRow[], label: (r: RankingRow) => string) =>
@@ -173,9 +183,7 @@ export default function AdminReportSummary() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('orders')}
-            </Typography>
+            {sectionHeader('ordenes', t('orders'))}
             <Typography variant="h5" fontWeight={700} sx={{ mt: 0.5 }}>
               {ventas.total}
             </Typography>
@@ -188,9 +196,7 @@ export default function AdminReportSummary() {
 
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('topProducts')}
-            </Typography>
+            {sectionHeader('productos-mas-vendidos', t('topProducts'))}
             {topNames(payload.productosTop, (r) => String(r.nombre ?? '—'))}
             {miniLink('productos-mas-vendidos')}
           </Paper>
@@ -198,9 +204,7 @@ export default function AdminReportSummary() {
 
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('topCategories')}
-            </Typography>
+            {sectionHeader('ventas-por-categoria', t('topCategories'))}
             {topNames(payload.categoriasTop, (r) =>
               `${String(r.categoria ?? '—')} · ${formatMoney(r.ingresosTotales)}`
             )}
@@ -210,9 +214,7 @@ export default function AdminReportSummary() {
 
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('topClasses')}
-            </Typography>
+            {sectionHeader('clases-mas-populares', t('topClasses'))}
             {topNames(payload.clasesTop, (r) => String(r.nombre ?? '—'))}
             {miniLink('clases-mas-populares')}
           </Paper>
@@ -220,9 +222,7 @@ export default function AdminReportSummary() {
 
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('topTrainers')}
-            </Typography>
+            {sectionHeader('entrenadores-mas-populares', t('topTrainers'))}
             {topNames(payload.entrenadoresTop, (r) => String(r.nombre ?? '—'))}
             {miniLink('entrenadores-mas-populares')}
           </Paper>
@@ -230,9 +230,7 @@ export default function AdminReportSummary() {
 
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('subscriptions')}
-            </Typography>
+            {sectionHeader('suscripciones', t('subscriptions'))}
             <Typography variant="h5" fontWeight={700} sx={{ mt: 0.5 }}>
               {payload.suscripciones.length}
             </Typography>
@@ -245,9 +243,7 @@ export default function AdminReportSummary() {
 
         <Grid item xs={12} sm={6} md={4}>
           <Paper elevation={0} sx={{ p: 2.5, borderRadius: 3, border: '1px solid #eee', height: '100%' }}>
-            <Typography variant="overline" color="text.secondary" fontWeight="bold">
-              {t('attendance')}
-            </Typography>
+            {sectionHeader('asistencias', t('attendance'))}
             <Typography variant="h5" fontWeight={700} sx={{ mt: 0.5 }}>
               {payload.asistencias.length}
             </Typography>

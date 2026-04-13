@@ -24,14 +24,7 @@ import { getColsDef } from './columns'
 import LoadingAnimation from "@/components/LoadingAnimatino";
 import { useTranslations } from 'next-intl';
 import DownloadIcon from '@mui/icons-material/Download';
-import LocalShippingOutlined from '@mui/icons-material/LocalShippingOutlined';
-import Inventory2Outlined from '@mui/icons-material/Inventory2Outlined';
-import CardMembershipOutlined from '@mui/icons-material/CardMembershipOutlined';
-import FactCheckOutlined from '@mui/icons-material/FactCheckOutlined';
-import EmojiEventsOutlined from '@mui/icons-material/EmojiEventsOutlined';
-import CategoryOutlined from '@mui/icons-material/CategoryOutlined';
-import FitnessCenterOutlined from '@mui/icons-material/FitnessCenterOutlined';
-import PersonOutlineOutlined from '@mui/icons-material/PersonOutlineOutlined';
+import { ReportTabIcon, type ReportTabId } from '@/utils/reportTabIcons';
 import ReportSpotlightCards, { type SpotlightVariant } from "./ReportSpotlightCards";
 import {
   reportesJsonPath,
@@ -41,15 +34,7 @@ import {
 } from "@/utils/reportesApi";
 import { isAxiosError } from "axios";
 
-type ReportTab =
-  | "ordenes"
-  | "productos"
-  | "suscripciones"
-  | "asistencias"
-  | "productos-mas-vendidos"
-  | "ventas-por-categoria"
-  | "clases-mas-populares"
-  | "entrenadores-mas-populares";
+type ReportTab = ReportTabId;
 
 const REPORT_TABS: ReportTab[] = [
   "ordenes",
@@ -261,49 +246,49 @@ function ReportesContent() {
           }}
         >
           <Tab
-            icon={<LocalShippingOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="ordenes" />}
             iconPosition="start"
             label={t('orders')}
             value="ordenes"
           />
           <Tab
-            icon={<Inventory2Outlined fontSize="small" />}
+            icon={<ReportTabIcon tab="productos" />}
             iconPosition="start"
             label={t('products')}
             value="productos"
           />
           <Tab
-            icon={<CardMembershipOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="suscripciones" />}
             iconPosition="start"
             label={t('subscriptions')}
             value="suscripciones"
           />
           <Tab
-            icon={<FactCheckOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="asistencias" />}
             iconPosition="start"
             label={t('attendance')}
             value="asistencias"
           />
           <Tab
-            icon={<EmojiEventsOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="productos-mas-vendidos" />}
             iconPosition="start"
             label={t('topProducts')}
             value="productos-mas-vendidos"
           />
           <Tab
-            icon={<CategoryOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="ventas-por-categoria" />}
             iconPosition="start"
             label={t('salesByCategory')}
             value="ventas-por-categoria"
           />
           <Tab
-            icon={<FitnessCenterOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="clases-mas-populares" />}
             iconPosition="start"
             label={t('popularClasses')}
             value="clases-mas-populares"
           />
           <Tab
-            icon={<PersonOutlineOutlined fontSize="small" />}
+            icon={<ReportTabIcon tab="entrenadores-mas-populares" />}
             iconPosition="start"
             label={t('popularTrainers')}
             value="entrenadores-mas-populares"
