@@ -25,12 +25,9 @@ import MyContainer from '@/components/MyContainer';
 import { useTranslations } from 'next-intl';
 import { useBreakpoints } from '@/utils/useMediaQuery';
 import AdminReportSummary from './AdminReportSummary';
-import AdminReportSummary from './AdminReportSummary';
 
 export default function DashboardPage() {
   const usuario = useAuthStore(s => s.usuario);
-  const ROLES = useAuthStore(s => s.ROLES);
-  const isAdmin = usuario?.rol === ROLES.ADMIN;
   const ROLES = useAuthStore(s => s.ROLES);
   const isAdmin = usuario?.rol === ROLES.ADMIN;
   const t = useTranslations('Dashboard');
@@ -67,7 +64,6 @@ export default function DashboardPage() {
   return (
     <MyContainer className="page-dashboard" isAuthGuard={true} sx={{ py: 4 }}>
       {/* hero */}
-      {/* hero */}
       <Box sx={{ mb: 6, textAlign: isMobile ? 'center' : 'left' }}>
         <Typography variant={isMobile ? "h4" : "h3"} fontWeight="800" sx={{ color: '#333', mb: 1 }}>
           {t('welcome', { name: usuario?.nombre || '' })} 👋
@@ -79,8 +75,7 @@ export default function DashboardPage() {
 
       {isAdmin ? <AdminReportSummary /> : null}
 
-      {isAdmin ? <AdminReportSummary /> : null}
-
+      {/* statistics */}
       <Grid container spacing={3} sx={{ mb: 6 }}>
         {statCards.map((stat, index) => (
           <Grid item xs={12} md={4} key={index}>
@@ -113,15 +108,13 @@ export default function DashboardPage() {
       </Grid>
 
       {/*  QUICK ACTIONS  */}
-      {/*  QUICK ACTIONS  */}
       <Typography variant="h5" gutterBottom fontWeight="800" sx={{ mb: 3, textAlign: isMobile ? 'center' : 'left' }}>
         {t('quickActions')}
       </Typography>
 
       <Grid container spacing={3}>
         {actions.map((action) => (
-          <Grid item xs={12} sm={6} md={3} mb={6} key={action.title}>
-          <Grid item xs={12} sm={6} md={3} mb={6} key={action.title}>
+          <Grid item xs={12} sm={6} md={3} mb={6} key={action.descKey}>
             <Card 
               elevation={0}
               sx={{ 
@@ -143,7 +136,6 @@ export default function DashboardPage() {
                       p: 2,
                       borderRadius: '50%',
                       bgcolor: `${action.color}15`,
-                      bgcolor: `${action.color}15`,
                       color: action.color,
                       mb: 2,
                       transition: '0.3s'
@@ -164,14 +156,6 @@ export default function DashboardPage() {
           </Grid>
         ))}
       </Grid>
-
-      
-
-      {isAdmin ? <AdminReportSummary /> : null}
-
-      
-
-      {isAdmin ? <AdminReportSummary /> : null}
     </MyContainer>
   );
 }
